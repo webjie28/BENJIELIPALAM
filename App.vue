@@ -99,10 +99,10 @@
         <!-- SECTION 1: THE ORIGIN -->
         <section id="origin" class="chapter-section scroll-section reveal-on-scroll">
           <div class="intro-card glass-card">
-            <h2 class="chapter-header">01. The Origin</h2>
+            <h2 class="chapter-header">The Origin</h2>
             <div class="story-layout">
               <div class="story-text">
-                <p class="lead-text">"Where Design Meets Code..."</p>
+                <p class="lead-text">Where Design Meets Code</p>
                 <p>
                   My journey started with a deep interest in technology, aesthetics, and user interfaces. 
                   As a Computer Science enthusiast, I quickly realized that writing backend logic is only half the picture—the real magic happens when users interact with a beautifully crafted, intuitive front-end.
@@ -172,7 +172,7 @@
         <!-- SECTION 2: THE CREATIONS -->
         <section id="creations" class="chapter-section scroll-section reveal-on-scroll">
           <div class="glass-card">
-            <h2 class="chapter-header">02. Selected Works</h2>
+            <h2 class="chapter-header">Selected Works</h2>
             <p class="chapter-subtitle">Live repository data fetched directly from GitHub, enriched with custom operational contexts.</p>
             
             <div class="project-grid">
@@ -203,7 +203,7 @@
         <!-- SECTION 3: CASE STUDY (STICKY SCROLLYTELLING) -->
         <section id="thesis" class="chapter-section scroll-section reveal-on-scroll">
           <div class="glass-card scrollytelling-wrapper">
-            <h2 class="chapter-header">03. Case Study: Thesis DSS</h2>
+            <h2 class="chapter-header">Case Study: Thesis DSS</h2>
             <p class="chapter-subtitle">An interactive walkthrough of the "Sales Reports Analysis On Automotive Spare Parts Business Using Decision Support System" prototype.</p>
 
             <div class="scrollytelling-container">
@@ -295,7 +295,7 @@
         <!-- SECTION 4: THE CONNECTION -->
         <section id="connection" class="chapter-section scroll-section reveal-on-scroll">
           <div class="glass-card contact-wrapper">
-            <h2 class="chapter-header">04. Get In Touch</h2>
+            <h2 class="chapter-header">Get In Touch</h2>
             <p class="chapter-subtitle">Have an interesting project, design idea, or want to collaborate? Send a message directly.</p>
 
             <div class="contact-layout">
@@ -311,7 +311,7 @@
                   </div>
                   <div class="detail-item">
                     <span class="detail-icon">✉️</span>
-                    <a href="mailto:lipalambenjie@gmail.com" class="detail-link">lipalambenjie@gmail.com</a>
+                    <span>lipalambenjie@gmail.com</span>
                   </div>
                   <div class="detail-item">
                     <span class="detail-icon">📞</span>
