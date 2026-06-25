@@ -2019,6 +2019,7 @@ button.cta-btn {
   border-bottom: 1px solid #000000 !important;
   padding-bottom: 0.5rem;
   margin-bottom: 0.25rem;
+  text-align: center;
 }
 
 .cv-name {
@@ -2038,23 +2039,27 @@ button.cta-btn {
 }
 
 .cv-contact-info {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #000000 !important;
   line-height: 1.4;
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 1.2rem;
 }
 
 .cv-contact-item {
   color: #000000 !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .cv-contact-item strong {
   font-weight: bold;
-  display: inline-block;
-  width: 70px;
+  display: inline;
   color: #000000 !important;
+  margin-right: 4px;
 }
 
 .cv-link {
@@ -2232,6 +2237,7 @@ button.cta-btn {
     border-bottom: 1px solid #000000 !important;
     padding-bottom: 0.4rem !important;
     margin-bottom: 0.2rem !important;
+    text-align: center !important;
   }
 
   .cv-name {
@@ -2245,6 +2251,7 @@ button.cta-btn {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
+    justify-content: center !important;
     gap: 0.3rem 1.2rem !important;
   }
 
