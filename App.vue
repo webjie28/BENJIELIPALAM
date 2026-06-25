@@ -529,13 +529,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import avatarImg from './avatar.png';
-import thesisDashboard from './thesis_1_dashboard.png';
-import thesisSalesReports from './thesis_2_sales_reports.png';
-import thesisPredictions from './thesis_3_predictions.png';
-import thesisRecommendations from './thesis_4_recommendations.png';
-import thesisInventory from './thesis_5_inventory.png';
-import thesisSuppliers from './thesis_6_suppliers.png';
-import thesisSettings from './thesis_7_settings.png';
+import thesisDashboard from './screenshots/thesis_1_dashboard.png';
+import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
+import thesisPredictions from './screenshots/thesis_3_predictions.png';
+import thesisRecommendations from './screenshots/thesis_4_recommendations.png';
+import thesisInventory from './screenshots/thesis_5_inventory.png';
+import thesisSuppliers from './screenshots/thesis_6_suppliers.png';
+import thesisSettings from './screenshots/thesis_7_settings.png';
 
 const hasImage = ref(true);
 const activeStep = ref(1);
