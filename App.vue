@@ -514,9 +514,9 @@
             <div class="cv-section-line"></div>
             
             <div class="cv-skills-content">
-              <p><strong>Programming Languages:</strong> Java, JavaScript, HTML, CSS, C++</p>
-              <p><strong>Frameworks/Libraries:</strong> Standard C++ libraries, Java libraries, Vue.js, Vite, Tailwind CSS</p>
-              <p><strong>IDEs &amp; Tools:</strong> VSCode (Main), Git, GitHub, CodeBlocks, Netbeans, Eclipse</p>
+              <p><strong>Programming Languages:</strong> JavaScript (ES6+), HTML5, CSS3, Java, C++</p>
+              <p><strong>Frameworks/Libraries:</strong> Vue.js (Vue 3), Vite, EmailJS, Tailwind CSS, Standard Java/C++ libraries</p>
+              <p><strong>IDEs &amp; Tools:</strong> VSCode (Main), Git, GitHub, Vercel, Netbeans, Eclipse, CodeBlocks</p>
             </div>
           </div>
         </div>
@@ -562,7 +562,6 @@ const downloadCV = async () => {
     });
   }
 
-  // Temporarily override wrapper styles so html2canvas captures tight content
   const wrapper = element;
   const prevOverflow = wrapper.style.overflow;
   const prevMaxHeight = wrapper.style.maxHeight;
@@ -582,7 +581,6 @@ const downloadCV = async () => {
 
   await window.html2pdf().set(opt).from(element).save();
 
-  // Restore original styles
   wrapper.style.overflow = prevOverflow;
   wrapper.style.maxHeight = prevMaxHeight;
   wrapper.style.height = prevHeight;
@@ -2020,6 +2018,7 @@ button.cta-btn {
   border-bottom: 1px solid #000000 !important;
   padding-bottom: 0.5rem;
   margin-bottom: 0.25rem;
+  text-align: center;
 }
 
 .cv-name {
@@ -2045,6 +2044,7 @@ button.cta-btn {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  align-items: center;
 }
 
 .cv-contact-item {
@@ -2233,6 +2233,7 @@ button.cta-btn {
     border-bottom: 1px solid #000000 !important;
     padding-bottom: 0.4rem !important;
     margin-bottom: 0.2rem !important;
+    text-align: center !important;
   }
 
   .cv-name {
@@ -2246,6 +2247,7 @@ button.cta-btn {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
+    justify-content: center !important;
     gap: 0.3rem 1.2rem !important;
   }
 
