@@ -54,9 +54,3 @@ Vite will output the optimized static build assets inside the `/dist` directory,
 
 ---
 
-## 🧑‍💻 Author
-
-**Benjie Lipalam**
-* **Email**: [Lipalambenjie@gmail.com](mailto:Lipalambenjie@gmail.com)
-* **Github**: [@webjie28](https://github.com/webjie28)
-* **Address**: Rosario, Cavite
