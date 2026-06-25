@@ -527,7 +527,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import emailjs from '@emailjs/browser';
 import avatarImg from './avatar.png';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
@@ -735,11 +734,6 @@ const isSubmitted = ref(false);
 const isSending = ref(false);
 const sendError = ref(false);
 
-// EmailJS config — replace with your actual IDs from emailjs.com
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-
 const submitContact = async () => {
   if (!contactForm.value.name || !contactForm.value.email || !contactForm.value.message) return;
 
@@ -747,22 +741,29 @@ const submitContact = async () => {
   sendError.value = false;
 
   try {
-    await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      {
-        from_name:    contactForm.value.name,
-        from_email:   contactForm.value.email,
-        message:      contactForm.value.message,
-        to_name:      'Benjie',
+    const response = await fetch('https://formsubmit.co/ajax/lipalambenjie@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      EMAILJS_PUBLIC_KEY
-    );
-    isSubmitted.value = true;
-    contactForm.value = { name: '', email: '', message: '' };
-    setTimeout(() => { isSubmitted.value = false; }, 5000);
+      body: JSON.stringify({
+        Name: contactForm.value.name,
+        Email: contactForm.value.email,
+        Message: contactForm.value.message,
+        _subject: `New Portfolio Message from ${contactForm.value.name}`
+      })
+    });
+
+    if (response.ok) {
+      isSubmitted.value = true;
+      contactForm.value = { name: '', email: '', message: '' };
+      setTimeout(() => { isSubmitted.value = false; }, 5000);
+    } else {
+      throw new Error('Failed to submit form');
+    }
   } catch (err) {
-    console.error('EmailJS error:', err);
+    console.error('Submission error:', err);
     sendError.value = true;
     setTimeout(() => { sendError.value = false; }, 5000);
   } finally {
@@ -2018,7 +2019,6 @@ button.cta-btn {
   border-bottom: 1px solid #000000 !important;
   padding-bottom: 0.5rem;
   margin-bottom: 0.25rem;
-  text-align: center;
 }
 
 .cv-name {
@@ -2044,7 +2044,6 @@ button.cta-btn {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  align-items: center;
 }
 
 .cv-contact-item {
@@ -2233,7 +2232,6 @@ button.cta-btn {
     border-bottom: 1px solid #000000 !important;
     padding-bottom: 0.4rem !important;
     margin-bottom: 0.2rem !important;
-    text-align: center !important;
   }
 
   .cv-name {
@@ -2247,7 +2245,6 @@ button.cta-btn {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
-    justify-content: center !important;
     gap: 0.3rem 1.2rem !important;
   }
 
