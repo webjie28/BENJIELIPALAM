@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "puppeteer-core": "^24.43.1",
     "vue": "^3.4.0"
   },

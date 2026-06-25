@@ -307,7 +307,7 @@
                 <div class="details-list">
                   <div class="detail-item">
                     <span class="detail-icon">📍</span>
-                    <span>Manila, Philippines</span>
+                    <span>Rosario, Cavite</span>
                   </div>
                   <div class="detail-item">
                     <span class="detail-icon">✉️</span>
@@ -333,8 +333,16 @@
                 <!-- Success Banner -->
                 <Transition name="slide-fade">
                   <div v-if="isSubmitted" class="success-banner">
-                    <h4>Message Sent Successfully!</h4>
-                    <p>Thank you for reaching out, {{ contactForm.name }}. I will get back to you shortly.</p>
+                    <h4>Message Sent!</h4>
+                    <p>Thank you for reaching out, {{ contactForm.name }}. I'll get back to you shortly.</p>
+                  </div>
+                </Transition>
+
+                <!-- Error Banner -->
+                <Transition name="slide-fade">
+                  <div v-if="sendError" class="error-banner">
+                    <h4>Failed to send.</h4>
+                    <p>Something went wrong. Please try again or email me directly.</p>
                   </div>
                 </Transition>
 
@@ -345,7 +353,7 @@
                     id="name" 
                     v-model="contactForm.name" 
                     required 
-                    placeholder="John Doe"
+                    placeholder="Benjie"
                     class="form-input"
                   />
                 </div>
@@ -357,7 +365,7 @@
                     id="email" 
                     v-model="contactForm.email" 
                     required 
-                    placeholder="john@example.com"
+                    placeholder="benjielipalam@example.com"
                     class="form-input"
                   />
                 </div>
@@ -374,9 +382,9 @@
                   ></textarea>
                 </div>
 
-                <button type="submit" class="submit-btn" :disabled="isSubmitted">
-                  <span>Send Message</span>
-                  <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+                <button type="submit" class="submit-btn" :disabled="isSubmitted || isSending">
+                  <span>{{ isSending ? 'Sending...' : 'Send Message' }}</span>
+                  <svg v-if="!isSending" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                   </svg>
@@ -528,6 +536,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import emailjs from '@emailjs/browser';
 import avatarImg from './avatar.png';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
@@ -595,13 +604,13 @@ const customRepoDetails = {
   'Sales-Reports-Analysis-on-Automotive-Spare-Parts-Business-Using-Decision-Support-System': {
     title: 'Automotive Spare Parts DSS',
     subtitle: 'Full-Stack DSS Development',
-    description: 'Designed and coded by me to automate inventory forecasting for automotive parts. I implemented statistical forecasting models, developed responsive frontend dashboard views, and built automated alerts to optimize restocking efficiency and reduce stockouts.',
+    description: 'A group thesis project developed by three Computer Science students at Cavite State University. Built to automate inventory forecasting for automotive spare parts businesses — implementing statistical forecasting models, a responsive Vue.js frontend dashboard, and automated restock alerts to reduce stockouts.',
     tags: ['Vue.js', 'Frontend Development', 'Algorithms', 'Inventory Forecasting', 'Data Analysis']
   },
   'DailylifeTrackingsystem': {
     title: 'Daily Life Tracking System',
     subtitle: 'Web App Development & Analytics',
-    description: 'An interactive productivity system I programmed to track habits and daily schedules. I coded custom data-visualization charts, integrated local state managers, and designed a clean responsive UI to help users analyze personal time-allocation trends.',
+    description: 'An interactive productivity system programmed to track habits and daily schedules. Features custom data-visualization charts, local state managers, and a clean responsive UI to help users analyze personal time-allocation trends.',
     tags: ['Vue.js', 'Web App Development', 'State Management', 'UI/UX Design', 'Data Visualization']
   }
 };
@@ -693,14 +702,41 @@ const contactForm = ref({
   message: ''
 });
 const isSubmitted = ref(false);
+const isSending = ref(false);
+const sendError = ref(false);
 
-const submitContact = () => {
-  if (contactForm.value.name && contactForm.value.email && contactForm.value.message) {
+// EmailJS config — replace with your actual IDs from emailjs.com
+const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+
+const submitContact = async () => {
+  if (!contactForm.value.name || !contactForm.value.email || !contactForm.value.message) return;
+
+  isSending.value = true;
+  sendError.value = false;
+
+  try {
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name:    contactForm.value.name,
+        from_email:   contactForm.value.email,
+        message:      contactForm.value.message,
+        to_name:      'Benjie',
+      },
+      EMAILJS_PUBLIC_KEY
+    );
     isSubmitted.value = true;
-    setTimeout(() => {
-      isSubmitted.value = false;
-      contactForm.value = { name: '', email: '', message: '' };
-    }, 4500);
+    contactForm.value = { name: '', email: '', message: '' };
+    setTimeout(() => { isSubmitted.value = false; }, 5000);
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    sendError.value = true;
+    setTimeout(() => { sendError.value = false; }, 5000);
+  } finally {
+    isSending.value = false;
   }
 };
 </script>
