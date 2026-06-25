@@ -410,22 +410,14 @@
         <div class="cv-modal-header no-print">
           <h3>Curriculum Vitae</h3>
           <div class="cv-header-actions">
-            <button @click="printCV" class="cv-action-btn download-btn" title="Download CV as PDF">
+            <a href="/Benjie_Lipalam_CV.pdf" download="Benjie_Lipalam_CV.pdf" class="cv-action-btn download-btn" title="Download CV as PDF">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
               <span>Download PDF</span>
-            </button>
-            <button @click="printCV" class="cv-action-btn print-btn" title="Print CV">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                <rect x="6" y="14" width="12" height="8"></rect>
-              </svg>
-              <span>Print</span>
-            </button>
+            </a>
             <button @click="showCV = false" class="cv-action-btn close-btn" title="Close">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -441,7 +433,6 @@
           <!-- Header -->
           <div class="cv-doc-header">
             <h1 class="cv-name">Benjie Lipalam</h1>
-            <p class="cv-subtitle">Computer Science Graduate &amp; Frontend Developer</p>
             <div class="cv-contact-info">
               <div class="cv-contact-item"><strong>Address</strong> Rosario, Cavite</div>
               <div class="cv-contact-item"><strong>Phone</strong> +639954853868</div>
@@ -452,7 +443,7 @@
 
           <!-- Profile / Objective -->
           <div class="cv-profile-summary">
-            Frontend Developer and Computer Science Graduate specializing in responsive web applications. Expert in building modern user interfaces using Vue.js, JavaScript, HTML5, CSS3, and Vite. Experienced in database systems and object-oriented programming (C++ / Java).
+            Specializing in responsive web applications. Expert in building modern user interfaces using Vue.js, JavaScript, HTML5, CSS3, and Vite. Experienced in database systems and object-oriented programming (C++ / Java).
           </div>
 
           <!-- Education -->
@@ -554,6 +545,47 @@ const showCV = ref(false);
 
 const printCV = () => {
   window.print();
+};
+
+const downloadCV = async () => {
+  const element = document.getElementById('printable-cv');
+  if (!element) return;
+
+  // Dynamically load html2pdf.js from CDN
+  if (!window.html2pdf) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  // Temporarily override wrapper styles so html2canvas captures tight content
+  const wrapper = element;
+  const prevOverflow = wrapper.style.overflow;
+  const prevMaxHeight = wrapper.style.maxHeight;
+  const prevHeight = wrapper.style.height;
+  wrapper.style.overflow = 'visible';
+  wrapper.style.maxHeight = 'none';
+  wrapper.style.height = 'auto';
+
+  const opt = {
+    margin:       [8, 10, 8, 10],
+    filename:     'Benjie_Lipalam_CV.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2, useCORS: true, letterRendering: true, scrollY: 0 },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  await window.html2pdf().set(opt).from(element).save();
+
+  // Restore original styles
+  wrapper.style.overflow = prevOverflow;
+  wrapper.style.maxHeight = prevMaxHeight;
+  wrapper.style.height = prevHeight;
 };
 
 const toggleDarkMode = () => {
@@ -1892,7 +1924,7 @@ button.cta-btn {
 .cv-modal-card {
   width: 100%;
   max-width: 850px;
-  height: 100%;
+  height: 90vh;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -1973,36 +2005,36 @@ button.cta-btn {
   flex-grow: 1;
   background: #ffffff !important;
   color: #000000 !important;
-  padding: 3rem;
+  padding: 1rem 2rem 1.5rem 2rem;
   overflow-y: auto;
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.6rem;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 /* Document Formatting */
 .cv-doc-header {
   border-bottom: 1px solid #000000 !important;
-  padding-bottom: 1rem;
-  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .cv-name {
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   font-weight: bold;
   color: #000000 !important;
-  margin: 0 0 0.2rem 0;
+  margin: 0 0 0.15rem 0;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .cv-subtitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-style: italic;
   color: #333333 !important;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.5rem 0;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -2036,18 +2068,18 @@ button.cta-btn {
 }
 
 .cv-profile-summary {
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.85rem;
+  line-height: 1.4;
   color: #000000 !important;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   text-align: justify;
 }
 
 .cv-section {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .cv-section-heading {
@@ -2068,8 +2100,8 @@ button.cta-btn {
 .cv-edu-item {
   display: flex;
   gap: 1.5rem;
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
 }
 
 .cv-edu-date {
@@ -2094,21 +2126,21 @@ button.cta-btn {
 }
 
 .cv-project-item {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.35rem;
 }
 
 .cv-project-title {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: bold;
   color: #000000 !important;
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.15rem 0;
 }
 
 .cv-bullets {
   margin: 0;
   padding-left: 1.25rem;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  line-height: 1.35;
   color: #000000 !important;
   list-style-type: disc;
 }
@@ -2119,8 +2151,8 @@ button.cta-btn {
 }
 
 .cv-skills-content {
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.85rem;
+  line-height: 1.4;
   color: #000000 !important;
 }
 
@@ -2136,35 +2168,159 @@ button.cta-btn {
 
 /* 🖨️ Printable CSS Override */
 @media print {
-  body * {
-    visibility: hidden;
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm 8mm 10mm;
   }
-  #printable-cv, #printable-cv * {
-    visibility: visible;
+
+  /* Completely hide the main application to fix the extra/blank pages issue */
+  .portfolio-app {
+    display: none !important;
   }
-  #printable-cv {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
+
+  body, html {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Show only the CV modal backdrop/card in flat format */
+  .cv-modal-backdrop {
+    display: block !important;
+    position: static !important;
+    background: #ffffff !important;
     padding: 0 !important;
     margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
     overflow: visible !important;
-    box-shadow: none !important;
   }
-  .cv-modal-backdrop {
-    background: transparent !important;
-    padding: 0 !important;
-  }
+
   .cv-modal-card {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
     max-height: none !important;
     border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
     overflow: visible !important;
   }
+
+  .cv-modal-header,
   .no-print {
     display: none !important;
+  }
+
+  .cv-document-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0.4rem !important;
+    font-size: 10pt !important;
+    line-height: 1.3 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  .cv-doc-header {
+    border-bottom: 1px solid #000000 !important;
+    padding-bottom: 0.4rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .cv-name {
+    font-size: 1.5rem !important;
+    margin: 0 0 0.1rem 0 !important;
+  }
+
+  /* Group contact items side by side to save print height */
+  .cv-contact-info {
+    font-size: 8.5pt !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.3rem 1.2rem !important;
+  }
+
+  .cv-contact-item {
+    display: inline-block !important;
+  }
+
+  .cv-contact-item strong {
+    width: auto !important;
+    margin-right: 4px !important;
+  }
+
+  .cv-profile-summary {
+    font-size: 8.5pt !important;
+    margin-bottom: 0.15rem !important;
+    text-align: justify !important;
+  }
+
+  .cv-section {
+    gap: 0.15rem !important;
+    margin-bottom: 0.15rem !important;
+  }
+
+  .cv-section-heading {
+    font-size: 0.95rem !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .cv-section-line {
+    margin-top: -0.25rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .cv-edu-item {
+    font-size: 8.5pt !important;
+    margin-bottom: 0.15rem !important;
+    gap: 1rem !important;
+  }
+
+  .cv-edu-date {
+    width: 80px !important;
+  }
+
+  .cv-project-item {
+    margin-bottom: 0.2rem !important;
+  }
+
+  .cv-project-title {
+    font-size: 8.5pt !important;
+    margin-bottom: 0.05rem !important;
+  }
+
+  .cv-bullets {
+    font-size: 8pt !important;
+    padding-left: 1.1rem !important;
+  }
+
+  .cv-bullets li {
+    margin-bottom: 0.1rem !important;
+  }
+
+  .cv-skills-content {
+    font-size: 8.5pt !important;
+  }
+
+  .cv-skills-content p {
+    margin-bottom: 0.15rem !important;
+  }
+
+  /* Prevent elements from breaking across pages */
+  .cv-section,
+  .cv-edu-item,
+  .cv-project-item {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }
 
