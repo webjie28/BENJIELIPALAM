@@ -474,10 +474,10 @@
             <div class="cv-section-line"></div>
             
             <div class="cv-project-item">
-              <h3 class="cv-project-title">Automotive Spare Parts DSS (Vue.js / Web Application)</h3>
+              <h3 class="cv-project-title">Automotive Spare Parts DSS (React, TypeScript, Node.js, Express, Python)</h3>
               <ul class="cv-bullets">
-                <li>Designed and coded a comprehensive forecasting and restocking recommendation prototype for automotive inventory.</li>
-                <li>Implemented statistical forecasting models, developed responsive frontend dashboard views, and built automated alerts to optimize restocking efficiency and reduce stockouts.</li>
+                <li>Collaborated in a team of three to design and build a comprehensive decision support system for spare parts inventory.</li>
+                <li>Developed responsive frontend views using React and TypeScript, and engineered statistical forecasting APIs using Node.js, Express.js, and Python.</li>
               </ul>
             </div>
 
@@ -633,8 +633,8 @@ const customRepoDetails = {
   'Sales-Reports-Analysis-on-Automotive-Spare-Parts-Business-Using-Decision-Support-System': {
     title: 'Automotive Spare Parts DSS',
     subtitle: 'Full-Stack DSS Development',
-    description: 'A group thesis project developed by three Computer Science students at Cavite State University. Built to automate inventory forecasting for automotive spare parts businesses — implementing statistical forecasting models, a responsive Vue.js frontend dashboard, and automated restock alerts to reduce stockouts.',
-    tags: ['Vue.js', 'Frontend Development', 'Algorithms', 'Inventory Forecasting', 'Data Analysis']
+    description: 'A group thesis project developed by three Computer Science students at Cavite State University. Built to automate inventory forecasting for automotive spare parts businesses — implementing statistical forecasting models, a responsive React and TypeScript frontend dashboard, and a backend powered by Node.js, Express.js, and Python.',
+    tags: ['React', 'TypeScript', 'Node.js', 'Express.js', 'Python', 'Algorithms', 'Inventory Forecasting']
   },
   'DailylifeTrackingsystem': {
     title: 'Daily Life Tracking System',
