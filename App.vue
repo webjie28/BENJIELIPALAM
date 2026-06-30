@@ -11,12 +11,63 @@
           <span class="logo-text">B</span><span class="logo-dot">L</span>
         </a>
         
-        <nav class="nav-links">
-          <a href="#origin">Origin</a>
-          <a href="#creations">Projects</a>
-          <a href="#thesis">Thesis</a>
-          <button @click="showCV = true" class="cv-nav-btn">CV</button>
+        <!-- Hamburger Menu Button (Mobile) -->
+        <button 
+          class="hamburger-btn" 
+          @click="toggleMobileMenu" 
+          :class="{ active: mobileMenuOpen }"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <nav class="nav-links" :class="{ 'mobile-open': mobileMenuOpen }">
+          <a href="#origin" @click="closeMobileMenu">Origin</a>
+          <a href="#creations" @click="closeMobileMenu">Projects</a>
+          <a href="#thesis" @click="closeMobileMenu">Thesis</a>
+          <button @click="showCV = true; closeMobileMenu()" class="cv-nav-btn">CV</button>
+          
+          <!-- Mobile-only: CTA and controls inside menu -->
+          <div class="mobile-menu-extras">
+            <a href="#connection" class="nav-cta-btn" @click="closeMobileMenu">Get In Touch</a>
+            <div class="mobile-controls-row">
+              <div class="theme-switcher">
+                <button 
+                  v-for="t in ['orange', 'teal', 'rose']" 
+                  :key="t"
+                  :class="['theme-dot', t, { active: activeTheme === t }]"
+                  @click="changeTheme(t)"
+                  :title="`Switch to ${t} accent theme`"
+                ></button>
+              </div>
+              <button 
+                @click="toggleDarkMode" 
+                class="dark-mode-toggle"
+                :title="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+              >
+                <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="M4.93 4.93l1.41 1.41"></path>
+                  <path d="M17.66 17.66l1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="M6.34 17.66l-1.41 1.41"></path>
+                  <path d="M19.07 4.93l-1.41 1.41"></path>
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
         </nav>
+
+        <!-- Mobile menu backdrop -->
+        <div class="mobile-menu-backdrop" :class="{ active: mobileMenuOpen }" @click="closeMobileMenu"></div>
 
         <div class="nav-right">
           <a href="#connection" class="nav-cta-btn">Get In Touch</a>
@@ -527,6 +578,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { db } from './firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import avatarImg from './avatar.png';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
@@ -541,6 +594,21 @@ const activeStep = ref(1);
 const activeTheme = ref('orange');
 const isDarkMode = ref(false);
 const showCV = ref(false);
+const mobileMenuOpen = ref(false);
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+  if (mobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+};
+
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false;
+  document.body.style.overflow = '';
+};
 
 const printCV = () => {
   window.print();
@@ -741,27 +809,17 @@ const submitContact = async () => {
   sendError.value = false;
 
   try {
-    const response = await fetch('https://formsubmit.co/ajax/lipalambenjie@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        Name: contactForm.value.name,
-        Email: contactForm.value.email,
-        Message: contactForm.value.message,
-        _subject: `New Portfolio Message from ${contactForm.value.name}`
-      })
+    await addDoc(collection(db, 'messages'), {
+      name: contactForm.value.name,
+      email: contactForm.value.email,
+      message: contactForm.value.message,
+      subject: `New Portfolio Message from ${contactForm.value.name}`,
+      createdAt: serverTimestamp()
     });
 
-    if (response.ok) {
-      isSubmitted.value = true;
-      contactForm.value = { name: '', email: '', message: '' };
-      setTimeout(() => { isSubmitted.value = false; }, 5000);
-    } else {
-      throw new Error('Failed to submit form');
-    }
+    isSubmitted.value = true;
+    contactForm.value = { name: '', email: '', message: '' };
+    setTimeout(() => { isSubmitted.value = false; }, 5000);
   } catch (err) {
     console.error('Submission error:', err);
     sendError.value = true;
@@ -2387,5 +2445,815 @@ button.cta-btn {
 .dark-theme .dark-mode-toggle:hover {
   background: #ffffff;
   color: #000000;
+}
+
+/* ============================================
+   🍔 HAMBURGER MENU BUTTON (hidden on desktop)
+   ============================================ */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 201;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+}
+
+.hamburger-btn.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-btn.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger-btn.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile menu backdrop overlay */
+.mobile-menu-backdrop {
+  display: none;
+}
+
+/* Mobile-only extras container (hidden on desktop) */
+.mobile-menu-extras {
+  display: none;
+}
+
+/* Mobile controls row inside mobile menu */
+.mobile-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Error banner */
+.error-banner {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  padding: 1.25rem;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.error-banner h4 {
+  color: #dc2626;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.error-banner p {
+  color: #991b1b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* ============================================
+   📱 TABLET BREAKPOINT (max-width: 768px)
+   ============================================ */
+@media (max-width: 768px) {
+  /* --- Hamburger visible --- */
+  .hamburger-btn {
+    display: flex;
+    order: 3;
+  }
+
+  /* --- Nav links become mobile slide-out --- */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--bg-primary);
+    flex-direction: column;
+    gap: 0;
+    padding: 100px 2rem 2rem 2rem;
+    z-index: 200;
+    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid var(--card-border);
+    overflow-y: auto;
+  }
+
+  .nav-links.mobile-open {
+    right: 0;
+  }
+
+  .nav-links a,
+  .nav-links .cv-nav-btn {
+    font-size: 1.05rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    text-align: left;
+    width: 100%;
+    display: block;
+  }
+
+  .nav-links .cv-nav-btn {
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* Show mobile extras inside the mobile menu */
+  .mobile-menu-extras {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-menu-extras .nav-cta-btn {
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
+
+  /* Mobile menu backdrop */
+  .mobile-menu-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu-backdrop.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Hide desktop nav-right on mobile */
+  .nav-right {
+    display: none;
+  }
+
+  /* Dark theme mobile menu */
+  .dark-theme .nav-links {
+    background: var(--bg-primary);
+    border-left-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .dark-theme .nav-links a,
+  .dark-theme .nav-links .cv-nav-btn {
+    border-bottom-color: rgba(255, 255, 255, 0.04);
+  }
+
+  .dark-theme .mobile-menu-extras {
+    border-top-color: rgba(255, 255, 255, 0.06);
+  }
+
+  /* --- Navbar height adjust --- */
+  .navbar {
+    height: 64px;
+  }
+
+  html {
+    scroll-padding-top: 80px;
+  }
+
+  /* --- Hero section --- */
+  .hero-section {
+    padding-top: 80px;
+    min-height: auto;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .hero-left {
+    align-items: center;
+    text-align: center;
+    order: 2;
+  }
+
+  .hero-right {
+    order: 1;
+  }
+
+  .hero-title {
+    font-size: 2.8rem;
+    justify-content: center;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    max-width: 100%;
+  }
+
+  .hero-image-frame {
+    width: 240px;
+    height: 240px;
+    border-radius: 24px;
+  }
+
+  .hero-ctas {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* --- Chapter sections --- */
+  .chapter-section {
+    margin-bottom: 5rem;
+  }
+
+  .glass-card {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .chapter-header {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .chapter-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* --- Origin section --- */
+  .story-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .lead-text {
+    font-size: 1.1rem;
+  }
+
+  /* --- Skills --- */
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* --- Projects --- */
+  .project-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .project-card {
+    padding: 2rem;
+    border-radius: 20px;
+  }
+
+  /* --- Scrollytelling --- */
+  .scrollytelling-wrapper {
+    padding: 2rem 1.5rem !important;
+  }
+
+  .scrollytelling-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .scrolly-visual {
+    position: relative;
+    top: 0;
+    height: 260px;
+    margin-bottom: 1rem;
+  }
+
+  .browser-body {
+    height: 180px;
+  }
+
+  .scrolly-text-column {
+    gap: 4rem;
+    padding: 1rem 0;
+  }
+
+  .scrolly-step h3 {
+    font-size: 1.25rem;
+  }
+
+  /* --- Contact --- */
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-wrapper {
+    max-width: 100%;
+  }
+
+  /* Touch targets for form inputs */
+  .form-input {
+    padding: 0.85rem 1rem;
+    font-size: 16px; /* Prevents iOS auto-zoom */
+  }
+
+  .submit-btn {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .social-btn.large {
+    min-height: 48px;
+  }
+
+  /* --- CV Modal --- */
+  .cv-modal-backdrop {
+    padding: 0;
+  }
+
+  .cv-modal-card {
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .cv-modal-header {
+    padding: 0.85rem 1rem;
+  }
+
+  .cv-modal-header h3 {
+    font-size: 1rem;
+  }
+
+  .cv-action-btn {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .cv-action-btn span {
+    display: none;
+  }
+
+  .cv-document-wrapper {
+    padding: 1rem 1.25rem;
+  }
+
+  .cv-name {
+    font-size: 1.4rem;
+  }
+
+  .cv-contact-info {
+    font-size: 0.78rem;
+    gap: 0.2rem 0.8rem;
+  }
+
+  .cv-contact-item {
+    white-space: normal;
+  }
+
+  /* --- Footer --- */
+  .portfolio-footer-nav {
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  /* --- Background glows size down --- */
+  .bg-glow-1 {
+    width: 350px;
+    height: 350px;
+  }
+
+  .bg-glow-2 {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+/* ============================================
+   📱 SMALL MOBILE BREAKPOINT (max-width: 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  /* --- Container padding --- */
+  .portfolio-container {
+    padding: 0 1rem;
+  }
+
+  /* --- Navbar --- */
+  .navbar {
+    height: 56px;
+  }
+
+  .nav-content {
+    padding: 0 1rem;
+  }
+
+  .nav-logo {
+    font-size: 1.35rem;
+  }
+
+  html {
+    scroll-padding-top: 70px;
+  }
+
+  /* --- Hero --- */
+  .hero-section {
+    padding-top: 70px;
+    padding-bottom: 2rem;
+  }
+
+  .hero-content {
+    gap: 2rem;
+  }
+
+  .hero-badge {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Fix typewriter for small screens */
+  .typewriter-text {
+    font-size: inherit;
+    white-space: nowrap;
+  }
+
+  .hero-desc {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    line-height: 1.65;
+  }
+
+  .hero-image-frame {
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    border-width: 3px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .cta-btn {
+    text-align: center;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.9rem;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* --- Sections --- */
+  .chapter-section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 70px;
+  }
+
+  .glass-card {
+    padding: 1.5rem 1.15rem;
+    border-radius: 16px;
+  }
+
+  .chapter-header {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .chapter-subtitle {
+    font-size: 0.88rem;
+    margin-bottom: 2rem;
+    line-height: 1.55;
+  }
+
+  /* --- Origin section --- */
+  .story-text p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .lead-text {
+    font-size: 1.05rem;
+  }
+
+  .journey-timeline {
+    padding-left: 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .step-marker {
+    left: calc(-1.25rem - 5px);
+    width: 8px;
+    height: 8px;
+  }
+
+  .step-content h5 {
+    font-size: 0.92rem;
+  }
+
+  .step-content p {
+    font-size: 0.82rem;
+  }
+
+  /* --- Skills --- */
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .skill-category h4 {
+    font-size: 1.05rem;
+  }
+
+  .skill-category p {
+    font-size: 0.88rem;
+  }
+
+  /* --- Projects --- */
+  .project-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .project-badge {
+    font-size: 0.68rem;
+  }
+
+  .project-title {
+    font-size: 1.2rem;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .view-btn {
+    font-size: 0.85rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* --- Scrollytelling --- */
+  .scrollytelling-wrapper {
+    padding: 1.5rem 1.15rem !important;
+  }
+
+  .scrolly-visual {
+    height: 220px;
+    margin-bottom: 0.75rem;
+  }
+
+  .browser-mockup {
+    border-radius: 12px;
+  }
+
+  .browser-header {
+    padding: 0.5rem 0.85rem;
+    gap: 0.35rem;
+  }
+
+  .browser-header .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .browser-url {
+    font-size: 0.6rem;
+    margin-left: 0.75rem;
+    padding: 0.2rem 0.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .browser-body {
+    height: 160px;
+  }
+
+  .scrolly-text-column {
+    gap: 3rem;
+    padding: 0.5rem 0;
+  }
+
+  .step-num-badge {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.65rem;
+  }
+
+  .scrolly-step h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .scrolly-step p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  /* --- Contact --- */
+  .contact-details h3 {
+    font-size: 1.2rem;
+  }
+
+  .contact-details p {
+    font-size: 0.9rem;
+  }
+
+  .detail-item {
+    font-size: 0.85rem;
+    gap: 0.6rem;
+  }
+
+  .detail-link {
+    word-break: break-all;
+  }
+
+  .form-group label {
+    font-size: 0.82rem;
+  }
+
+  .form-input {
+    padding: 0.8rem 0.9rem;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  .submit-btn {
+    padding: 0.85rem;
+    border-radius: 10px;
+    min-height: 48px;
+    font-size: 0.92rem;
+  }
+
+  .social-btn.large {
+    padding: 0.85rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    min-height: 48px;
+  }
+
+  .success-banner,
+  .error-banner {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .success-banner h4,
+  .error-banner h4 {
+    font-size: 0.95rem;
+  }
+
+  .success-banner p,
+  .error-banner p {
+    font-size: 0.82rem;
+  }
+
+  /* --- CV Modal --- */
+  .cv-modal-card {
+    border-radius: 0;
+  }
+
+  .cv-modal-header {
+    padding: 0.75rem 0.85rem;
+  }
+
+  .cv-modal-header h3 {
+    font-size: 0.9rem;
+  }
+
+  .cv-header-actions {
+    gap: 0.5rem;
+  }
+
+  .cv-action-btn {
+    padding: 0.4rem 0.55rem;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .cv-document-wrapper {
+    padding: 0.75rem 0.85rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .cv-name {
+    font-size: 1.2rem;
+  }
+
+  .cv-section-heading {
+    font-size: 0.95rem;
+  }
+
+  .cv-contact-info {
+    font-size: 0.72rem;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .cv-edu-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.78rem;
+  }
+
+  .cv-edu-date {
+    width: auto;
+  }
+
+  .cv-profile-summary {
+    font-size: 0.78rem;
+  }
+
+  .cv-project-title {
+    font-size: 0.78rem;
+  }
+
+  .cv-bullets {
+    font-size: 0.72rem;
+    padding-left: 1rem;
+  }
+
+  .cv-skills-content {
+    font-size: 0.78rem;
+  }
+
+  /* --- Footer --- */
+  .portfolio-footer-nav {
+    font-size: 0.72rem;
+    padding-bottom: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  /* --- Background glows --- */
+  .bg-glow-1 {
+    width: 250px;
+    height: 250px;
+  }
+
+  .bg-glow-2 {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* ============================================
+   📱 EXTRA SMALL (max-width: 360px)
+   ============================================ */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
+  .hero-desc {
+    font-size: 0.85rem;
+  }
+
+  .chapter-header {
+    font-size: 1.35rem;
+  }
+
+  .glass-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+  }
 }
 </style>
