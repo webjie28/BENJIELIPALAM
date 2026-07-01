@@ -27,7 +27,7 @@
           <a href="#origin" @click="closeMobileMenu">Origin</a>
           <a href="#creations" @click="closeMobileMenu">Projects</a>
           <a href="#thesis" @click="closeMobileMenu">Thesis</a>
-          <a href="#routines" @click="closeMobileMenu">Routines</a>
+          <a v-if="isAdmin" href="#routines" @click="closeMobileMenu">Routines</a>
           <button @click="showCV = true; closeMobileMenu()" class="cv-nav-btn">CV</button>
           
           <!-- Mobile-only: CTA and controls inside menu -->
@@ -61,6 +61,22 @@
                 </svg>
                 <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </svg>
+              </button>
+
+              <!-- Mobile Auth Control -->
+              <button 
+                @click="currentUser ? handleLogout() : showAuthModal = true" 
+                class="auth-toggle-btn"
+                :title="currentUser ? 'Logout' : 'Admin Login'"
+              >
+                <svg v-if="currentUser" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
               </button>
             </div>
@@ -104,6 +120,22 @@
               </svg>
               <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+              </svg>
+            </button>
+
+            <!-- Desktop Auth Control -->
+            <button 
+              @click="currentUser ? handleLogout() : showAuthModal = true" 
+              class="auth-toggle-btn"
+              :title="currentUser ? 'Logout' : 'Admin Login'"
+            >
+              <svg v-if="currentUser" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
             </button>
           </div>
@@ -345,7 +377,7 @@
         </section>
 
         <!-- SECTION: WEEKLY ROUTINES -->
-        <section id="routines" class="chapter-section scroll-section reveal-on-scroll">
+        <section v-if="isAdmin" id="routines" class="chapter-section scroll-section reveal-on-scroll">
           <div class="glass-card">
             <h2 class="chapter-header">Weekly Routines</h2>
             <p class="chapter-subtitle">My current V-Taper workout split and active recovery tracking.</p>
@@ -785,12 +817,69 @@
       </div>
     </div>
   </Transition>
+
+  <!-- Admin Sign In Modal -->
+  <Transition name="fade">
+    <div v-if="showAuthModal" class="cv-modal-backdrop" @click.self="showAuthModal = false">
+      <div class="cv-modal-card animate-in auth-modal-card" style="max-width: 420px; height: auto; max-height: 90vh;">
+        <div class="cv-modal-header no-print">
+          <h3>Admin Authentication</h3>
+          <div class="cv-header-actions">
+            <button @click="showAuthModal = false" class="cv-action-btn close-btn" title="Close">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-card" style="border-radius: 0 0 20px 20px; padding: 2rem;">
+          <form @submit.prevent="handleLogin" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div v-if="authError" class="error-banner" style="margin-bottom: 0;">
+              <h4>Error</h4>
+              <p>{{ authError }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="auth-email">Email Address</label>
+              <input 
+                type="email" 
+                id="auth-email" 
+                v-model="authEmail" 
+                required 
+                placeholder="lipalambenjie@gmail.com"
+                class="form-input"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="auth-password">Password</label>
+              <input 
+                type="password" 
+                id="auth-password" 
+                v-model="authPassword" 
+                required 
+                placeholder="••••••••"
+                class="form-input"
+              />
+            </div>
+
+            <button type="submit" class="submit-btn" :disabled="isLoggingIn" style="margin-top: 0.5rem; width: 100%;">
+              <span>{{ isLoggingIn ? 'Signing In...' : 'Verify Admin Access' }}</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { db } from './firebase';
+import { db, auth } from './firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import avatarImg from './avatar.png';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
@@ -806,6 +895,48 @@ const activeTheme = ref('orange');
 const isDarkMode = ref(false);
 const showCV = ref(false);
 const mobileMenuOpen = ref(false);
+
+// Authentication State
+const currentUser = ref(null);
+const isAdmin = ref(false);
+const showAuthModal = ref(false);
+const authEmail = ref('');
+const authPassword = ref('');
+const authError = ref('');
+const isLoggingIn = ref(false);
+
+// Listen to Auth State
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    currentUser.value = user;
+    isAdmin.value = user && user.email === 'lipalambenjie@gmail.com';
+  });
+});
+
+const handleLogin = async () => {
+  if (!authEmail.value || !authPassword.value) return;
+  isLoggingIn.value = true;
+  authError.value = '';
+  try {
+    await signInWithEmailAndPassword(auth, authEmail.value, authPassword.value);
+    showAuthModal.value = false;
+    authEmail.value = '';
+    authPassword.value = '';
+  } catch (err) {
+    console.error(err);
+    authError.value = 'Failed to sign in. Please check your credentials.';
+  } finally {
+    isLoggingIn.value = false;
+  }
+};
+
+const handleLogout = async () => {
+  try {
+    await signOut(auth);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value;
@@ -2809,6 +2940,39 @@ button.cta-btn {
   background: #ffffff;
   color: #000000;
 }
+
+.auth-toggle-btn {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.auth-toggle-btn:hover {
+  background: var(--accent-purple);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+.dark-theme .auth-toggle-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .auth-toggle-btn:hover {
+  background: var(--accent-purple);
+  color: #ffffff;
+}
+
 
 /* ============================================
    🏋️ WEEKLY ROUTINES STYLE
