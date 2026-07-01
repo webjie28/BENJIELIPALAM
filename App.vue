@@ -270,7 +270,7 @@
                     <span class="dot red"></span>
                     <span class="dot yellow"></span>
                     <span class="dot green"></span>
-                    <span class="browser-url">automotive-spare-parts-dss.vercel.app</span>
+                    <span class="browser-url">automotive-spare-parts-dss-thesis.vercel.app</span>
                   </div>
                   <div class="browser-body">
                     <div class="screenshot-container">
@@ -921,7 +921,7 @@ const customRepoDetails = {
     subtitle: 'Full-Stack DSS Development',
     description: 'A group thesis project developed by three Computer Science students at Cavite State University. Built to automate inventory forecasting for automotive spare parts businesses — implementing statistical forecasting models, a responsive React and TypeScript frontend dashboard, and a backend powered by Node.js, Express.js, and Python.',
     tags: ['React', 'TypeScript', 'Node.js', 'Express.js', 'Python', 'Algorithms', 'Inventory Forecasting'],
-    liveLink: 'https://automotive-spare-parts-dss.vercel.app'
+    liveLink: 'https://automotive-spare-parts-dss-thesis.vercel.app'
   },
   'DailylifeTrackingsystem': {
     title: 'Daily Life Tracking System',
