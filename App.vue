@@ -242,8 +242,8 @@
                   <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
                 </div>
                 <div class="project-footer">
-                  <a :href="project.html_url" target="_blank" class="view-btn">
-                    <span>Explore Repository</span>
+                  <a :href="project.displayLink" target="_blank" class="view-btn">
+                    <span>Visit Live App</span>
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                       <polyline points="15 3 21 3 21 9"></polyline>
@@ -920,7 +920,8 @@ const customRepoDetails = {
     title: 'Automotive Spare Parts DSS',
     subtitle: 'Full-Stack DSS Development',
     description: 'A group thesis project developed by three Computer Science students at Cavite State University. Built to automate inventory forecasting for automotive spare parts businesses — implementing statistical forecasting models, a responsive React and TypeScript frontend dashboard, and a backend powered by Node.js, Express.js, and Python.',
-    tags: ['React', 'TypeScript', 'Node.js', 'Express.js', 'Python', 'Algorithms', 'Inventory Forecasting']
+    tags: ['React', 'TypeScript', 'Node.js', 'Express.js', 'Python', 'Algorithms', 'Inventory Forecasting'],
+    liveLink: 'https://automotive-spare-parts-dss.vercel.app'
   },
   'DailylifeTrackingsystem': {
     title: 'Daily Life Tracking System',
@@ -932,7 +933,8 @@ const customRepoDetails = {
     title: 'MNLLUMIERE E-Commerce',
     subtitle: 'Web Application & E-Commerce',
     description: 'A responsive and modern e-commerce web application focused on providing a seamless digital shopping experience. Built with a robust JavaScript ecosystem and optimized for both performance and visual aesthetics across mobile and desktop devices.',
-    tags: ['JavaScript', 'Web Development', 'Responsive UI', 'E-Commerce']
+    tags: ['JavaScript', 'Web Development', 'Responsive UI', 'E-Commerce'],
+    liveLink: 'https://mnllumiere.vercel.app'
   }
 };
 
@@ -991,7 +993,8 @@ onMounted(async () => {
         customTitle: customData.title || proj.name,
         customSubtitle: customData.subtitle || 'Personal Project',
         customDescription: customData.description || proj.description || 'No description available.',
-        tags: customData.tags || ['GitHub Repo']
+        tags: customData.tags || ['GitHub Repo'],
+        displayLink: customData.liveLink || proj.homepage || proj.html_url
       };
     });
 
