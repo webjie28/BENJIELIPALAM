@@ -709,6 +709,12 @@ const customRepoDetails = {
     subtitle: 'Web App Development & Analytics',
     description: 'An interactive productivity system programmed to track habits and daily schedules. Features custom data-visualization charts, local state managers, and a clean responsive UI to help users analyze personal time-allocation trends.',
     tags: ['Vue.js', 'Web App Development', 'State Management', 'UI/UX Design', 'Data Visualization']
+  },
+  'MNLLUMIERE': {
+    title: 'MNLLUMIERE E-Commerce',
+    subtitle: 'Web Application & E-Commerce',
+    description: 'A responsive and modern e-commerce web application focused on providing a seamless digital shopping experience. Built with a robust JavaScript ecosystem and optimized for both performance and visual aesthetics across mobile and desktop devices.',
+    tags: ['JavaScript', 'Web Development', 'Responsive UI', 'E-Commerce']
   }
 };
 
@@ -750,7 +756,8 @@ onMounted(async () => {
   try {
     const repoNames = [
       'Sales-Reports-Analysis-on-Automotive-Spare-Parts-Business-Using-Decision-Support-System',
-      'DailylifeTrackingsystem'
+      'DailylifeTrackingsystem',
+      'MNLLUMIERE'
     ];
 
     const promises = repoNames.map(name => 

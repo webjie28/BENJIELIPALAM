@@ -1,0 +1,21 @@
+[debug] [2026-06-29T20:11:30.791Z] ----------------------------------------------------------------------
+[debug] [2026-06-29T20:11:30.797Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\lamka\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js projects:list
+[debug] [2026-06-29T20:11:30.797Z] CLI Version:   15.22.3
+[debug] [2026-06-29T20:11:30.798Z] Platform:      win32
+[debug] [2026-06-29T20:11:30.798Z] Node Version:  v20.20.0
+[debug] [2026-06-29T20:11:30.798Z] Detected Agent: unknown
+[debug] [2026-06-29T20:11:30.799Z] Time:          Tue Jun 30 2026 04:11:30 GMT+0800 (Singapore Standard Time)
+[debug] [2026-06-29T20:11:30.799Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-29T20:11:30.812Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-29T20:11:30.813Z] > authorizing via signed-in user (lipalambenjie@gmail.com)
+[debug] [2026-06-29T20:11:30.819Z] Checked if tokens are valid: true, expires at: 1782767261650
+[debug] [2026-06-29T20:11:30.820Z] Checked if tokens are valid: true, expires at: 1782767261650
+[debug] [2026-06-29T20:11:30.821Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-06-29T20:11:30.902Z] *** [apiv2] error from fetch(https://firebase.googleapis.com/v1beta1/projects?pageSize=1000, {"headers":{},"method":"GET","signal":{"reason":""}}): FetchError: request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000 failed, reason: getaddrinfo ENOENT firebase.googleapis.com
+[debug] [2026-06-29T20:11:30.903Z] Failed to make request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000
+[debug] [2026-06-29T20:11:30.918Z] FirebaseError: Failed to make request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000
+    at RetryOperation._fn (C:\Users\lamka\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:316:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to list Firebase projects. See firebase-debug.log for more info.
