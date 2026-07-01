@@ -27,6 +27,7 @@
           <a href="#origin" @click="closeMobileMenu">Origin</a>
           <a href="#creations" @click="closeMobileMenu">Projects</a>
           <a href="#thesis" @click="closeMobileMenu">Thesis</a>
+          <a href="#routines" @click="closeMobileMenu">Routines</a>
           <button @click="showCV = true; closeMobileMenu()" class="cv-nav-btn">CV</button>
           
           <!-- Mobile-only: CTA and controls inside menu -->
@@ -338,6 +339,236 @@
                     Allows administrators to adjust DSS parameters, update business metadata, and configure user credentials. This ensures the system remains flexible and scalable as business operations grow.
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: WEEKLY ROUTINES -->
+        <section id="routines" class="chapter-section scroll-section reveal-on-scroll">
+          <div class="glass-card">
+            <h2 class="chapter-header">Weekly Routines</h2>
+            <p class="chapter-subtitle">My current V-Taper workout split and active recovery tracking.</p>
+            
+            <div class="routine-grid">
+              <!-- MONDAY -->
+              <div class="routine-day glass-card sub-card">
+                <div class="day-header">
+                  <span class="day-badge">Monday</span>
+                  <h4>Push (Chest Focus)</h4>
+                </div>
+                <ul class="exercise-list">
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Incline DB Press <span class="sets-reps">– 4x6-8</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Flat DB Press <span class="sets-reps">– 3x10</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Shoulder Press <span class="sets-reps">– 3x6-8</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Lateral Raise <span class="sets-reps">– 5x15</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Cable / Rope Pushdown <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Overhead Tricep Extension <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Incline Walk <span class="sets-reps">– 20 mins</span></span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- TUESDAY -->
+              <div class="routine-day glass-card sub-card">
+                <div class="day-header">
+                  <span class="day-badge">Tuesday</span>
+                  <h4>Pull (Back Width Focus)</h4>
+                </div>
+                <ul class="exercise-list">
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Lat Pulldown (wide grip) <span class="sets-reps">– 4×10</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Assisted Pullups / Pullups <span class="sets-reps">– 3 sets</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Chest Supported Row <span class="sets-reps">– 3×10</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Seated Cable Row <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Straight Arm Pulldown <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Face Pull <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Rear Delt Fly <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Barbell Curl <span class="sets-reps">– 3×10</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Incline Walk <span class="sets-reps">– 15 mins</span></span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- WEDNESDAY -->
+              <div class="routine-day glass-card sub-card">
+                <div class="day-header">
+                  <span class="day-badge">Wednesday</span>
+                  <h4>Legs + Core</h4>
+                </div>
+                <ul class="exercise-list">
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Squat / Leg Press <span class="sets-reps">– 4×6-8m</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Romanian Deadlift <span class="sets-reps">– 3×10</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Walking Lunges <span class="sets-reps">– 3×12 each</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Leg Extension <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Plank <span class="sets-reps">– 3×1 min</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Leg Raises <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Russian Twist <span class="sets-reps">– 3×20</span></span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- THURSDAY -->
+              <div class="routine-day glass-card sub-card">
+                <div class="day-header">
+                  <span class="day-badge">Thursday</span>
+                  <h4>Active Recovery</h4>
+                </div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">10k steps</span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Stretching</span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Dead hang <span class="sets-reps">– 3× max</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">15 min HIIT <span class="sets-reps">– bike/jog intervals</span></span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- FRIDAY -->
+              <div class="routine-day glass-card sub-card">
+                <div class="day-header">
+                  <span class="day-badge">Friday</span>
+                  <h4>Upper (Shape Day)</h4>
+                </div>
+                <ul class="exercise-list">
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Incline DB Press <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Single Arm Lat Pulldown <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Chest Supported Row <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Lateral Raise <span class="sets-reps">– 5x15</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Leaning Lateral Raise <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Rear Delt Fly <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">Dips <span class="sets-reps">– 3× failure</span></span>
+                  </li>
+                  <li class="exercise-item done">
+                    <span class="checkbox">✓</span>
+                    <span class="exercise-name">DB Curl <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">20 min incline walk</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- SATURDAY -->
+              <div class="routine-day glass-card sub-card">
+                <div class="day-header">
+                  <span class="day-badge">Saturday</span>
+                  <h4>Lower + Fat Burn</h4>
+                </div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Goblet Squat <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">RDL <span class="sets-reps">– 3×12</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Leg Press <span class="sets-reps">– 3×15</span></span>
+                  </li>
+                  <li class="exercise-item">
+                    <span class="checkbox">○</span>
+                    <span class="exercise-name">Kettlebell Swings</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -2578,6 +2809,117 @@ button.cta-btn {
   background: #ffffff;
   color: #000000;
 }
+
+/* ============================================
+   🏋️ WEEKLY ROUTINES STYLE
+   ============================================ */
+.routine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+  margin-top: 2rem;
+}
+
+.routine-day.sub-card {
+  padding: 1.75rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dark-theme .routine-day.sub-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.day-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 0.75rem;
+}
+
+.dark-theme .day-header {
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.day-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.day-header h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.exercise-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+}
+
+.exercise-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.exercise-item.done {
+  color: var(--text-primary);
+}
+
+.checkbox {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #a8a29e;
+  user-select: none;
+  flex-shrink: 0;
+  line-height: 1;
+  display: inline-block;
+  margin-top: 1px;
+}
+
+.exercise-item.done .checkbox {
+  color: var(--accent-purple);
+  text-shadow: 0 0 8px var(--accent-glow);
+}
+
+.exercise-name {
+  font-weight: 500;
+}
+
+.exercise-item.done .exercise-name {
+  font-weight: 600;
+}
+
+.sets-reps {
+  font-size: 0.82rem;
+  color: #78716c;
+  font-weight: 400;
+}
+
+.dark-theme .sets-reps {
+  color: #a8a29e;
+}
+
 
 /* ============================================
    🍔 HAMBURGER MENU BUTTON (hidden on desktop)
