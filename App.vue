@@ -35,7 +35,7 @@
             <div class="mobile-controls-row">
               <div class="theme-switcher">
                 <button 
-                  v-for="t in ['orange', 'teal', 'rose']" 
+                  v-for="t in ['orange', 'teal', 'blue']" 
                   :key="t"
                   :class="['theme-dot', t, { active: activeTheme === t }]"
                   @click="changeTheme(t)"
@@ -76,7 +76,7 @@
             <!-- Theme Switcher -->
             <div class="theme-switcher">
               <button 
-                v-for="t in ['orange', 'teal', 'rose']" 
+                v-for="t in ['orange', 'teal', 'blue']" 
                 :key="t"
                 :class="['theme-dot', t, { active: activeTheme === t }]"
                 @click="changeTheme(t)"
@@ -679,12 +679,12 @@ const changeTheme = (themeName) => {
       badge: 'rgba(13, 148, 136, 0.06)',
       badgeText: '#0f766e'
     },
-    rose: {
-      primary: '#db2777', // Rose Pink
-      secondary: '#7c3aed', // Violet
-      glow: 'rgba(219, 39, 119, 0.08)',
-      badge: 'rgba(219, 39, 119, 0.06)',
-      badgeText: '#be185d'
+    blue: {
+      primary: '#2563eb', // Blue
+      secondary: '#6366f1', // Indigo
+      glow: 'rgba(37, 99, 235, 0.10)',
+      badge: 'rgba(37, 99, 235, 0.08)',
+      badgeText: '#1d4ed8'
     }
   };
   const theme = roots[themeName];
@@ -1023,7 +1023,7 @@ body {
 
 .theme-dot.orange { background-color: #ea580c; }
 .theme-dot.teal { background-color: #0d9488; }
-.theme-dot.rose { background-color: #db2777; }
+.theme-dot.blue { background-color: #2563eb; }
 
 .theme-dot:hover {
   transform: scale(1.2);
@@ -2400,19 +2400,219 @@ button.cta-btn {
   --bg-primary: #0a0908;
   --bg-secondary: #12100e;
   --text-primary: #f5f5f4;
-  --text-secondary: #a8a29e;
+  --text-secondary: #b8b4af;
   --card-bg: rgba(20, 18, 16, 0.65);
-  --card-border: rgba(255, 255, 255, 0.05);
-  --shadow-color: rgba(0, 0, 0, 0.4);
+  --card-border: rgba(255, 255, 255, 0.07);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --badge-bg: rgba(var(--accent-rgb, 234, 88, 12), 0.12);
 }
 
+/* Navbar */
 .dark-theme .navbar {
-  background: rgba(10, 9, 8, 0.75);
+  background: rgba(10, 9, 8, 0.8);
+  border-bottom-color: rgba(255, 255, 255, 0.04);
 }
 
+/* Hero secondary button */
+.dark-theme .secondary-btn {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.dark-theme .secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent-purple);
+}
+
+/* Nav CTA button */
+.dark-theme .nav-cta-btn {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+/* Project cards */
+.dark-theme .project-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .project-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 25px var(--accent-glow);
+}
+
+/* Project badges */
+.dark-theme .project-badge {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-purple);
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Tags */
+.dark-theme .tag {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+}
+
+/* View button */
+.dark-theme .view-btn {
+  color: var(--text-primary);
+}
+
+.dark-theme .view-btn:hover {
+  color: var(--accent-purple);
+}
+
+/* Browser Mockup */
+.dark-theme .browser-mockup {
+  background: #1a1918;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .browser-header {
+  background: #1e1d1b;
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .browser-url {
+  background: rgba(255, 255, 255, 0.05);
+  color: #a8a29e;
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.dark-theme .browser-body {
+  background: #141312;
+}
+
+/* Scrolly step badges */
+.dark-theme .step-num-badge {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-purple);
+}
+
+/* Journey Timeline */
+.dark-theme .journey-timeline {
+  border-left-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .step-marker {
+  border-color: var(--bg-primary);
+}
+
+/* Lead text gradient */
+.dark-theme .lead-text {
+  background: linear-gradient(90deg, var(--text-primary), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Typewriter text gradient */
+.dark-theme .typewriter-text {
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-purple) 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Form inputs */
 .dark-theme .form-input {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.dark-theme .form-input:focus {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--accent-purple);
+}
+
+.dark-theme .form-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Contact details */
+.dark-theme .detail-link {
+  color: var(--text-primary);
+}
+
+.dark-theme .detail-link:hover {
+  color: var(--accent-purple);
+}
+
+/* Social / GitHub button */
+.dark-theme .social-btn.large {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.dark-theme .social-btn.large:hover {
+  background: var(--accent-purple);
+  color: #ffffff;
+}
+
+/* Theme Switcher pill */
+.dark-theme .theme-switcher {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .theme-dot.active {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Hero badge */
+.dark-theme .hero-badge {
+  color: var(--accent-purple);
+}
+
+/* Hero image frame */
+.dark-theme .hero-image-frame {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Skills section */
+.dark-theme .skill-icon-title {
+  color: var(--accent-purple);
+}
+
+/* Glass card overlay */
+.dark-theme .glass-card {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Footer */
+.dark-theme .portfolio-footer-nav {
+  border-top-color: rgba(255, 255, 255, 0.04);
+  color: #6b6966;
+}
+
+/* Success / Error banners in dark mode */
+.dark-theme .success-banner {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.dark-theme .success-banner h4 {
+  color: #34d399;
+}
+
+.dark-theme .success-banner p {
+  color: #6ee7b7;
+}
+
+.dark-theme .error-banner {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.dark-theme .error-banner h4 {
+  color: #f87171;
+}
+
+.dark-theme .error-banner p {
+  color: #fca5a5;
 }
 
 /* Dark/Light Mode Toggle Button styling */
