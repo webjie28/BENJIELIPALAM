@@ -483,38 +483,20 @@
         <div class="cv-document-wrapper" id="printable-cv">
           <!-- Header -->
           <div class="cv-doc-header">
-            <h1 class="cv-name">Benjie Lipalam</h1>
-            <div class="cv-contact-info">
-              <div class="cv-contact-item"><strong>Address</strong> Rosario, Cavite</div>
-              <div class="cv-contact-item"><strong>Phone</strong> +639954853868</div>
-              <div class="cv-contact-item"><strong>Github</strong> <a href="https://github.com/webjie28" target="_blank" class="cv-link">BNJ28 (Benjie) - GitHub</a></div>
-              <div class="cv-contact-item"><strong>E-mail</strong> <a href="mailto:Lipalambenjie@gmail.com" class="cv-link">Lipalambenjie@gmail.com</a></div>
+            <h1 class="cv-name">BENJIE LIPALAM</h1>
+            <div class="cv-contact-line">
+              Rosario, Cavite &nbsp;|&nbsp; +63 995 485 3868 &nbsp;|&nbsp; <a href="mailto:Lipalambenjie@gmail.com" class="cv-link">Lipalambenjie@gmail.com</a> &nbsp;&nbsp;<a href="https://benjielipalam.vercel.app/" target="_blank" class="cv-link">https://benjielipalam.vercel.app/</a>
             </div>
-          </div>
-
-          <!-- Profile / Objective -->
-          <div class="cv-profile-summary">
-            Specializing in responsive web applications. Expert in building modern user interfaces using Vue.js, JavaScript, HTML5, CSS3, and Vite. Experienced in database systems and object-oriented programming (C++ / Java).
           </div>
 
           <!-- Education -->
           <div class="cv-section">
             <h2 class="cv-section-heading">Education</h2>
-            <div class="cv-section-line"></div>
             
             <div class="cv-edu-item">
-              <div class="cv-edu-date">2022 - 2026</div>
               <div class="cv-edu-details">
-                <span class="cv-school-name">Cavite State University CCAT-Campus</span>
+                <span class="cv-school-name"><a href="https://cvsu.edu.ph/" target="_blank" class="cv-link-accent">Cavite State University – CCAT Campus</a> &nbsp;|&nbsp; <em>2022 – 2026</em></span>
                 <span class="cv-degree-name">Bachelor of Science in Computer Science</span>
-              </div>
-            </div>
-            
-            <div class="cv-edu-item">
-              <div class="cv-edu-date">2021 - 2022</div>
-              <div class="cv-edu-details">
-                <span class="cv-school-name">Noveleta Senior High School</span>
-                <span class="cv-degree-name">TVL - Information and Communications Technology (ICT) Strand</span>
               </div>
             </div>
           </div>
@@ -522,10 +504,9 @@
           <!-- Projects -->
           <div class="cv-section">
             <h2 class="cv-section-heading">Projects</h2>
-            <div class="cv-section-line"></div>
             
             <div class="cv-project-item">
-              <h3 class="cv-project-title">Automotive Spare Parts DSS (React, TypeScript, Node.js, Express, Python)</h3>
+              <h3 class="cv-project-title">Automotive Spare Parts Decision Support System (Thesis) &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, TypeScript, Node.js, Express, Python</em></span></h3>
               <ul class="cv-bullets">
                 <li>Collaborated in a team of three to design and build a comprehensive decision support system for spare parts inventory.</li>
                 <li>Developed responsive frontend views using React and TypeScript, and engineered statistical forecasting APIs using Node.js, Express.js, and Python.</li>
@@ -533,7 +514,17 @@
             </div>
 
             <div class="cv-project-item">
-              <h3 class="cv-project-title">Daily Life Tracking System (Vue.js / Web Application)</h3>
+              <h3 class="cv-project-title">MNL Lumiere — Streetwear Brand Web Application &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, Vite, Firebase</em></span></h3>
+              <ul class="cv-bullets">
+                <li>Built a modern e-commerce-style brand website for a streetwear label using React 19 and Vite for a fast, component-driven frontend.</li>
+                <li>Integrated Firebase for backend services, enabling scalable data handling and app hosting.</li>
+                <li>Designed a custom typography and visual identity system with Google Fonts (Fraunces, Inter, JetBrains Mono) for on-brand, responsive UI.</li>
+                <li>Set up Oxlint with React-specific rules to enforce code quality and consistency across the codebase.</li>
+              </ul>
+            </div>
+
+            <div class="cv-project-item">
+              <h3 class="cv-project-title">Daily Life Tracking System &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Vue.js</em></span></h3>
               <ul class="cv-bullets">
                 <li>Programmed a productivity platform to log and track personal routines.</li>
                 <li>Built reactive visualization widgets and responsive charts to help users review habit completion logs and analyze daily schedules.</li>
@@ -541,20 +532,10 @@
             </div>
 
             <div class="cv-project-item">
-              <h3 class="cv-project-title">Personalized Banking System (Java)</h3>
+              <h3 class="cv-project-title">Personalized Banking System &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Java</em></span></h3>
               <ul class="cv-bullets">
                 <li>Developed a personal account system that allows users to deposit and withdraw funds, maintaining unique balances per account.</li>
                 <li>Implemented account creation and simple authentication logic.</li>
-              </ul>
-            </div>
-
-            <div class="cv-project-item">
-              <h3 class="cv-project-title">Pesoplay Gaming Platform (Pure C++)</h3>
-              <ul class="cv-bullets">
-                <li>Engineered in-game currency system for skin purchases and account top-ups.</li>
-                <li>Implemented secure wallet management using encapsulation and class inheritance.</li>
-                <li>Developed file-based data persistence for player inventories and balances.</li>
-                <li>Designed console interface with menu-driven navigation system.</li>
               </ul>
             </div>
           </div>
@@ -562,12 +543,11 @@
           <!-- Skills -->
           <div class="cv-section">
             <h2 class="cv-section-heading">Skills</h2>
-            <div class="cv-section-line"></div>
             
             <div class="cv-skills-content">
-              <p><strong>Programming Languages:</strong> JavaScript (ES6+), HTML5, CSS3, Java, C++</p>
-              <p><strong>Frameworks/Libraries:</strong> Vue.js (Vue 3), Vite, EmailJS, Tailwind CSS, Standard Java/C++ libraries</p>
-              <p><strong>IDEs &amp; Tools:</strong> VSCode (Main), Git, GitHub, Vercel, Netbeans, Eclipse, CodeBlocks</p>
+              <p><strong>Programming Languages:</strong> JavaScript (ES6+), TypeScript, HTML5, CSS3, Java, C++, Python</p>
+              <p><strong>Frameworks &amp; Libraries:</strong> React, Vue.js (Vue 3), Vite, Node.js, Express.js, Firebase, EmailJS, Tailwind CSS</p>
+              <p><strong>Tools &amp; Platforms:</strong> VS Code, Git, GitHub, Vercel, NetBeans, Eclipse, Code::Blocks, Oxlint</p>
             </div>
           </div>
         </div>
@@ -2091,40 +2071,17 @@ button.cta-btn {
   font-size: 1.7rem;
   font-weight: bold;
   color: #000000 !important;
-  margin: 0 0 0.15rem 0;
+  margin: 0 0 0.25rem 0;
   font-family: Georgia, 'Times New Roman', Times, serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.cv-subtitle {
-  font-size: 1rem;
-  font-style: italic;
-  color: #333333 !important;
-  margin: 0 0 0.5rem 0;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-.cv-contact-info {
-  font-size: 0.85rem;
+.cv-contact-line {
+  font-size: 0.82rem;
   color: #000000 !important;
-  line-height: 1.4;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.3rem 1.2rem;
-}
-
-.cv-contact-item {
-  color: #000000 !important;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.cv-contact-item strong {
-  font-weight: bold;
-  display: inline;
-  color: #000000 !important;
-  margin-right: 4px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .cv-link {
@@ -2136,19 +2093,17 @@ button.cta-btn {
   color: #333333 !important;
 }
 
-.cv-profile-summary {
-  font-size: 0.85rem;
-  line-height: 1.4;
-  color: #000000 !important;
-  margin-bottom: 0.25rem;
-  text-align: justify;
+.cv-link-accent {
+  color: var(--accent-purple, #ea580c) !important;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .cv-section {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
 }
 
 .cv-section-heading {
@@ -2158,26 +2113,13 @@ button.cta-btn {
   letter-spacing: 0.05em;
   color: #000000 !important;
   margin: 0;
-}
-
-.cv-section-line {
-  border-bottom: 1px solid #000000 !important;
-  margin-top: -0.25rem;
-  margin-bottom: 0.5rem;
+  padding-left: 0.6rem;
+  border-left: 3px solid var(--accent-purple, #ea580c);
 }
 
 .cv-edu-item {
-  display: flex;
-  gap: 1.5rem;
   font-size: 0.85rem;
   margin-bottom: 0.25rem;
-}
-
-.cv-edu-date {
-  width: 100px;
-  flex-shrink: 0;
-  font-weight: bold;
-  color: #000000 !important;
 }
 
 .cv-edu-details {
@@ -2203,6 +2145,11 @@ button.cta-btn {
   font-weight: bold;
   color: #000000 !important;
   margin: 0 0 0.15rem 0;
+}
+
+.cv-tech-stack {
+  font-weight: normal;
+  color: #444444 !important;
 }
 
 .cv-bullets {
@@ -2310,29 +2257,12 @@ button.cta-btn {
     margin: 0 0 0.1rem 0 !important;
   }
 
-  /* Group contact items side by side to save print height */
-  .cv-contact-info {
+  .cv-contact-line {
     font-size: 8.5pt !important;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 0.3rem 1.2rem !important;
   }
 
-  .cv-contact-item {
-    display: inline-block !important;
-  }
-
-  .cv-contact-item strong {
-    width: auto !important;
-    margin-right: 4px !important;
-  }
-
-  .cv-profile-summary {
-    font-size: 8.5pt !important;
-    margin-bottom: 0.15rem !important;
-    text-align: justify !important;
+  .cv-link-accent {
+    color: #000000 !important;
   }
 
   .cv-section {
@@ -2343,21 +2273,12 @@ button.cta-btn {
   .cv-section-heading {
     font-size: 0.95rem !important;
     letter-spacing: 0.03em !important;
-  }
-
-  .cv-section-line {
-    margin-top: -0.25rem !important;
-    margin-bottom: 0.3rem !important;
+    border-left-color: #000000 !important;
   }
 
   .cv-edu-item {
     font-size: 8.5pt !important;
     margin-bottom: 0.15rem !important;
-    gap: 1rem !important;
-  }
-
-  .cv-edu-date {
-    width: 80px !important;
   }
 
   .cv-project-item {
@@ -2367,6 +2288,10 @@ button.cta-btn {
   .cv-project-title {
     font-size: 8.5pt !important;
     margin-bottom: 0.05rem !important;
+  }
+
+  .cv-tech-stack {
+    color: #444444 !important;
   }
 
   .cv-bullets {
@@ -3028,13 +2953,8 @@ button.cta-btn {
     font-size: 1.4rem;
   }
 
-  .cv-contact-info {
+  .cv-contact-line {
     font-size: 0.78rem;
-    gap: 0.2rem 0.8rem;
-  }
-
-  .cv-contact-item {
-    white-space: normal;
   }
 
   /* --- Footer --- */
@@ -3387,23 +3307,11 @@ button.cta-btn {
     font-size: 0.95rem;
   }
 
-  .cv-contact-info {
+  .cv-contact-line {
     font-size: 0.72rem;
-    flex-direction: column;
-    gap: 0.15rem;
   }
 
   .cv-edu-item {
-    flex-direction: column;
-    gap: 0.25rem;
-    font-size: 0.78rem;
-  }
-
-  .cv-edu-date {
-    width: auto;
-  }
-
-  .cv-profile-summary {
     font-size: 0.78rem;
   }
 
