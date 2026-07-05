@@ -63,7 +63,15 @@
                   <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                 </svg>
               </button>
-
+              
+              <div class="responsive-indicator" @click="showResponsiveAlert" title="Responsive Design Indicator">
+                <div class="show-on-mobile">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <div class="show-on-desktop">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -109,6 +117,14 @@
               </svg>
             </button>
 
+            <div class="responsive-indicator" @click="showResponsiveAlert" title="Responsive Design Indicator">
+              <div class="show-on-mobile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              </div>
+              <div class="show-on-desktop">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              </div>
+            </div>
 
           </div>
         </div>
@@ -812,7 +828,13 @@ const activeTheme = ref('orange');
 const isDarkMode = ref(false);
 const showCV = ref(false);
 const mobileMenuOpen = ref(false);
-
+const showResponsiveAlert = () => {
+  if (window.innerWidth <= 820) {
+    alert("Thanks for visiting on your phone! My portfolio is also fully optimized for Desktop.");
+  } else {
+    alert("Thanks for visiting on your PC! My portfolio is also fully optimized for Mobile viewing.");
+  }
+};
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value;
@@ -2818,6 +2840,59 @@ button.cta-btn {
 .dark-theme .dark-mode-toggle:hover {
   background: #ffffff;
   color: #000000;
+}
+
+/* Responsive Indicator Badge */
+.responsive-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.responsive-indicator:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.dark-theme .responsive-indicator {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.dark-theme .responsive-indicator:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.responsive-indicator .show-on-mobile {
+  display: none;
+}
+
+.responsive-indicator .show-on-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 820px) {
+  .responsive-indicator .show-on-desktop {
+    display: none;
+  }
+  .responsive-indicator .show-on-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .auth-toggle-btn {
