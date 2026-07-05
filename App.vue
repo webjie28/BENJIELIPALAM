@@ -1752,10 +1752,19 @@ body {
 
 @media (max-width: 820px) {
   .scrolly-visual {
-    position: relative;
-    top: 0;
+    position: sticky;
+    top: 70px;
     height: 300px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+    z-index: 10;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
 }
 
@@ -3332,10 +3341,19 @@ button.cta-btn {
   }
 
   .scrolly-visual {
-    position: relative;
-    top: 0;
+    position: sticky;
+    top: 70px;
     height: 260px;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+    z-index: 10;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
 
   .browser-body {
@@ -3622,8 +3640,20 @@ button.cta-btn {
   }
 
   .scrolly-visual {
+    position: sticky;
+    top: 56px;
     height: 220px;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
+    z-index: 10;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    margin-left: -1.15rem;
+    margin-right: -1.15rem;
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
 
   .browser-mockup {
