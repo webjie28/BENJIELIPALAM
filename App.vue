@@ -3482,6 +3482,72 @@ button.cta-btn {
     transform: translateX(0) scale(1);
     opacity: 1;
   }
+
+  /* --- Landscape Rotated Layout for Origin Section on Mobile --- */
+  #origin {
+    height: 90vh; /* Takes up most of the vertical space */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem 0;
+  }
+
+  #origin .intro-card {
+    position: absolute;
+    width: 88vh; /* Will become the width of the card (phone height) */
+    height: 92vw; /* Will become the height of the card (phone width) */
+    transform: rotate(90deg);
+    padding: 2.5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Force desktop 2-column layout */
+  #origin .story-layout {
+    display: grid !important;
+    grid-template-columns: 1.1fr 0.9fr !important;
+    gap: 2rem !important;
+    align-items: center;
+  }
+  
+  /* Scale down texts slightly to fit within rotated bounds */
+  #origin .chapter-header {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  #origin .story-text p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+  
+  #origin .lead-text {
+    font-size: 1rem;
+    margin-bottom: 1rem !important;
+  }
+  
+  #origin .step-content h5 {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  #origin .step-content p {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+  
+  /* Update the 3D scroll animations for the rotated card */
+  /* Since it's rotated 90deg, translateX moves it vertically on the phone */
+  #origin .journey-timeline .timeline-step.reveal-on-scroll {
+    transform: translateX(-50px) scale(0.95);
+  }
+  #origin .journey-timeline .timeline-step.reveal-on-scroll.revealed {
+    transform: translateX(0) scale(1);
+  }
 }
 
 /* ============================================
