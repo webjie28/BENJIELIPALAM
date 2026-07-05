@@ -170,12 +170,20 @@
             <!-- Terminal Hero Section -->
             <div class="hero-terminal">
               <div class="terminal-header">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
+                <div class="terminal-dots">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot blue"></span>
+                </div>
+                <div class="terminal-title">terminal &mdash; benjie@portfolio</div>
               </div>
               <div class="terminal-body">
-                <span class="terminal-prompt">&gt;</span> 3+ Deployed Projects &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
+                <div class="terminal-line">
+                  <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">whoami</span>
+                </div>
+                <div class="terminal-line terminal-output">
+                  3+ Deployed Projects &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -1497,6 +1505,99 @@ body {
   font-weight: 800;
   color: #ffffff;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+}
+
+/* Terminal Hero Section */
+.hero-terminal {
+  background: #2b4382;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-terminal:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.terminal-header {
+  background: #f6f6f6;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dots .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-dots .dot.red { background: #ffb4c0; }
+.terminal-dots .dot.yellow { background: #ffde26; }
+.terminal-dots .dot.blue { background: #8bcbf9; }
+
+.terminal-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #999;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.terminal-body {
+  padding: 16px 20px;
+  color: #ffffff;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.terminal-line {
+  margin-bottom: 6px;
+}
+
+.terminal-user {
+  color: #a2c6f9;
+  margin-right: 6px;
+}
+
+.terminal-command {
+  color: #ffffff;
+}
+
+.terminal-output {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: #ffffff;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 @keyframes float {
