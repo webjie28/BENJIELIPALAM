@@ -166,6 +166,18 @@
               />
               <div v-else class="hero-avatar-fallback">BL</div>
             </div>
+
+            <!-- Terminal Hero Section -->
+            <div class="hero-terminal">
+              <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <div class="terminal-body">
+                <span class="terminal-prompt">&gt;</span> 3+ Deployed Projects &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1450,8 +1462,10 @@ body {
 
 .hero-right {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2.5rem;
 }
 
 .hero-image-frame {
