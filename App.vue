@@ -147,16 +147,9 @@
             <div class="hero-ctas animate-in">
               <a href="#creations" class="cta-btn primary-btn">View Projects</a>
               <button @click="showCV = true" class="cta-btn secondary-btn">View My CV</button>
-            </div>
-            
-            <div class="hero-socials animate-in">
-              <a href="https://github.com/webjie28" target="_blank" class="hero-social-link">
+              <a href="https://github.com/webjie28" target="_blank" title="GitHub" class="cta-btn secondary-btn github-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                <span>View GitHub</span>
-              </a>
-              <a href="mailto:lipalambenjie@gmail.com" class="hero-social-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                <span>Email Me</span>
+                <span>GitHub</span>
               </a>
             </div>
           </div>
@@ -1399,44 +1392,7 @@ body {
   gap: 1.25rem;
 }
 
-.hero-socials {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
 
-.hero-social-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.25rem;
-  border-radius: 99px;
-  background: var(--card-bg);
-  color: var(--text-secondary);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero-social-link:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.6);
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px var(--shadow-color);
-  border-color: var(--accent-purple);
-}
-
-.dark-theme .hero-social-link {
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.dark-theme .hero-social-link:hover {
-  background: rgba(20, 18, 16, 0.8);
-  border-color: rgba(255, 255, 255, 0.15);
-}
 
 .cta-btn {
   padding: 0.9rem 1.8rem;
@@ -1445,6 +1401,13 @@ body {
   font-size: 0.95rem;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .primary-btn {
@@ -3611,10 +3574,6 @@ button.cta-btn {
     gap: 0.75rem;
   }
 
-  .hero-socials {
-    justify-content: center;
-    margin-top: 1.25rem;
-  }
 
   .cta-btn {
     text-align: center;
