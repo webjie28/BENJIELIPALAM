@@ -149,10 +149,10 @@
               </div>
               <div class="terminal-body">
                 <div class="terminal-line">
-                  <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">whoami</span>
+                  <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">{{ terminalCommandText }}</span><span class="terminal-cursor" v-if="showCursor1"></span>
                 </div>
-                <div class="terminal-line terminal-output">
-                  Computer Science &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
+                <div class="terminal-line terminal-output" v-if="showCursor2 || terminalOutputText">
+                  {{ terminalOutputText }}<span class="terminal-cursor" v-if="showCursor2"></span>
                 </div>
               </div>
             </div>
@@ -853,6 +853,34 @@ const activeTheme = ref('orange');
 const isDarkMode = ref(false);
 const showCV = ref(false);
 const mobileMenuOpen = ref(false);
+
+// Terminal Typing Effect
+const terminalCommandText = ref("");
+const terminalOutputText = ref("");
+const showCursor1 = ref(true);
+const showCursor2 = ref(false);
+
+const startTypingEffect = async () => {
+  const cmd = "whoami";
+  const output = "Computer Science  |  UI/UX + Frontend  |  Graduating 2026";
+  
+  await new Promise(r => setTimeout(r, 800));
+  
+  for (let i = 0; i < cmd.length; i++) {
+    terminalCommandText.value += cmd[i];
+    await new Promise(r => setTimeout(r, 100));
+  }
+  
+  await new Promise(r => setTimeout(r, 400));
+  
+  showCursor1.value = false;
+  showCursor2.value = true;
+  
+  for (let i = 0; i < output.length; i++) {
+    terminalOutputText.value += output[i];
+    await new Promise(r => setTimeout(r, 20));
+  }
+};
 const showResponsiveAlert = () => {
   if (window.innerWidth <= 820) {
     alert("Thanks for visiting on your phone! My portfolio is also fully optimized for Desktop.");
@@ -986,6 +1014,9 @@ const customRepoDetails = {
 };
 
 onMounted(async () => {
+  // Trigger terminal animation
+  startTypingEffect();
+
   // Trigger theme set
   changeTheme('orange');
 
