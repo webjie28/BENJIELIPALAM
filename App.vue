@@ -137,13 +137,29 @@
         <div class="hero-content">
           <!-- Left Side: Typography -->
           <div class="hero-left">
-            <span class="hero-badge animate-in">Computer Science &amp; Web Design</span>
+            <!-- Terminal Hero Section -->
+            <div class="hero-terminal animate-in">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot blue"></span>
+                </div>
+                <div class="terminal-title">terminal &mdash; benjie@portfolio</div>
+              </div>
+              <div class="terminal-body">
+                <div class="terminal-line">
+                  <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">whoami</span>
+                </div>
+                <div class="terminal-line terminal-output">
+                  3+ Deployed Projects &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
+                </div>
+              </div>
+            </div>
+
             <h1 class="hero-title animate-in">
               <span class="typewriter-text">Benjie Lipalam</span>
             </h1>
-            <p class="hero-desc animate-in">
-              A Computer Science &amp; Web Design Enthusiast focused on visually appealing, responsive, and user-centric web applications. I combine modern frontend frameworks with clean UI/UX principles to create interfaces that are functional, intuitive, and visually timeless.
-            </p>
             <div class="hero-ctas animate-in">
               <a href="#creations" class="cta-btn primary-btn">View Projects</a>
               <button @click="showCV = true" class="cta-btn secondary-btn">View My CV</button>
@@ -167,25 +183,7 @@
               <div v-else class="hero-avatar-fallback">BL</div>
             </div>
 
-            <!-- Terminal Hero Section -->
-            <div class="hero-terminal">
-              <div class="terminal-header">
-                <div class="terminal-dots">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot blue"></span>
-                </div>
-                <div class="terminal-title">terminal &mdash; benjie@portfolio</div>
-              </div>
-              <div class="terminal-body">
-                <div class="terminal-line">
-                  <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">whoami</span>
-                </div>
-                <div class="terminal-line terminal-output">
-                  3+ Deployed Projects &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </section>
@@ -1512,7 +1510,8 @@ body {
   background: #2b4382;
   border-radius: 8px;
   width: 100%;
-  max-width: 520px;
+  max-width: 100%;
+  margin-bottom: 1.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.85rem;
