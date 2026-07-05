@@ -160,6 +160,9 @@
             <h1 class="hero-title animate-in">
               <span class="typewriter-text">Benjie Lipalam</span>
             </h1>
+            <p class="hero-desc animate-in">
+              A Computer Science &amp; Web Design Enthusiast focused on visually appealing, responsive, and user-centric web applications. I combine modern frontend frameworks with clean UI/UX principles to create interfaces that are functional, intuitive, and visually timeless.
+            </p>
             <div class="hero-ctas animate-in">
               <a href="#creations" class="cta-btn primary-btn">View Projects</a>
               <button @click="showCV = true" class="cta-btn secondary-btn">View My CV</button>
@@ -1510,7 +1513,7 @@ body {
   border-radius: 8px;
   width: 100%;
   max-width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.85rem;
@@ -1527,7 +1530,7 @@ body {
 
 .terminal-header {
   background: #f6f6f6;
-  padding: 6px 12px;
+  padding: 4px 10px;
   display: flex;
   align-items: center;
   position: relative;
@@ -1559,14 +1562,14 @@ body {
 }
 
 .terminal-body {
-  padding: 10px 16px;
+  padding: 6px 12px;
   color: #ffffff;
-  line-height: 1.6;
+  line-height: 1.4;
   text-align: left;
 }
 
 .terminal-line {
-  margin-bottom: 2px;
+  margin-bottom: 0;
 }
 
 .terminal-user {
