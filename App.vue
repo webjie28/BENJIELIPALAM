@@ -1504,8 +1504,8 @@ body {
 
 @media (max-width: 820px) {
   .story-layout {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
   }
 }
 
@@ -3575,6 +3575,45 @@ button.cta-btn {
   .glass-card {
     padding: 1.5rem 1.15rem;
     border-radius: 16px;
+  }
+
+  /* Shrink Origin layout to fit 2-columns on mobile */
+  #origin .glass-card {
+    padding: 1.25rem 0.75rem;
+  }
+  #origin .story-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  #origin .story-text p {
+    font-size: 0.72rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+  }
+  #origin .lead-text {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem !important;
+  }
+  #origin .chapter-header {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+  #origin .journey-timeline {
+    padding-left: 0.75rem;
+    gap: 1rem;
+  }
+  #origin .step-marker {
+    left: calc(-0.75rem - 4px);
+    width: 8px;
+    height: 8px;
+  }
+  #origin .step-content h5 {
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+  #origin .step-content p {
+    font-size: 0.65rem;
+    line-height: 1.35;
   }
 
   .chapter-header {
