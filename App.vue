@@ -3453,8 +3453,8 @@ button.cta-btn {
   }
 
   /* --- Custom Mobile Animations (Kakaiba) --- */
+  /* We remove transition-delay: 0s for timeline-step to allow them to reveal one by one */
   .project-grid .project-card.reveal-on-scroll,
-  .journey-timeline .timeline-step.reveal-on-scroll,
   .skills-grid .skill-category.reveal-on-scroll {
     transition-delay: 0s !important;
   }
@@ -3473,10 +3473,16 @@ button.cta-btn {
     opacity: 1;
   }
 
+  /* Timeline steps alternating slide left and right */
   .journey-timeline .timeline-step.reveal-on-scroll {
-    transform: translateX(60px) scale(0.95);
     opacity: 0;
     transition: opacity 0.6s ease-out, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .journey-timeline .timeline-step.reveal-on-scroll:nth-child(odd) {
+    transform: translateX(-60px) scale(0.95);
+  }
+  .journey-timeline .timeline-step.reveal-on-scroll:nth-child(even) {
+    transform: translateX(60px) scale(0.95);
   }
   .journey-timeline .timeline-step.reveal-on-scroll.revealed {
     transform: translateX(0) scale(1);
