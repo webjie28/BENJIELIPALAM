@@ -152,7 +152,7 @@
                   <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">whoami</span>
                 </div>
                 <div class="terminal-line terminal-output">
-                  3+ Deployed Projects &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
+                  Computer Science &nbsp;|&nbsp; UI/UX + Frontend &nbsp;|&nbsp; Graduating 2026<span class="terminal-cursor"></span>
                 </div>
               </div>
             </div>
@@ -1505,13 +1505,12 @@ body {
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
 }
 
-/* Terminal Hero Section */
 .hero-terminal {
   background: #2b4382;
   border-radius: 8px;
   width: 100%;
   max-width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.85rem;
@@ -1528,7 +1527,7 @@ body {
 
 .terminal-header {
   background: #f6f6f6;
-  padding: 10px 14px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   position: relative;
@@ -1545,9 +1544,9 @@ body {
   border-radius: 50%;
 }
 
-.terminal-dots .dot.red { background: #ffb4c0; }
-.terminal-dots .dot.yellow { background: #ffde26; }
-.terminal-dots .dot.blue { background: #8bcbf9; }
+.terminal-dots .dot.red { background: #ea580c; }
+.terminal-dots .dot.yellow { background: #0d9488; }
+.terminal-dots .dot.blue { background: #2563eb; }
 
 .terminal-title {
   position: absolute;
@@ -1560,14 +1559,14 @@ body {
 }
 
 .terminal-body {
-  padding: 16px 20px;
+  padding: 10px 16px;
   color: #ffffff;
-  line-height: 1.8;
+  line-height: 1.6;
   text-align: left;
 }
 
 .terminal-line {
-  margin-bottom: 6px;
+  margin-bottom: 2px;
 }
 
 .terminal-user {
