@@ -3451,6 +3451,37 @@ button.cta-btn {
     width: 400px;
     height: 400px;
   }
+
+  /* --- Custom Mobile Animations (Kakaiba) --- */
+  .project-grid .project-card.reveal-on-scroll,
+  .journey-timeline .timeline-step.reveal-on-scroll,
+  .skills-grid .skill-category.reveal-on-scroll {
+    transition-delay: 0s !important;
+  }
+
+  .project-grid {
+    perspective: 1000px;
+  }
+  .project-grid .project-card.reveal-on-scroll {
+    transform: translateY(60px) rotateX(15deg) scale(0.9);
+    opacity: 0;
+    transform-origin: center bottom;
+    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .project-grid .project-card.reveal-on-scroll.revealed {
+    transform: translateY(0) rotateX(0) scale(1);
+    opacity: 1;
+  }
+
+  .journey-timeline .timeline-step.reveal-on-scroll {
+    transform: translateX(60px) scale(0.95);
+    opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .journey-timeline .timeline-step.reveal-on-scroll.revealed {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
 }
 
 /* ============================================
