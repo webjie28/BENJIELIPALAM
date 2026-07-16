@@ -198,27 +198,7 @@
                   As a Computer Science enthusiast, I quickly realized that writing backend logic is only half the picture—the real magic happens when users interact with a beautifully crafted, intuitive front-end.
                 </p>
 
-                <!-- Terminal Storytelling Element -->
-                <div class="hero-terminal animate-in" style="margin-top: 1.5rem;">
-                  <div class="terminal-header">
-                    <div class="terminal-dots">
-                      <span class="dot red"></span>
-                      <span class="dot yellow"></span>
-                      <span class="dot blue"></span>
-                    </div>
-                    <div class="terminal-title">terminal &mdash; benjie@portfolio</div>
-                  </div>
-                  <div class="terminal-body">
-                    <div class="terminal-line">
-                      <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">{{ terminalCommandText }}</span><span class="terminal-cursor" v-if="showCursor1"></span>
-                    </div>
-                    <div class="terminal-line terminal-output" v-if="showCursor2 || terminalOutputText">
-                      {{ terminalOutputText }}<span class="terminal-cursor" v-if="showCursor2"></span>
-                    </div>
-                  </div>
-                </div>
-
-                <p style="margin-top: 1.5rem;">
+                <p>
                   By combining software engineering with clean web design principles, I focus on creating 
                   web applications that are fast, accessible, and visually timeless.
                 </p>
