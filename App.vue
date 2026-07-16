@@ -1721,27 +1721,31 @@ body {
   border-radius: 8px;
   width: 100%;
   max-width: 100%;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin: 1.5rem 0; /* Add margin to breathe within paragraphs */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.85rem;
   overflow: hidden;
   position: relative;
   z-index: 2;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.08); /* Clean border */
 }
 
 .hero-terminal:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
 }
 
 .terminal-header {
   background: #f6f6f6;
-  padding: 4px 10px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  margin: 0;
+  border-radius: 8px 8px 0 0; /* Force border radius to fix bleeding */
 }
 
 .terminal-dots {
