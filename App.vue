@@ -1035,7 +1035,9 @@ const changeTheme = (themeName) => {
       badgeText: '#c2410c',
       glow1: 'rgba(234, 88, 12, 0.45)',
       glow2: 'rgba(217, 119, 6, 0.3)',
-      glow3: 'rgba(234, 88, 12, 0.15)'
+      glow3: 'rgba(234, 88, 12, 0.15)',
+      darkBgPrimary: '#431400',
+      darkBgSecondary: '#5e1c00'
     },
     teal: {
       primary: '#0d9488', // Teal
@@ -1045,7 +1047,9 @@ const changeTheme = (themeName) => {
       badgeText: '#0f766e',
       glow1: 'rgba(13, 148, 136, 0.45)',
       glow2: 'rgba(2, 132, 199, 0.3)',
-      glow3: 'rgba(13, 148, 136, 0.15)'
+      glow3: 'rgba(13, 148, 136, 0.15)',
+      darkBgPrimary: '#002f2a',
+      darkBgSecondary: '#00473f'
     },
     blue: {
       primary: '#2563eb', // Blue
@@ -1055,7 +1059,9 @@ const changeTheme = (themeName) => {
       badgeText: '#1d4ed8',
       glow1: 'rgba(37, 99, 235, 0.45)',
       glow2: 'rgba(99, 102, 241, 0.3)',
-      glow3: 'rgba(37, 99, 235, 0.15)'
+      glow3: 'rgba(37, 99, 235, 0.15)',
+      darkBgPrimary: '#071842',
+      darkBgSecondary: '#0a2366'
     }
   };
   const theme = roots[themeName];
@@ -1067,6 +1073,8 @@ const changeTheme = (themeName) => {
   document.documentElement.style.setProperty('--hero-glow-1', theme.glow1);
   document.documentElement.style.setProperty('--hero-glow-2', theme.glow2);
   document.documentElement.style.setProperty('--hero-glow-3', theme.glow3);
+  document.documentElement.style.setProperty('--dark-bg-primary', theme.darkBgPrimary);
+  document.documentElement.style.setProperty('--dark-bg-secondary', theme.darkBgSecondary);
 };
 
 // Projects State & Github Fetching
@@ -3053,8 +3061,8 @@ button.cta-btn {
 
 /* 🌙 Dark Mode Variables Override */
 .dark-theme {
-  --bg-primary: #050505;
-  --bg-secondary: #0a0a0a;
+  --bg-primary: var(--dark-bg-primary, #050505);
+  --bg-secondary: var(--dark-bg-secondary, #0a0a0a);
   --text-primary: #f5f5f4;
   --text-secondary: #b8b4af;
   --card-bg: rgba(15, 15, 15, 0.65);
