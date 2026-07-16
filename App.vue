@@ -26,6 +26,7 @@
         <nav class="nav-links" :class="{ 'mobile-open': mobileMenuOpen }">
           <a href="#origin" @click="closeMobileMenu">Origin</a>
           <a href="#creations" @click="closeMobileMenu">Projects</a>
+          <a href="#automations" @click="closeMobileMenu">n8n</a>
           <a href="#thesis" @click="closeMobileMenu">Thesis</a>
           <a v-if="isAdmin" href="#routines" @click="closeMobileMenu">Routines</a>
           <button @click="showCV = true; closeMobileMenu()" class="cv-nav-btn">CV</button>
@@ -285,6 +286,37 @@
                 <div class="project-footer">
                   <a :href="project.displayLink" target="_blank" class="view-btn">
                     <span>Visit Live App</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2.5: n8n AUTOMATIONS -->
+        <section id="automations" class="chapter-section scroll-section reveal-on-scroll">
+          <div class="glass-card">
+            <h2 class="chapter-header">n8n Automations</h2>
+            <p class="chapter-subtitle">Automated workflows built with n8n to streamline processes and integrate APIs seamlessly.</p>
+            
+            <div class="project-grid">
+              <div class="project-card reveal-on-scroll" v-for="project in n8nProjects" :key="project.id">
+                <div class="project-header">
+                  <span class="project-badge">{{ project.customSubtitle }}</span>
+                </div>
+                <h3 class="project-title">{{ project.customTitle }}</h3>
+                <p class="project-desc">{{ project.customDescription }}</p>
+                <div class="project-tags">
+                  <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
+                </div>
+                <div class="project-footer">
+                  <a :href="project.displayLink" target="_blank" class="view-btn">
+                    <span>View Repository</span>
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                       <polyline points="15 3 21 3 21 9"></polyline>
@@ -990,7 +1022,26 @@ const changeTheme = (themeName) => {
 
 // Projects State & Github Fetching
 const projects = ref([]);
+const n8nProjects = ref([]);
 const customRepoDetails = {
+  'my-soroban.studio': {
+    title: 'my-soroban.studio',
+    subtitle: 'Blockchain & Smart Contracts',
+    description: 'A blockchain-based project built using the Rust programming language and the Soroban smart contract platform.',
+    tags: ['Rust', 'Blockchain', 'Smart Contracts', 'Soroban']
+  },
+  'n8n-auto-clock-in-out': {
+    title: 'Auto Clock-In/Out',
+    subtitle: 'n8n Workflow Automation',
+    description: 'Automated work clock-in and clock-out system using n8n, Railway, and Gmail API.',
+    tags: ['n8n', 'Automation', 'JavaScript', 'Railway', 'Gmail API']
+  },
+  'AI-recruitment-agent-n8n': {
+    title: 'AI Recruitment Agent',
+    subtitle: 'n8n Workflow Automation',
+    description: 'An automated AI-driven recruitment agent workflow designed using n8n for intelligent candidate processing.',
+    tags: ['n8n', 'AI', 'Automation', 'HTML']
+  },
   'Sales-Reports-Analysis-on-Automotive-Spare-Parts-Business-Using-Decision-Support-System': {
     title: 'Automotive Spare Parts DSS',
     subtitle: 'Full-Stack DSS Development',
@@ -1053,18 +1104,31 @@ onMounted(async () => {
 
   try {
     const repoNames = [
+      'my-soroban.studio',
       'Sales-Reports-Analysis-on-Automotive-Spare-Parts-Business-Using-Decision-Support-System',
       'DailylifeTrackingsystem',
       'MNLLUMIERE'
+    ];
+
+    const n8nRepoNames = [
+      'n8n-auto-clock-in-out',
+      'AI-recruitment-agent-n8n'
     ];
 
     const promises = repoNames.map(name => 
       fetch(`https://api.github.com/repos/webjie28/${name}`).then(res => res.json())
     );
     
-    const fetchedProjects = await Promise.all(promises);
+    const n8nPromises = n8nRepoNames.map(name => 
+      fetch(`https://api.github.com/repos/webjie28/${name}`).then(res => res.json())
+    );
     
-    projects.value = fetchedProjects.map(proj => {
+    const [fetchedProjects, fetchedN8nProjects] = await Promise.all([
+      Promise.all(promises),
+      Promise.all(n8nPromises)
+    ]);
+    
+    const mapProjectData = (proj) => {
       const customData = customRepoDetails[proj.name] || {};
       return {
         ...proj,
@@ -1074,7 +1138,10 @@ onMounted(async () => {
         tags: customData.tags || ['GitHub Repo'],
         displayLink: customData.liveLink || proj.homepage || proj.html_url
       };
-    });
+    };
+
+    projects.value = fetchedProjects.map(mapProjectData);
+    n8nProjects.value = fetchedN8nProjects.map(mapProjectData);
 
     // Observe dynamic elements after render
     setTimeout(() => {
