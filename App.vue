@@ -1566,7 +1566,7 @@ body {
 }
 
 .pinia-accent {
-  color: #ffc82c; /* Pinia Yellow */
+  color: var(--accent-purple);
 }
 
 .hero-tagline {
@@ -1608,16 +1608,16 @@ body {
 
 /* PINIA BUTTONS */
 .pinia-primary-btn {
-  background: #ffc82c;
-  color: #1b1b1f !important;
+  background: var(--accent-purple);
+  color: #ffffff !important;
   border: none;
-  box-shadow: 0 4px 15px rgba(255, 200, 44, 0.3);
+  box-shadow: 0 4px 15px var(--hero-glow-2, rgba(0,0,0,0.2));
 }
 
 .pinia-primary-btn:hover {
-  background: #ffd553;
+  filter: brightness(1.1);
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(255, 200, 44, 0.4);
+  box-shadow: 0 6px 20px var(--hero-glow-1, rgba(0,0,0,0.3));
 }
 
 .pinia-secondary-btn {
@@ -1656,7 +1656,7 @@ body {
 
 .dark-theme .hero-glow-layer.primary-glow {
   opacity: 0.3;
-  background: radial-gradient(circle, #ffc82c, transparent 70%);
+  background: radial-gradient(circle, var(--accent-purple), transparent 70%);
   width: 60vw;
   height: 60vw;
   max-width: 800px;
@@ -1669,7 +1669,7 @@ body {
 
 .dark-theme .hero-glow-layer.secondary-glow {
   opacity: 0.12;
-  background: radial-gradient(circle, #42b883, transparent 70%);
+  background: radial-gradient(circle, var(--accent-blue), transparent 70%);
   width: 40vw;
   height: 40vw;
   max-width: 500px;
