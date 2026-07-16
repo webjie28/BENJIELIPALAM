@@ -135,39 +135,31 @@
     <div class="portfolio-container">
       <!-- FULL-SCREEN SPLIT HERO SECTION (Archi Green Layout) -->
       <section id="hero" class="hero-section">
+        <!-- Ambient Hero Glow Layers (Dark Mode Only) -->
+        <div class="hero-glow-layer primary-glow"></div>
+        <div class="hero-glow-layer secondary-glow"></div>
+
         <div class="hero-content">
           <!-- Left Side: Typography -->
           <div class="hero-left">
-            <!-- Terminal Hero Section -->
-            <div class="hero-terminal animate-in">
-              <div class="terminal-header">
-                <div class="terminal-dots">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot blue"></span>
-                </div>
-                <div class="terminal-title">terminal &mdash; benjie@portfolio</div>
-              </div>
-              <div class="terminal-body">
-                <div class="terminal-line">
-                  <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">{{ terminalCommandText }}</span><span class="terminal-cursor" v-if="showCursor1"></span>
-                </div>
-                <div class="terminal-line terminal-output" v-if="showCursor2 || terminalOutputText">
-                  {{ terminalOutputText }}<span class="terminal-cursor" v-if="showCursor2"></span>
-                </div>
-              </div>
+            <div class="hero-badge animate-in stagger-1">
+              Computer Science &middot; UI/UX + Frontend &middot; Agentic AI
             </div>
 
-            <h1 class="hero-title animate-in">
-              <span class="typewriter-text">Benjie Lipalam</span>
+            <h1 class="hero-title animate-in stagger-2">
+              <span class="typewriter-text pinia-accent">Benjie Lipalam</span>
             </h1>
-            <p class="hero-desc animate-in">
-              A Computer Science &amp; Web Design Enthusiast focused on visually appealing, responsive, and user-centric web applications. I combine modern frontend frameworks with clean UI/UX principles to create interfaces that are functional, intuitive, and visually timeless.
+            <p class="hero-tagline animate-in stagger-3">
+              Frontend developer building interfaces, agentic systems on the side.
             </p>
-            <div class="hero-ctas animate-in">
-              <a href="#creations" class="cta-btn primary-btn">View Projects</a>
-              <button @click="showCV = true" class="cta-btn secondary-btn">View My CV</button>
-              <a href="https://github.com/webjie28" target="_blank" title="GitHub" class="cta-btn secondary-btn github-btn">
+            <p class="hero-desc muted animate-in stagger-4">
+              A Computer Science &amp; Web Design Enthusiast focused on visually appealing, responsive, and user-centric web applications. I combine modern frameworks with clean UI/UX principles.
+            </p>
+
+            <div class="hero-ctas animate-in stagger-5">
+              <a href="#creations" class="cta-btn pinia-primary-btn">View Projects</a>
+              <button @click="showCV = true" class="cta-btn pinia-secondary-btn">View My CV</button>
+              <a href="https://github.com/webjie28" target="_blank" title="GitHub" class="cta-btn pinia-secondary-btn github-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                 <span>GitHub</span>
               </a>
@@ -205,7 +197,28 @@
                   My journey started with a deep interest in technology, aesthetics, and user interfaces. 
                   As a Computer Science enthusiast, I quickly realized that writing backend logic is only half the picture—the real magic happens when users interact with a beautifully crafted, intuitive front-end.
                 </p>
-                <p>
+
+                <!-- Terminal Storytelling Element -->
+                <div class="hero-terminal animate-in" style="margin-top: 1.5rem;">
+                  <div class="terminal-header">
+                    <div class="terminal-dots">
+                      <span class="dot red"></span>
+                      <span class="dot yellow"></span>
+                      <span class="dot blue"></span>
+                    </div>
+                    <div class="terminal-title">terminal &mdash; benjie@portfolio</div>
+                  </div>
+                  <div class="terminal-body">
+                    <div class="terminal-line">
+                      <span class="terminal-user">benjie@lipalam:~$</span> <span class="terminal-command">{{ terminalCommandText }}</span><span class="terminal-cursor" v-if="showCursor1"></span>
+                    </div>
+                    <div class="terminal-line terminal-output" v-if="showCursor2 || terminalOutputText">
+                      {{ terminalOutputText }}<span class="terminal-cursor" v-if="showCursor2"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <p style="margin-top: 1.5rem;">
                   By combining software engineering with clean web design principles, I focus on creating 
                   web applications that are fast, accessible, and visually timeless.
                 </p>
@@ -1485,12 +1498,32 @@ body {
   transition: color 0.3s ease;
 }
 
+/* NEW PINIA-STYLE HERO TYPOGRAPHY */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem; /* ~12px */
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.dark-theme .hero-badge {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
 .hero-title {
-  font-size: 4rem;
+  font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 850;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.05em;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
   display: flex;
 }
 
@@ -1500,56 +1533,30 @@ body {
   }
 }
 
-@media (max-width: 600px) {
-  .hero-title {
-    font-size: 3rem;
-  }
+.pinia-accent {
+  color: #ffc82c; /* Pinia Yellow */
 }
 
-/* CSS Typewriter Effect */
-.typewriter-text {
-  display: inline-block;
-  overflow: hidden;
-  border-right: 3px solid var(--accent-purple);
-  white-space: nowrap;
-  letter-spacing: -0.05em;
-  animation: 
-    typing 6s steps(14, end) infinite,
-    blink-caret 0.75s step-end infinite;
-  max-width: fit-content;
-  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-purple) 90%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: border-color 0.3s ease;
+.hero-tagline {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.3;
 }
 
-@keyframes typing {
-  0% { width: 0; }
-  35% { width: 14ch; }
-  60% { width: 14ch; }
-  85% { width: 0; }
-  100% { width: 0; }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: var(--accent-purple); }
-}
-
-.hero-desc {
+.hero-desc.muted {
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--text-secondary);
-  margin-bottom: 2.75rem;
-  max-width: 580px;
+  margin-bottom: 2.5rem;
+  max-width: 400px;
 }
 
 .hero-ctas {
   display: flex;
   gap: 1.25rem;
 }
-
-
 
 .cta-btn {
   padding: 0.9rem 1.8rem;
@@ -1567,36 +1574,107 @@ body {
   gap: 0.5rem;
 }
 
-@keyframes btn-pulse {
-  0% { box-shadow: 0 0 10px var(--accent-glow); }
-  50% { box-shadow: 0 0 25px var(--accent-glow), 0 0 45px var(--accent-glow); }
-  100% { box-shadow: 0 0 10px var(--accent-glow); }
+/* PINIA BUTTONS */
+.pinia-primary-btn {
+  background: #ffc82c;
+  color: #1b1b1f !important;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 200, 44, 0.3);
 }
 
-.primary-btn {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-  color: #ffffff !important;
-  box-shadow: 0 6px 20px var(--accent-glow);
-  animation: btn-pulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+.pinia-primary-btn:hover {
+  background: #ffd553;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(255, 200, 44, 0.4);
 }
 
-.primary-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px var(--accent-glow);
-  animation: none;
-}
-
-.secondary-btn {
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.5);
+.pinia-secondary-btn {
+  background: rgba(0, 0, 0, 0.05);
   color: var(--text-primary);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: var(--accent-purple);
-  transform: translateY(-3px);
+.pinia-secondary-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.dark-theme .pinia-secondary-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.dark-theme .pinia-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* HERO AMBIENT GLOW LAYERS */
+.hero-section {
+  position: relative;
+}
+
+.hero-glow-layer {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(120px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.dark-theme .hero-glow-layer.primary-glow {
+  opacity: 0.3;
+  background: radial-gradient(circle, #ffc82c, transparent 70%);
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  top: 50%;
+  right: -10%;
+  transform: translateY(-50%);
+  animation: glow-pulse-slow 8s infinite alternate ease-in-out;
+}
+
+.dark-theme .hero-glow-layer.secondary-glow {
+  opacity: 0.12;
+  background: radial-gradient(circle, #42b883, transparent 70%);
+  width: 40vw;
+  height: 40vw;
+  max-width: 500px;
+  max-height: 500px;
+  bottom: -10%;
+  left: -5%;
+}
+
+@keyframes glow-pulse-slow {
+  from { transform: translateY(-50%) scale(1); }
+  to { transform: translateY(-50%) scale(1.1); }
+}
+
+/* STAGGERED ENTRANCE ANIMATIONS */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .stagger-1 { animation-delay: 100ms; }
+  .stagger-2 { animation-delay: 250ms; }
+  .stagger-3 { animation-delay: 400ms; }
+  .stagger-4 { animation-delay: 550ms; }
+  .stagger-5 { animation-delay: 700ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .hero-right {
