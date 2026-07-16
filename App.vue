@@ -142,10 +142,6 @@
         <div class="hero-content">
           <!-- Left Side: Typography -->
           <div class="hero-left">
-            <div class="hero-badge animate-in stagger-1">
-              Computer Science &middot; UI/UX + Frontend &middot; Agentic AI
-            </div>
-
             <h1 class="hero-title animate-in stagger-2">
               <span class="typewriter-text pinia-accent">Benjie Lipalam</span>
             </h1>
@@ -180,9 +176,9 @@
             </div>
 
             <div class="hero-quick-facts animate-in stagger-4">
-              <span class="hero-fact-tag">Frontend Development</span>
-              <span class="hero-fact-tag">UI/UX Design</span>
-              <span class="hero-fact-tag">Agentic AI Systems</span>
+              <span class="hero-fact-tag"><span class="fact-bullet orange"></span> Frontend Development</span>
+              <span class="hero-fact-tag"><span class="fact-bullet green"></span> UI/UX Design</span>
+              <span class="hero-fact-tag"><span class="fact-bullet blue"></span> Agentic AI Systems</span>
             </div>
           </div>
         </div>
@@ -1723,36 +1719,52 @@ body {
 .hero-quick-facts {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  align-items: center;
-  margin-top: 1rem;
+  gap: 0.6rem;
+  align-items: flex-start; /* Align list perfectly on the left */
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 250px; /* Keep it tight below the image */
 }
 
 .hero-fact-tag {
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.03);
-  padding: 0.5rem 1.25rem;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 0.6rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  width: 100%;
 }
 
+.fact-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.fact-bullet.orange { background: #ea580c; box-shadow: 0 0 8px rgba(234, 88, 12, 0.5); }
+.fact-bullet.green { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
+.fact-bullet.blue { background: #3b82f6; box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); }
+
 .hero-fact-tag:hover {
-  transform: translateY(-2px);
+  transform: translateX(4px);
   color: var(--text-primary);
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .dark-theme .hero-fact-tag {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .dark-theme .hero-fact-tag:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   color: #ffffff;
 }
 
