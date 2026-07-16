@@ -1724,7 +1724,7 @@ body {
   justify-content: center;
   gap: 0.6rem;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 0.75rem; /* Moved up closer to the picture */
   width: max-content; /* Allow it to be wider than the 320px image container */
   max-width: 100vw;
   box-sizing: border-box;
@@ -1737,10 +1737,10 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.02);
+  background: #f3f4f6; /* Gray background so the dots pop */
   padding: 0.5rem 1rem;
   border-radius: 999px; /* Pill shape for horizontal tags */
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
   transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
   letter-spacing: 0.01em;
   width: auto; /* Auto width based on content */
@@ -1787,12 +1787,12 @@ body {
 }
 
 .dark-theme .hero-fact-tag {
-  background: rgba(255, 255, 255, 0.02);
-  border-color: rgba(255, 255, 255, 0.05);
+  background: #1f2937; /* Dark gray */
+  border-color: #374151;
 }
 
 .dark-theme .hero-fact-tag:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: #374151;
   color: #ffffff;
 }
 
