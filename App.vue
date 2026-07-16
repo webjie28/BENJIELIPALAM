@@ -1033,8 +1033,9 @@ const changeTheme = (themeName) => {
       glow: 'rgba(234, 88, 12, 0.08)',
       badge: 'rgba(234, 88, 12, 0.06)',
       badgeText: '#c2410c',
-      darkBgPrimary: '#431400', // Much more noticeable dark orange
-      darkBgSecondary: '#5e1c00'
+      glow1: 'rgba(234, 88, 12, 0.45)',
+      glow2: 'rgba(217, 119, 6, 0.3)',
+      glow3: 'rgba(234, 88, 12, 0.15)'
     },
     teal: {
       primary: '#0d9488', // Teal
@@ -1042,8 +1043,9 @@ const changeTheme = (themeName) => {
       glow: 'rgba(13, 148, 136, 0.08)',
       badge: 'rgba(13, 148, 136, 0.06)',
       badgeText: '#0f766e',
-      darkBgPrimary: '#002f2a', // Much more noticeable dark teal
-      darkBgSecondary: '#00473f'
+      glow1: 'rgba(13, 148, 136, 0.45)',
+      glow2: 'rgba(2, 132, 199, 0.3)',
+      glow3: 'rgba(13, 148, 136, 0.15)'
     },
     blue: {
       primary: '#2563eb', // Blue
@@ -1051,8 +1053,9 @@ const changeTheme = (themeName) => {
       glow: 'rgba(37, 99, 235, 0.10)',
       badge: 'rgba(37, 99, 235, 0.08)',
       badgeText: '#1d4ed8',
-      darkBgPrimary: '#071842', // Much more noticeable dark blue
-      darkBgSecondary: '#0a2366'
+      glow1: 'rgba(37, 99, 235, 0.45)',
+      glow2: 'rgba(99, 102, 241, 0.3)',
+      glow3: 'rgba(37, 99, 235, 0.15)'
     }
   };
   const theme = roots[themeName];
@@ -1061,8 +1064,9 @@ const changeTheme = (themeName) => {
   document.documentElement.style.setProperty('--accent-glow', theme.glow);
   document.documentElement.style.setProperty('--badge-bg', theme.badge);
   document.documentElement.style.setProperty('--badge-text', theme.badgeText);
-  document.documentElement.style.setProperty('--dark-bg-primary', theme.darkBgPrimary);
-  document.documentElement.style.setProperty('--dark-bg-secondary', theme.darkBgSecondary);
+  document.documentElement.style.setProperty('--hero-glow-1', theme.glow1);
+  document.documentElement.style.setProperty('--hero-glow-2', theme.glow2);
+  document.documentElement.style.setProperty('--hero-glow-3', theme.glow3);
 };
 
 // Projects State & Github Fetching
@@ -3049,8 +3053,8 @@ button.cta-btn {
 
 /* 🌙 Dark Mode Variables Override */
 .dark-theme {
-  --bg-primary: var(--dark-bg-primary, #050505);
-  --bg-secondary: var(--dark-bg-secondary, #0a0a0a);
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
   --text-primary: #f5f5f4;
   --text-secondary: #b8b4af;
   --card-bg: rgba(15, 15, 15, 0.65);
@@ -3067,9 +3071,9 @@ button.cta-btn {
 /* Pinia-style glow for Avatar in Dark Mode - Main Light Source */
 .dark-theme .hero-image-frame {
   box-shadow: 0 30px 60px var(--shadow-color), 
-              0 0 100px rgba(230, 255, 0, 0.45), 
-              0 0 250px rgba(0, 255, 120, 0.3),
-              0 0 450px rgba(0, 255, 120, 0.15);
+              0 0 100px var(--hero-glow-1, rgba(230, 255, 0, 0.45)), 
+              0 0 250px var(--hero-glow-2, rgba(0, 255, 120, 0.3)),
+              0 0 450px var(--hero-glow-3, rgba(0, 255, 120, 0.15));
 }
 
 /* Navbar */
