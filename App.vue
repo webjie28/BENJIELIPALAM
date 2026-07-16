@@ -803,8 +803,8 @@
             
             <div class="cv-edu-item">
               <div class="cv-edu-details">
-                <span class="cv-school-name"><a href="https://cvsu.edu.ph/" target="_blank" class="cv-link-accent">Cavite State University – CCAT Campus</a> &nbsp;|&nbsp; <em>2022 – 2026</em></span>
-                <span class="cv-degree-name">Bachelor of Science in Computer Science</span>
+                <span class="cv-school-name"><a href="https://cvsu.edu.ph/" target="_blank" class="cv-link-accent">Cavite State University – CCAT Campus</a> &nbsp;&nbsp; <em>2022 – 2026</em></span>
+                <span class="cv-degree-name"><em>Bachelor of Science in Computer Science</em></span>
               </div>
             </div>
           </div>
@@ -814,9 +814,26 @@
             <h2 class="cv-section-heading">Projects</h2>
             
             <div class="cv-project-item">
+              <h3 class="cv-project-title">AI Recruiter Agent &nbsp;<span class="cv-tech-stack">| &nbsp;<em>n8n, Google Gemini API, Google Sheets, Gmail API</em></span></h3>
+              <ul class="cv-bullets">
+                <li>Built a production-grade recruitment automation agent that screens incoming resumes from Gmail, filters spam, and uses AI to parse and log candidate data to Google Sheets.</li>
+                <li>Designed a 4-route classification system that auto-drafts tailored interview invitations or HR review alerts based on candidate seniority and role fit, with duplicate-candidate prevention via upsert logic.</li>
+                <li>Deployed the workflow engine 24/7 on Railway for real-time processing of incoming applications.</li>
+              </ul>
+            </div>
+
+            <div class="cv-project-item">
+              <h3 class="cv-project-title">n8n Automated Attendance Engine &nbsp;<span class="cv-tech-stack">| &nbsp;<em>n8n, Railway, Gmail API, PostgreSQL</em></span></h3>
+              <ul class="cv-bullets">
+                <li>Developed a serverless workflow automating daily attendance clock-in/clock-out with weekday-aware scheduling and timezone-safe logic to prevent UTC/local discrepancies.</li>
+                <li>Integrated Gmail API with OAuth2 for real-time HTML email notifications and PostgreSQL for persistent cloud storage of credentials and configuration.</li>
+              </ul>
+            </div>
+
+            <div class="cv-project-item">
               <h3 class="cv-project-title">Automotive Spare Parts Decision Support System (Thesis) &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, TypeScript, Node.js, Express, Python</em></span></h3>
               <ul class="cv-bullets">
-                <li>Collaborated in a team of three to design and build a comprehensive decision support system for spare parts inventory.</li>
+                <li>Collaborated in a team of three to design and build a decision support system for spare parts inventory.</li>
                 <li>Developed responsive frontend views using React and TypeScript, and engineered statistical forecasting APIs using Node.js, Express.js, and Python.</li>
               </ul>
             </div>
@@ -824,26 +841,32 @@
             <div class="cv-project-item">
               <h3 class="cv-project-title">MNL Lumiere — Streetwear Brand Web Application &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, Vite, Firebase</em></span></h3>
               <ul class="cv-bullets">
-                <li>Built a modern e-commerce-style brand website for a streetwear label using React 19 and Vite for a fast, component-driven frontend.</li>
-                <li>Integrated Firebase for backend services, enabling scalable data handling and app hosting.</li>
-                <li>Designed a custom typography and visual identity system with Google Fonts (Fraunces, Inter, JetBrains Mono) for on-brand, responsive UI.</li>
-                <li>Set up Oxlint with React-specific rules to enforce code quality and consistency across the codebase.</li>
+                <li>Built a modern e-commerce-style brand website using React 19 and Vite, with Firebase integration for scalable data handling and hosting.</li>
+                <li>Designed a custom typography and visual identity system for on-brand, responsive UI, and set up Oxlint for code quality consistency.</li>
               </ul>
             </div>
 
             <div class="cv-project-item">
-              <h3 class="cv-project-title">Daily Life Tracking System &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Vue.js</em></span></h3>
+              <h3 class="cv-project-title">Daily Life Tracking System &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Vue.js, Firebase, Pinia</em></span></h3>
               <ul class="cv-bullets">
-                <li>Programmed a productivity platform to log and track personal routines.</li>
+                <li>Programmed a productivity platform to log and track personal routines, habits, finances, and workouts.</li>
                 <li>Built reactive visualization widgets and responsive charts to help users review habit completion logs and analyze daily schedules.</li>
               </ul>
             </div>
 
             <div class="cv-project-item">
-              <h3 class="cv-project-title">Personalized Banking System &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Java</em></span></h3>
+              <h3 class="cv-project-title">Mobile App UI/UX Design — Pharmacy & E-commerce Apps &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Figma</em></span></h3>
               <ul class="cv-bullets">
-                <li>Developed a personal account system that allows users to deposit and withdraw funds, maintaining unique balances per account.</li>
-                <li>Implemented account creation and simple authentication logic.</li>
+                <li>Designed complete mobile app UI/UX flows in Figma, including onboarding, authentication, and home dashboard screens for a pharmacy ordering app and a separate e-commerce concept.</li>
+                <li>Applied consistent branding, color systems, and layout structure across multi-screen user flows.</li>
+              </ul>
+            </div>
+
+            <div class="cv-project-item">
+              <h3 class="cv-project-title">Bayanihan Escrow &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Rust, Soroban (Stellar Smart Contracts)</em></span></h3>
+              <ul class="cv-bullets">
+                <li>Built an on-chain escrow smart contract securing freelance milestone payments for Southeast Asian freelancers, developed during the Stellar Philippines Bootcamp 2026.</li>
+                <li>Implemented fund deposit, approval-based release, and cancellation-refund logic in Rust, validated with automated unit tests and deployed to the Stellar Testnet.</li>
               </ul>
             </div>
           </div>
@@ -853,9 +876,10 @@
             <h2 class="cv-section-heading">Skills</h2>
             
             <div class="cv-skills-content">
-              <p><strong>Programming Languages:</strong> JavaScript (ES6+), TypeScript, HTML5, CSS3, Java, C++, Python</p>
+              <p><strong>Programming Languages:</strong> JavaScript (ES6+), TypeScript, HTML5, CSS3, Java, C++, Python, Rust</p>
               <p><strong>Frameworks &amp; Libraries:</strong> React, Vue.js (Vue 3), Vite, Node.js, Express.js, Firebase, EmailJS, Tailwind CSS</p>
-              <p><strong>Tools &amp; Platforms:</strong> VS Code, Git, GitHub, Vercel, NetBeans, Eclipse, Code::Blocks, Oxlint</p>
+              <p><strong>AI &amp; Automation:</strong> n8n workflow automation, Make, Google Gemini API, agentic AI tooling (OpenAI Agents SDK, Cursor)</p>
+              <p><strong>Tools &amp; Platforms:</strong> VS Code, Git, GitHub, Vercel, Railway, PostgreSQL, NetBeans, Eclipse, Code::Blocks, Figma</p>
             </div>
           </div>
         </div>
@@ -894,7 +918,7 @@ const showCursor2 = ref(false);
 
 const startTypingEffect = async () => {
   const cmd = "whoami";
-  const output = "Computer Science  |  UI/UX + Frontend  |  Graduating 2026";
+  const output = "Computer Science  |  UI/UX + Frontend  |  Agentic AI";
   
   await new Promise(r => setTimeout(r, 800));
   
@@ -2751,9 +2775,9 @@ button.cta-btn {
     flex-direction: column !important;
     padding: 0 !important;
     margin: 0 !important;
-    gap: 0.4rem !important;
-    font-size: 10pt !important;
-    line-height: 1.3 !important;
+    gap: 0.2rem !important;
+    font-size: 9pt !important;
+    line-height: 1.2 !important;
     background: #ffffff !important;
     overflow: visible !important;
   }
@@ -2790,17 +2814,17 @@ button.cta-btn {
   }
 
   .cv-edu-item {
-    font-size: 8.5pt !important;
-    margin-bottom: 0.15rem !important;
+    font-size: 8pt !important;
+    margin-bottom: 0.1rem !important;
   }
 
   .cv-project-item {
-    margin-bottom: 0.2rem !important;
+    margin-bottom: 0.15rem !important;
   }
 
   .cv-project-title {
     font-size: 8.5pt !important;
-    margin-bottom: 0.05rem !important;
+    margin-bottom: 0.02rem !important;
   }
 
   .cv-tech-stack {
@@ -2808,20 +2832,20 @@ button.cta-btn {
   }
 
   .cv-bullets {
-    font-size: 8pt !important;
-    padding-left: 1.1rem !important;
+    font-size: 7.8pt !important;
+    padding-left: 1rem !important;
   }
 
   .cv-bullets li {
-    margin-bottom: 0.1rem !important;
+    margin-bottom: 0.05rem !important;
   }
 
   .cv-skills-content {
-    font-size: 8.5pt !important;
+    font-size: 8.2pt !important;
   }
 
   .cv-skills-content p {
-    margin-bottom: 0.15rem !important;
+    margin-bottom: 0.1rem !important;
   }
 
   /* Prevent elements from breaking across pages */
