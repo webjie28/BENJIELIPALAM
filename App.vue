@@ -227,6 +227,13 @@
                     <p>Unifying frontend engineering with clean design to build responsive web applications that deliver great user experiences.</p>
                   </div>
                 </div>
+                <div class="timeline-step reveal-on-scroll">
+                  <div class="step-marker"></div>
+                  <div class="step-content">
+                    <h5>The Automation Leap</h5>
+                    <p>Diving into agentic AI engineering — building autonomous workflows with n8n, exploring OpenAI Agents SDK, CrewAI, LangGraph, and Google ADK to bridge frontend craft with intelligent systems.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -255,6 +262,19 @@
                   <h4>UI/UX &amp; Web Design</h4>
                 </div>
                 <p>Crafting intuitive layout structures, selecting balanced typography, implementing clean color palettes, and creating polished visual elements to build highly engaging user interfaces.</p>
+              </div>
+              <div class="skill-category reveal-on-scroll">
+                <div class="skill-icon-title">
+                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                    <rect x="4" y="8" width="16" height="12" rx="2" ry="2"></rect>
+                    <path d="M12 8V4"></path>
+                    <path d="M8 4h8"></path>
+                    <circle cx="9" cy="13" r="1"></circle>
+                    <circle cx="15" cy="13" r="1"></circle>
+                  </svg>
+                  <h4>Agentic AI &amp; Automation</h4>
+                </div>
+                <p>Building automated workflows with n8n, Gemini API, and multi-agent frameworks — including an AI recruiter agent that screens resumes and drafts responses, and an automated attendance system with PostgreSQL integration.</p>
               </div>
             </div>
           </div>
@@ -2009,11 +2029,11 @@ body {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .skills-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
