@@ -176,9 +176,9 @@
             </div>
 
             <div class="hero-quick-facts animate-in stagger-4">
-              <span class="hero-fact-tag"><span class="fact-bullet orange"></span> Frontend Development</span>
+              <span class="hero-fact-tag"><span class="fact-bullet orange"></span> Frontend</span>
               <span class="hero-fact-tag"><span class="fact-bullet green"></span> UI/UX Design</span>
-              <span class="hero-fact-tag"><span class="fact-bullet blue"></span> Agentic AI Systems</span>
+              <span class="hero-fact-tag"><span class="fact-bullet blue"></span> Agentic AI</span>
             </div>
           </div>
         </div>
