@@ -695,9 +695,6 @@
                   </div>
                 </div>
 
-                <a href="https://github.com/webjie28" target="_blank" class="social-btn large">
-                  Connect on GitHub
-                </a>
               </div>
 
               <!-- Contact Form -->
