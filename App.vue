@@ -1720,10 +1720,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  align-items: flex-start; /* Align list perfectly on the left */
+  align-items: stretch; /* Stretch tags to fill the full width */
   margin-top: 1.5rem;
-  width: 100%;
-  max-width: 250px; /* Keep it tight below the image */
+  width: 320px; /* Match exactly the width of .hero-image-frame */
+  max-width: 100%; /* Ensure responsiveness on small screens */
+  box-sizing: border-box;
 }
 
 .hero-fact-tag {
@@ -1740,6 +1741,7 @@ body {
   transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
   letter-spacing: 0.01em;
   width: 100%;
+  box-sizing: border-box; /* Crucial for straight edges */
 }
 
 .fact-bullet {
