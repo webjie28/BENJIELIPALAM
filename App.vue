@@ -1720,13 +1720,13 @@ body {
 .hero-quick-facts {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Force them to stay on one line */
   justify-content: center;
   gap: 0.6rem;
   align-items: center;
   margin-top: 1.5rem;
-  width: 100%;
-  max-width: 600px; /* Increased to allow them to sit side-by-side */
+  width: max-content; /* Allow it to be wider than the 320px image container */
+  max-width: 100vw;
   box-sizing: border-box;
 }
 
@@ -1754,16 +1754,16 @@ body {
   flex-shrink: 0;
 }
 .fact-bullet.orange { 
-  background: radial-gradient(circle at 30% 30%, #fb923c, #ea580c); 
-  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.6), 0 0 8px rgba(234, 88, 12, 0.5); 
+  background: #fb923c; 
+  box-shadow: inset -2px -2px 3px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.8), 0 0 10px #fb923c, 0 0 20px #ea580c; 
 }
 .fact-bullet.green { 
-  background: radial-gradient(circle at 30% 30%, #34d399, #10b981); 
-  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.6), 0 0 8px rgba(16, 185, 129, 0.5); 
+  background: #34d399; 
+  box-shadow: inset -2px -2px 3px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.8), 0 0 10px #34d399, 0 0 20px #10b981; 
 }
 .fact-bullet.blue { 
-  background: radial-gradient(circle at 30% 30%, #93c5fd, #3b82f6); 
-  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.6), 0 0 8px rgba(59, 130, 246, 0.5); 
+  background: #60a5fa; 
+  box-shadow: inset -2px -2px 3px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.8), 0 0 10px #60a5fa, 0 0 20px #3b82f6; 
 }
 
 .hero-fact-tag:hover {
