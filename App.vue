@@ -1696,6 +1696,7 @@ body {
   animation: float 6s ease-in-out infinite;
   overflow: hidden;
   transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
 .hero-avatar {
@@ -1728,7 +1729,7 @@ body {
 }
 
 .hero-fact-tag {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.75rem;
   font-size: 0.95rem;
