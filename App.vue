@@ -1567,15 +1567,23 @@ body {
   gap: 0.5rem;
 }
 
+@keyframes btn-pulse {
+  0% { box-shadow: 0 0 10px var(--accent-glow); }
+  50% { box-shadow: 0 0 25px var(--accent-glow), 0 0 45px var(--accent-glow); }
+  100% { box-shadow: 0 0 10px var(--accent-glow); }
+}
+
 .primary-btn {
   background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
   color: #ffffff !important;
   box-shadow: 0 6px 20px var(--accent-glow);
+  animation: btn-pulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .primary-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 25px var(--accent-glow);
+  animation: none;
 }
 
 .secondary-btn {
@@ -2867,6 +2875,13 @@ button.cta-btn {
   --card-border: rgba(255, 255, 255, 0.07);
   --shadow-color: rgba(0, 0, 0, 0.5);
   --badge-bg: rgba(var(--accent-rgb, 234, 88, 12), 0.12);
+}
+
+/* Pinia-style glow for Avatar in Dark Mode */
+.dark-theme .hero-image-frame {
+  box-shadow: 0 30px 60px var(--shadow-color), 
+              0 0 50px rgba(230, 255, 0, 0.35), 
+              0 0 100px rgba(0, 255, 120, 0.25);
 }
 
 /* Navbar */
