@@ -1045,19 +1045,22 @@ const customRepoDetails = {
     title: 'my-soroban.studio',
     subtitle: 'Blockchain & Smart Contracts',
     description: 'A blockchain-based project built using the Rust programming language and the Soroban smart contract platform.',
-    tags: ['Rust', 'Blockchain', 'Smart Contracts', 'Soroban']
+    tags: ['Rust', 'Blockchain', 'Smart Contracts', 'Soroban'],
+    liveLink: 'https://github.com/webjie28/my-soroban.studio'
   },
   'n8n-auto-clock-in-out': {
     title: 'Auto Clock-In/Out',
     subtitle: 'n8n Workflow Automation',
     description: 'Automated work clock-in and clock-out system using n8n, Railway, and Gmail API.',
-    tags: ['n8n', 'Automation', 'JavaScript', 'Railway', 'Gmail API']
+    tags: ['n8n', 'Automation', 'JavaScript', 'Railway', 'Gmail API'],
+    liveLink: 'https://github.com/webjie28/n8n-auto-clock-in-out'
   },
   'AI-recruitment-agent-n8n': {
     title: 'AI Recruitment Agent',
     subtitle: 'n8n Workflow Automation',
     description: 'An automated AI-driven recruitment agent workflow designed using n8n for intelligent candidate processing.',
-    tags: ['n8n', 'AI', 'Automation', 'HTML']
+    tags: ['n8n', 'AI', 'Automation', 'HTML'],
+    liveLink: 'https://ai-recruitment-agent-n8n.vercel.app/'
   },
   'Sales-Reports-Analysis-on-Automotive-Spare-Parts-Business-Using-Decision-Support-System': {
     title: 'Automotive Spare Parts DSS',
@@ -1070,7 +1073,8 @@ const customRepoDetails = {
     title: 'Daily Life Tracking System',
     subtitle: 'Web App Development & Analytics',
     description: 'An interactive productivity system programmed to track habits and daily schedules. Features custom data-visualization charts, local state managers, and a clean responsive UI to help users analyze personal time-allocation trends.',
-    tags: ['Vue.js', 'Web App Development', 'State Management', 'UI/UX Design', 'Data Visualization']
+    tags: ['Vue.js', 'Web App Development', 'State Management', 'UI/UX Design', 'Data Visualization'],
+    liveLink: 'https://dailylife-trackingsystem.vercel.app/#/'
   },
   'MNLLUMIERE': {
     title: 'MNLLUMIERE E-Commerce',
