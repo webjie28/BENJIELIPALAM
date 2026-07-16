@@ -1032,21 +1032,27 @@ const changeTheme = (themeName) => {
       secondary: '#d97706', // Gold
       glow: 'rgba(234, 88, 12, 0.08)',
       badge: 'rgba(234, 88, 12, 0.06)',
-      badgeText: '#c2410c'
+      badgeText: '#c2410c',
+      darkBgPrimary: '#150600',
+      darkBgSecondary: '#200d00'
     },
     teal: {
       primary: '#0d9488', // Teal
       secondary: '#0284c7', // Sky Blue
       glow: 'rgba(13, 148, 136, 0.08)',
       badge: 'rgba(13, 148, 136, 0.06)',
-      badgeText: '#0f766e'
+      badgeText: '#0f766e',
+      darkBgPrimary: '#00100d',
+      darkBgSecondary: '#001b16'
     },
     blue: {
       primary: '#2563eb', // Blue
       secondary: '#6366f1', // Indigo
       glow: 'rgba(37, 99, 235, 0.10)',
       badge: 'rgba(37, 99, 235, 0.08)',
-      badgeText: '#1d4ed8'
+      badgeText: '#1d4ed8',
+      darkBgPrimary: '#030814',
+      darkBgSecondary: '#071224'
     }
   };
   const theme = roots[themeName];
@@ -1055,6 +1061,8 @@ const changeTheme = (themeName) => {
   document.documentElement.style.setProperty('--accent-glow', theme.glow);
   document.documentElement.style.setProperty('--badge-bg', theme.badge);
   document.documentElement.style.setProperty('--badge-text', theme.badgeText);
+  document.documentElement.style.setProperty('--dark-bg-primary', theme.darkBgPrimary);
+  document.documentElement.style.setProperty('--dark-bg-secondary', theme.darkBgSecondary);
 };
 
 // Projects State & Github Fetching
@@ -3041,8 +3049,8 @@ button.cta-btn {
 
 /* 🌙 Dark Mode Variables Override */
 .dark-theme {
-  --bg-primary: #050505;
-  --bg-secondary: #0a0a0a;
+  --bg-primary: var(--dark-bg-primary, #050505);
+  --bg-secondary: var(--dark-bg-secondary, #0a0a0a);
   --text-primary: #f5f5f4;
   --text-secondary: #b8b4af;
   --card-bg: rgba(15, 15, 15, 0.65);
