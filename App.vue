@@ -1033,8 +1033,8 @@ const changeTheme = (themeName) => {
       glow: 'rgba(234, 88, 12, 0.08)',
       badge: 'rgba(234, 88, 12, 0.06)',
       badgeText: '#c2410c',
-      darkBgPrimary: '#150600',
-      darkBgSecondary: '#200d00'
+      darkBgPrimary: '#431400', // Much more noticeable dark orange
+      darkBgSecondary: '#5e1c00'
     },
     teal: {
       primary: '#0d9488', // Teal
@@ -1042,8 +1042,8 @@ const changeTheme = (themeName) => {
       glow: 'rgba(13, 148, 136, 0.08)',
       badge: 'rgba(13, 148, 136, 0.06)',
       badgeText: '#0f766e',
-      darkBgPrimary: '#00100d',
-      darkBgSecondary: '#001b16'
+      darkBgPrimary: '#002f2a', // Much more noticeable dark teal
+      darkBgSecondary: '#00473f'
     },
     blue: {
       primary: '#2563eb', // Blue
@@ -1051,8 +1051,8 @@ const changeTheme = (themeName) => {
       glow: 'rgba(37, 99, 235, 0.10)',
       badge: 'rgba(37, 99, 235, 0.08)',
       badgeText: '#1d4ed8',
-      darkBgPrimary: '#030814',
-      darkBgSecondary: '#071224'
+      darkBgPrimary: '#071842', // Much more noticeable dark blue
+      darkBgSecondary: '#0a2366'
     }
   };
   const theme = roots[themeName];
