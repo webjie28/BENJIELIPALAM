@@ -2867,21 +2867,27 @@ button.cta-btn {
 
 /* 🌙 Dark Mode Variables Override */
 .dark-theme {
-  --bg-primary: #0a0908;
-  --bg-secondary: #12100e;
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
   --text-primary: #f5f5f4;
   --text-secondary: #b8b4af;
-  --card-bg: rgba(20, 18, 16, 0.65);
-  --card-border: rgba(255, 255, 255, 0.07);
-  --shadow-color: rgba(0, 0, 0, 0.5);
+  --card-bg: rgba(15, 15, 15, 0.65);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --shadow-color: rgba(0, 0, 0, 0.7);
   --badge-bg: rgba(var(--accent-rgb, 234, 88, 12), 0.12);
 }
 
-/* Pinia-style glow for Avatar in Dark Mode */
+.dark-theme .bg-glow {
+  opacity: 0;
+  display: none;
+}
+
+/* Pinia-style glow for Avatar in Dark Mode - Main Light Source */
 .dark-theme .hero-image-frame {
   box-shadow: 0 30px 60px var(--shadow-color), 
-              0 0 50px rgba(230, 255, 0, 0.35), 
-              0 0 100px rgba(0, 255, 120, 0.25);
+              0 0 100px rgba(230, 255, 0, 0.45), 
+              0 0 250px rgba(0, 255, 120, 0.3),
+              0 0 450px rgba(0, 255, 120, 0.15);
 }
 
 /* Navbar */
