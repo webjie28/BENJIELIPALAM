@@ -1719,30 +1719,32 @@ body {
 
 .hero-quick-facts {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.6rem;
-  align-items: stretch; /* Stretch tags to fill the full width */
+  align-items: center;
   margin-top: 1.5rem;
-  width: 320px; /* Match exactly the width of .hero-image-frame */
-  max-width: 100%; /* Ensure responsiveness on small screens */
+  width: 100%;
+  max-width: 450px;
   box-sizing: border-box;
 }
 
 .hero-fact-tag {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.95rem;
+  gap: 0.6rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-secondary);
   background: rgba(0, 0, 0, 0.02);
-  padding: 0.6rem 1.25rem;
-  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  border-radius: 999px; /* Pill shape for horizontal tags */
   border: 1px solid rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
   letter-spacing: 0.01em;
-  width: 100%;
-  box-sizing: border-box; /* Crucial for straight edges */
+  width: auto; /* Auto width based on content */
+  box-sizing: border-box;
 }
 
 .fact-bullet {
