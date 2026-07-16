@@ -1133,11 +1133,15 @@ onMounted(async () => {
     ];
 
     const promises = repoNames.map(name => 
-      fetch(`https://api.github.com/repos/webjie28/${name}`).then(res => res.json())
+      fetch(`https://api.github.com/repos/webjie28/${name}`)
+        .then(res => res.json())
+        .then(data => ({ ...data, _repoName: name })) // Keep track of the original requested name for fallbacks
     );
     
     const n8nPromises = n8nRepoNames.map(name => 
-      fetch(`https://api.github.com/repos/webjie28/${name}`).then(res => res.json())
+      fetch(`https://api.github.com/repos/webjie28/${name}`)
+        .then(res => res.json())
+        .then(data => ({ ...data, _repoName: name }))
     );
     
     const [fetchedProjects, fetchedN8nProjects] = await Promise.all([
@@ -1146,14 +1150,18 @@ onMounted(async () => {
     ]);
     
     const mapProjectData = (proj) => {
-      const customData = customRepoDetails[proj.name] || {};
+      // Fallback if GitHub API rate limit is exceeded
+      const repoName = proj.name || proj._repoName;
+      const customData = customRepoDetails[repoName] || {};
+      
       return {
         ...proj,
-        customTitle: customData.title || proj.name,
+        id: proj.id || Math.random().toString(36).substr(2, 9), // Fallback ID
+        customTitle: customData.title || repoName || 'Project',
         customSubtitle: customData.subtitle || 'Personal Project',
         customDescription: customData.description || proj.description || 'No description available.',
         tags: customData.tags || ['GitHub Repo'],
-        displayLink: customData.liveLink || proj.homepage || proj.html_url
+        displayLink: customData.liveLink || proj.homepage || proj.html_url || '#'
       };
     };
 
