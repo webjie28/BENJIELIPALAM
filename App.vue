@@ -179,7 +179,11 @@
               <div v-else class="hero-avatar-fallback">BL</div>
             </div>
 
-
+            <div class="hero-quick-facts animate-in stagger-4">
+              <span class="hero-fact-tag">Frontend Development</span>
+              <span class="hero-fact-tag">UI/UX Design</span>
+              <span class="hero-fact-tag">Agentic AI Systems</span>
+            </div>
           </div>
         </div>
       </section>
@@ -1692,7 +1696,7 @@ body {
   border-radius: 32px;
   border: 4px solid rgba(255, 255, 255, 0.85);
   background: var(--card-bg);
-  box-shadow: 0 30px 60px var(--shadow-color), 0 0 30px var(--accent-glow);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); /* Soft shadow for light mode */
   animation: float 6s ease-in-out infinite;
   overflow: hidden;
   transition: box-shadow 0.3s ease;
@@ -1714,6 +1718,42 @@ body {
   font-weight: 800;
   color: #ffffff;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+}
+
+.hero-quick-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.hero-fact-tag {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.03);
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.hero-fact-tag:hover {
+  transform: translateY(-2px);
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.dark-theme .hero-fact-tag {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .hero-fact-tag:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
 }
 
 .hero-terminal {
