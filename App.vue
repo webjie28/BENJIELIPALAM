@@ -1748,22 +1748,36 @@ body {
 }
 
 .fact-bullet {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
+  animation: 2.4s ease-out 0s infinite normal none running pulse-dot;
 }
+
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 var(--pulse-color);
+  }
+  70% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
 .fact-bullet.orange { 
-  background: #fb923c; 
-  box-shadow: inset -2px -2px 3px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.8), 0 0 10px #fb923c, 0 0 20px #ea580c; 
+  background-color: #ea580c; 
+  --pulse-color: rgba(234, 88, 12, 0.6);
 }
 .fact-bullet.green { 
-  background: #34d399; 
-  box-shadow: inset -2px -2px 3px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.8), 0 0 10px #34d399, 0 0 20px #10b981; 
+  background-color: #10b981; 
+  --pulse-color: rgba(16, 185, 129, 0.6);
 }
 .fact-bullet.blue { 
-  background: #60a5fa; 
-  box-shadow: inset -2px -2px 3px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.8), 0 0 10px #60a5fa, 0 0 20px #3b82f6; 
+  background-color: #3b82f6; 
+  --pulse-color: rgba(59, 130, 246, 0.6);
 }
 
 .hero-fact-tag:hover {
