@@ -1726,7 +1726,7 @@ body {
   align-items: center;
   margin-top: 1.5rem;
   width: 100%;
-  max-width: 450px;
+  max-width: 600px; /* Increased to allow them to sit side-by-side */
   box-sizing: border-box;
 }
 
@@ -1748,14 +1748,23 @@ body {
 }
 
 .fact-bullet {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
-.fact-bullet.orange { background: #ea580c; box-shadow: 0 0 8px rgba(234, 88, 12, 0.5); }
-.fact-bullet.green { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
-.fact-bullet.blue { background: #3b82f6; box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); }
+.fact-bullet.orange { 
+  background: radial-gradient(circle at 30% 30%, #fb923c, #ea580c); 
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.6), 0 0 8px rgba(234, 88, 12, 0.5); 
+}
+.fact-bullet.green { 
+  background: radial-gradient(circle at 30% 30%, #34d399, #10b981); 
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.6), 0 0 8px rgba(16, 185, 129, 0.5); 
+}
+.fact-bullet.blue { 
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #3b82f6); 
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.6), 0 0 8px rgba(59, 130, 246, 0.5); 
+}
 
 .hero-fact-tag:hover {
   transform: translateX(4px);
