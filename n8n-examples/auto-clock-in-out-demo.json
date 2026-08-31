@@ -1,0 +1,93 @@
+{
+  "name": "Portfolio Demo — Auto Clock-In/Out",
+  "nodes": [
+    {
+      "parameters": { "content": "## Auto Clock-In/Out\n**Safe portfolio demo** — validates a Manila time window and creates an audit-ready action.\n\nNo attendance platform is called.", "height": 160, "width": 300, "color": 4 },
+      "id": "5cac164e-d494-4e3c-9185-55e7b25d6f81",
+      "name": "What this demo shows",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, -220]
+    },
+    {
+      "parameters": {},
+      "id": "94a4bb65-303b-4f47-8898-9fc38059188e",
+      "name": "Run attendance demo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst parts = new Intl.DateTimeFormat('en-US', {\n  timeZone: 'Asia/Manila',\n  weekday: 'short',\n  hour: '2-digit',\n  minute: '2-digit',\n  hourCycle: 'h23'\n}).formatToParts(now);\nconst value = (type) => parts.find((part) => part.type === type)?.value;\n\nreturn [{\n  json: {\n    employee: 'Benjie Lipalam',\n    weekday: value('weekday'),\n    hour: Number(value('hour')),\n    minute: Number(value('minute')),\n    timezone: 'Asia/Manila',\n    checkedAt: now.toISOString()\n  }\n}];"
+      },
+      "id": "470ef0e4-0d76-47b9-8a53-49a9f4a08da0",
+      "name": "Read Manila work time",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [250, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => {\n  const weekday = !['Sat', 'Sun'].includes(json.weekday);\n  const minutes = json.hour * 60 + json.minute;\n  const clockIn = minutes >= 480 && minutes <= 555;\n  const clockOut = minutes >= 1020 && minutes <= 1095;\n  const action = weekday && clockIn ? 'CLOCK_IN' : weekday && clockOut ? 'CLOCK_OUT' : 'HOLD';\n\n  return {\n    json: {\n      ...json,\n      action,\n      validWindow: action !== 'HOLD',\n      explanation: action === 'HOLD' ? 'Outside the approved time windows; no action is taken.' : `Validated ${action.replace('_', ' ').toLowerCase()} window.`\n    }\n  };\n});"
+      },
+      "id": "aa6f4080-55ee-42d5-bb1f-a50aec3ea740",
+      "name": "Validate clock window",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 2 },
+          "conditions": [
+            {
+              "id": "f4e7e4f5-4e11-4fe7-bd11-12d06163f4ea",
+              "leftValue": "={{ $json.validWindow }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b3e17334-db50-4e99-b3bb-79f325d7977e",
+      "name": "Approved time window?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [790, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => ({\n  json: {\n    ...json,\n    auditStatus: 'Ready for attendance API',\n    auditMessage: `${json.action} validated for ${json.employee}.`\n  }\n}));"
+      },
+      "id": "bb2d94ec-e3b3-4dd1-8bdb-b5dc1cf5cb18",
+      "name": "Prepare audit event",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, -80]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => ({\n  json: {\n    ...json,\n    auditStatus: 'No action',\n    auditMessage: json.explanation\n  }\n}));"
+      },
+      "id": "51455a36-fd06-4ec8-9909-b8d0c1c56979",
+      "name": "Record safe hold",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 100]
+    }
+  ],
+  "connections": {
+    "Run attendance demo": { "main": [[{ "node": "Read Manila work time", "type": "main", "index": 0 }]] },
+    "Read Manila work time": { "main": [[{ "node": "Validate clock window", "type": "main", "index": 0 }]] },
+    "Validate clock window": { "main": [[{ "node": "Approved time window?", "type": "main", "index": 0 }]] },
+    "Approved time window?": { "main": [[{ "node": "Prepare audit event", "type": "main", "index": 0 }], [{ "node": "Record safe hold", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "cc5bc82a-0d3f-437e-849f-06bcfe6f434e"
+}

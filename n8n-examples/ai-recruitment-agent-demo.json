@@ -1,0 +1,93 @@
+{
+  "name": "Portfolio Demo — AI Recruitment Agent",
+  "nodes": [
+    {
+      "parameters": { "content": "## AI Recruitment Agent\n**Safe portfolio demo** — sample candidate → transparent score → shortlist decision.\n\nNo email is sent and no applicant data is stored.", "height": 160, "width": 300, "color": 5 },
+      "id": "1d1c6d4f-3bdd-4e2c-8c38-b9004f735c31",
+      "name": "What this demo shows",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, -220]
+    },
+    {
+      "parameters": {},
+      "id": "57a3a0d7-6498-47f7-8d45-731e908ad7a5",
+      "name": "Run candidate demo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    candidate: 'Ariana Cruz',\n    role: 'Frontend Developer',\n    yearsExperience: 2,\n    skills: ['Vue', 'Firebase', 'n8n'],\n    portfolio: true,\n    communication: 'strong'\n  }\n}];"
+      },
+      "id": "808a751a-d1a5-48d1-98a6-a2cfa9505c66",
+      "name": "Example candidate intake",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => {\n  const skillPoints = Math.min(json.skills.length * 15, 45);\n  const experiencePoints = Math.min(json.yearsExperience * 12, 30);\n  const portfolioPoints = json.portfolio ? 15 : 0;\n  const communicationPoints = json.communication === 'strong' ? 10 : 0;\n  const score = skillPoints + experiencePoints + portfolioPoints + communicationPoints;\n\n  return {\n    json: {\n      ...json,\n      score,\n      reasoning: `Skills ${skillPoints}/45 · experience ${experiencePoints}/30 · portfolio ${portfolioPoints}/15 · communication ${communicationPoints}/10`\n    }\n  };\n});"
+      },
+      "id": "3101d280-b0ae-47ee-9e36-035abc9d3bd1",
+      "name": "Transparent candidate scoring",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 2 },
+          "conditions": [
+            {
+              "id": "b39a1301-9cf6-4637-976d-8d21e9232a6e",
+              "leftValue": "={{ $json.score }}",
+              "rightValue": 70,
+              "operator": { "type": "number", "operation": "gte" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6c98f7b1-e2ae-4e6c-bacd-509abb3c77b7",
+      "name": "Ready for interview?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [760, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => ({\n  json: {\n    ...json,\n    status: 'Shortlisted',\n    nextStep: 'Invite candidate to a first interview'\n  }\n}));"
+      },
+      "id": "2fe541bd-d4b0-443b-afc3-16cf6174e264",
+      "name": "Create shortlist result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1020, -80]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => ({\n  json: {\n    ...json,\n    status: 'Needs review',\n    nextStep: 'Keep in talent pool with human review'\n  }\n}));"
+      },
+      "id": "8b8ea22a-bd07-48ac-a90e-bec7be762644",
+      "name": "Create review result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1020, 100]
+    }
+  ],
+  "connections": {
+    "Run candidate demo": { "main": [[{ "node": "Example candidate intake", "type": "main", "index": 0 }]] },
+    "Example candidate intake": { "main": [[{ "node": "Transparent candidate scoring", "type": "main", "index": 0 }]] },
+    "Transparent candidate scoring": { "main": [[{ "node": "Ready for interview?", "type": "main", "index": 0 }]] },
+    "Ready for interview?": { "main": [[{ "node": "Create shortlist result", "type": "main", "index": 0 }], [{ "node": "Create review result", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "c0d49591-b303-4da6-b5ca-8c09cb3be7a9"
+}
