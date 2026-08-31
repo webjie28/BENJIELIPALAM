@@ -298,29 +298,16 @@
         <section id="creations" class="chapter-section scroll-section reveal-on-scroll">
           <div class="glass-card">
             <h2 class="chapter-header">Selected Works</h2>
-            <p class="chapter-subtitle">Live repository data fetched directly from GitHub, enriched with custom operational contexts.</p>
-            
-            <div class="project-grid">
-              <div class="project-card reveal-on-scroll" v-for="project in projects" :key="project.id">
-                <div class="project-header">
-                  <span class="project-badge">{{ project.customSubtitle }}</span>
-                </div>
-                <h3 class="project-title">{{ project.customTitle }}</h3>
-                <p class="project-desc">{{ project.customDescription }}</p>
-                <div class="project-tags">
-                  <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-                </div>
-                <div class="project-footer">
-                  <a :href="project.displayLink" target="_blank" class="view-btn">
-                    <span>Visit Live App</span>
-                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </a>
-                </div>
-              </div>
+            <p class="chapter-subtitle">Short visual case studies built from real interfaces, workflow captures, and live project sources.</p>
+            <div class="reel-grid">
+              <article v-for="reel in systemReels" :key="reel.title" :class="['system-reel', reel.tone, 'reveal-on-scroll']">
+                <a :href="reel.href" :target="reel.href.startsWith('http') ? '_blank' : undefined" class="reel-stage" :aria-label="`Open ${reel.title}`">
+                  <video autoplay muted loop playsinline preload="metadata" :poster="reel.poster" :aria-label="`${reel.title} system reel`"><source :src="reel.video" type="video/webm" /></video>
+                  <img v-if="reel.overlay" :src="reel.overlay" class="reel-overlay" alt="" aria-hidden="true" />
+                  <span class="reel-scan"></span><span class="reel-play">▶</span><span class="reel-duration">00:06</span>
+                </a>
+                <div class="reel-copy"><span>{{ reel.kicker }}</span><h3>{{ reel.title }}</h3><p>{{ reel.description }}</p><small>{{ reel.detail }}</small></div>
+              </article>
             </div>
           </div>
         </section>
@@ -956,6 +943,10 @@ import thesisRecommendations from './screenshots/thesis_4_recommendations.png';
 import thesisInventory from './screenshots/thesis_5_inventory.png';
 import thesisSuppliers from './screenshots/thesis_6_suppliers.png';
 import thesisSettings from './screenshots/thesis_7_settings.png';
+import reelPortfolio from './screenshots/reels/portfolio-ai-hero.png';
+import reelRecruiter from './screenshots/reels/ai-recruiter-overview.png';
+import reelRecruiterFlow from './screenshots/reels/ai-recruiter-workflow.png';
+import reelClock from './screenshots/reels/auto-clock-source.png';
 
 const hasImage = ref(true);
 const activeStep = ref(1);
@@ -970,6 +961,12 @@ const toolStack = [
   { name: 'Gemini', mark: '✦', color: '#4285f4' }, { name: 'GitHub', mark: '⌘', color: '#181717' },
   { name: 'Vercel', mark: '▲', color: '#111111' }, { name: 'PostgreSQL', mark: '◉', color: '#336791' },
   { name: 'JavaScript', mark: 'JS', color: '#d69e2e' }, { name: 'Tailwind', mark: '~', color: '#38bdf8' }
+];
+const systemReels = [
+  { kicker: 'Live portfolio system', title: 'Portfolio AI Assistant', description: 'A visitor question flows through n8n and Gemini, then appears in a private live inbox with a one-time Telegram alert.', poster: reelPortfolio, video: '/reels/portfolio-ai.webm', detail: 'Chat → AI → automation → inbox', href: '#automations', tone: 'orange' },
+  { kicker: 'Automation case study', title: 'AI Recruitment Agent', description: 'A production-oriented n8n recruitment workflow that screens resumes, structures candidate data, prevents duplicates, and drafts replies.', poster: reelRecruiter, video: '/reels/ai-recruiter.webm', overlay: reelRecruiterFlow, detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet' },
+  { kicker: 'Workflow source', title: 'Auto Clock-In / Out', description: 'An n8n workflow designed for scheduled work clock-in and clock-out using Railway and Gmail.', poster: reelClock, video: '/reels/auto-clock.webm', detail: 'Schedule → n8n → Gmail', href: 'https://github.com/webjie28/n8n-auto-clock-in-out', tone: 'blue' },
+  { kicker: 'Decision support system', title: 'Thesis DSS', description: 'A visual walkthrough of automotive sales reporting, demand forecasting, inventory, and recommendations.', poster: thesisDashboard, video: '/reels/thesis-dss.webm', overlay: thesisPredictions, detail: 'Data → forecast → decision', href: '#thesis', tone: 'green' }
 ];
 const isInbox = ref(location.hash === '#inbox');
 const inboxUser = ref(null);
@@ -4550,13 +4547,15 @@ button.cta-btn {
 .hero-scroll-cue { position: absolute; left: 50%; bottom: 1.7rem; transform: translateX(-50%); display: grid; justify-items: center; gap: .55rem; color: var(--text-secondary); text-decoration: none; font-size: .68rem; letter-spacing: .13em; text-transform: uppercase; font-weight: 700; }
 .hero-scroll-cue i { width: 1px; height: 34px; display: block; background: linear-gradient(var(--accent-purple), transparent); animation: scrollCue 1.8s ease-in-out infinite; }
 .hero-image-frame { isolation: isolate; }
-.hero-image-frame::before { content: 'Available for thoughtful work'; position: absolute; z-index: 2; top: -14px; right: -40px; padding: .55rem .8rem; border: 1px solid var(--card-border); border-radius: 999px; background: rgba(255,255,255,.72); color: var(--text-primary); font-size: .68rem; font-weight: 700; box-shadow: 0 14px 35px var(--shadow-color); animation: floatBadge 4s ease-in-out infinite; }
 .system-flow { margin: 2.5rem 0 3rem; padding: 2rem; border-radius: 22px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; overflow: hidden; position: relative; color: #fff; background: linear-gradient(125deg, #1c1917, #382114); box-shadow: 0 25px 55px rgba(73,35,4,.18); }
 .system-flow::before { content:''; position:absolute; width:300px; height:300px; border-radius:50%; right:-80px; top:-190px; background:radial-gradient(circle,rgba(251,146,60,.36),transparent 65%); }
 .system-flow-copy,.flow-nodes { position:relative; z-index:1; }.eyebrow { display:block; margin-bottom:.7rem; color:#fdba74; text-transform:uppercase; letter-spacing:.12em; font-weight:800; font-size:.68rem; }.system-flow h3 { max-width:420px; font-size:clamp(1.45rem,2.3vw,2rem); line-height:1.15; }.system-flow p { margin-top:.8rem; max-width:480px; color:#d6d3d1; line-height:1.65; font-size:.91rem; }.flow-nodes { display:flex; align-items:center; justify-content:center; gap:.7rem; }.flow-node { width:105px; min-height:105px; padding:1rem .75rem; display:grid; align-content:space-between; border:1px solid rgba(255,255,255,.18); border-radius:18px; background:rgba(255,255,255,.08); backdrop-filter:blur(8px); animation: nodeFloat 4.5s ease-in-out infinite; }.flow-node:nth-of-type(2){animation-delay:.5s}.flow-node:nth-of-type(3){animation-delay:1s}.flow-node.accent { border-color:#fb923c; background:rgba(234,88,12,.28); }.flow-node b { color:#fdba74; font-size:.72rem; }.flow-node span { font-size:.83rem; font-weight:800; }.flow-nodes > i { width:24px; height:1px; background:linear-gradient(90deg,#fb923c,rgba(255,255,255,.25)); position:relative; }.flow-nodes > i::after { content:'›'; position:absolute; right:-3px; top:50%; transform:translateY(-53%); color:#fdba74; }.project-card::before { content:''; position:absolute; inset:0; opacity:0; background:linear-gradient(135deg,rgba(255,255,255,.55),transparent 45%); transition:opacity .35s ease; pointer-events:none; }.project-card:hover::before { opacity:1; }
-@keyframes scrollCue { 50% { transform: translateY(8px); opacity:.3; } } @keyframes floatBadge { 50% { transform: translateY(-7px) rotate(1deg); } } @keyframes nodeFloat { 50% { transform: translateY(-7px); } }
-@media (max-width: 760px) { .hero-scroll-cue { display:none; }.hero-image-frame::before { right:-8px; top:-10px; font-size:.58rem; }.system-flow { grid-template-columns:1fr; padding:1.5rem; }.flow-nodes { justify-content:flex-start; }.flow-node { width:90px; min-height:88px; }.flow-nodes > i { width:12px; } }
+@keyframes scrollCue { 50% { transform: translateY(8px); opacity:.3; } } @keyframes nodeFloat { 50% { transform: translateY(-7px); } }
+@media (max-width: 760px) { .hero-scroll-cue { display:none; }.system-flow { grid-template-columns:1fr; padding:1.5rem; }.flow-nodes { justify-content:flex-start; }.flow-node { width:90px; min-height:88px; }.flow-nodes > i { width:12px; } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; } }
 
 .toolbelt { width:min(1080px, calc(100% - 3rem)); margin:-1.8rem auto 4.5rem; position:relative; z-index:2; }.toolbelt > p { margin:0 0 .85rem 1rem; color:var(--text-secondary); font-size:.68rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }.toolbelt-mask { overflow:hidden; padding:.6rem 0; mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent); }.toolbelt-track { width:max-content; display:flex; gap:.8rem; animation:toolMarquee 28s linear infinite; }.toolbelt-track:hover { animation-play-state:paused; }.tool-card { min-width:136px; height:70px; display:flex; align-items:center; gap:.7rem; padding:0 1rem; border:1px solid var(--card-border); border-radius:16px; background:rgba(255,255,255,.64); box-shadow:0 10px 28px var(--shadow-color); color:var(--text-primary); font-size:.84rem; font-weight:800; transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, background .25s ease; cursor:default; }.tool-card:hover { transform:translateY(-7px) scale(1.08); background:#fff; box-shadow:0 18px 35px rgba(120,50,0,.17); }.tool-mark { width:32px; height:32px; display:grid; place-items:center; border-radius:10px; background:color-mix(in srgb,currentColor 12%,white); font-size:1rem; font-weight:900; }.dark-theme .tool-card { background:rgba(31,41,55,.72); border-color:rgba(255,255,255,.12); }.dark-theme .tool-card:hover { background:#273142; } @keyframes toolMarquee { to { transform:translateX(calc(-50% - .4rem)); } }
+
+/* Real-capture motion reels */
+.reel-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.4rem; margin-top:2.25rem; }.system-reel { overflow:hidden; border:1px solid var(--card-border); border-radius:24px; background:rgba(255,255,255,.52); box-shadow:0 16px 40px var(--shadow-color); transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease; }.system-reel:hover { transform:translateY(-7px); box-shadow:0 28px 60px rgba(112,54,5,.16); }.reel-stage { height:250px; display:block; position:relative; overflow:hidden; background:#171717; }.reel-stage>video { width:100%; height:100%; display:block; object-fit:cover; object-position:top center; transform:scale(1.01); transition:transform .8s cubic-bezier(.2,.8,.2,1); }.system-reel:hover .reel-stage>video { transform:scale(1.08); }.reel-overlay { position:absolute; inset:13% 8%; width:84% !important; height:74% !important; border:1px solid rgba(255,255,255,.3); border-radius:10px; box-shadow:0 18px 35px rgba(0,0,0,.38); opacity:0; transform:translateY(14px) rotate(-2deg) !important; transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1) !important; }.system-reel:hover .reel-overlay { opacity:1; transform:translateY(0) rotate(-2deg) !important; }.reel-stage::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.75)); pointer-events:none; }.reel-scan { position:absolute; z-index:1; left:0; right:0; top:-30%; height:28%; background:linear-gradient(transparent,rgba(255,255,255,.16),transparent); animation:reelScan 5s linear infinite; }.reel-play { position:absolute; z-index:2; left:16px; top:16px; width:36px; height:36px; display:grid; place-items:center; border-radius:50%; padding-left:2px; color:#fff; background:rgba(0,0,0,.44); border:1px solid rgba(255,255,255,.35); font-size:.72rem; transition:transform .3s ease,background .3s ease; }.system-reel:hover .reel-play { transform:scale(1.15); background:var(--accent-purple); }.reel-duration { position:absolute; z-index:2; bottom:12px; right:13px; color:#fff; font-size:.65rem; font-weight:800; letter-spacing:.08em; }.reel-copy { padding:1.35rem 1.45rem 1.5rem; }.reel-copy>span { display:block; color:var(--badge-text); font-size:.66rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }.reel-copy h3 { margin:.6rem 0 .55rem; font-size:1.3rem; line-height:1.2; }.reel-copy p { min-height:4.2em; color:var(--text-secondary); font-size:.88rem; line-height:1.58; }.reel-copy small { display:inline-block; margin-top:1.1rem; padding:.38rem .62rem; border-radius:999px; background:var(--badge-bg); color:var(--badge-text); font-size:.68rem; font-weight:800; }.system-reel.violet .reel-copy>span,.system-reel.violet .reel-copy small { color:#7c3aed; }.system-reel.blue .reel-copy>span,.system-reel.blue .reel-copy small { color:#2563eb; }.system-reel.green .reel-copy>span,.system-reel.green .reel-copy small { color:#059669; } @keyframes reelScan { 0%,55% { transform:translateY(0); opacity:0; } 62% { opacity:1; } 85%,100% { transform:translateY(500%); opacity:0; } } @media(max-width:760px){.reel-grid{grid-template-columns:1fr}.reel-stage{height:220px}.reel-copy p{min-height:0}} @media(prefers-reduced-motion:reduce){.reel-scan{display:none}.reel-overlay{transition:none}.system-reel:hover .reel-stage>video{transform:none}}
 </style>
