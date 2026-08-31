@@ -897,13 +897,34 @@
     </div>
   </Transition>
 
+  <!-- n8n-powered portfolio assistant -->
+  <div class="chatbot-shell">
+    <Transition name="chat-pop">
+      <section v-if="chatOpen" class="chatbot-panel" role="dialog" aria-label="Portfolio assistant">
+        <header class="chatbot-header"><div class="chatbot-title"><span class="chatbot-status" aria-hidden="true"></span><div><strong>Ask Benjie's AI</strong><small>Powered by n8n</small></div></div><button class="chatbot-icon-btn" type="button" @click="chatOpen = false" aria-label="Close chat">×</button></header>
+        <div ref="chatMessagesEl" class="chatbot-messages" aria-live="polite"><div v-for="message in chatMessages" :key="message.id" :class="['chat-message', message.role]">{{ message.content }}</div><div v-if="chatSending" class="chat-message assistant chat-typing"><i></i><i></i><i></i></div></div>
+        <div class="chatbot-suggestions"><button v-for="question in chatSuggestions" :key="question" type="button" @click="sendChatMessage(question)">{{ question }}</button></div>
+        <form class="chatbot-form" @submit.prevent="sendChatMessage()"><input v-model="chatInput" :disabled="chatSending" maxlength="1000" autocomplete="off" placeholder="Type your message..." aria-label="Your message" /><button type="submit" :disabled="chatSending || !chatInput.trim()" aria-label="Send message"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button></form>
+      </section>
+    </Transition>
+    <button class="chatbot-launcher" type="button" @click="toggleChat" :aria-expanded="chatOpen" aria-label="Open portfolio assistant"><svg v-if="!chatOpen" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"></path><path d="M8 11h.01M12 11h.01M16 11h.01"></path></svg><span v-else aria-hidden="true">×</span></button>
+  </div>
+
+  <section v-if="isInbox" class="inbox-overlay" aria-label="Live chat inbox">
+    <div class="inbox-header"><div><strong>Live Chat Inbox</strong><span>{{ inboxUser ? 'Realtime visitor conversations' : 'Private admin view' }}</span></div><button @click="closeInbox">×</button></div>
+    <div v-if="!inboxUser" class="inbox-login"><h2>Private inbox</h2><p>Sign in with Benjie's Google account to view live portfolio chats.</p><button @click="signInToInbox">Sign in with Google</button></div>
+    <div v-else-if="!isAdmin" class="inbox-login"><h2>Access restricted</h2><p>This inbox is available only to Benjie's authorized Google account.</p></div>
+    <div v-else class="inbox-content"><aside><button v-for="chat in chatSessions" :key="chat.id" @click="selectedChatId = chat.id" :class="{ selected: selectedChatId === chat.id }"><strong>{{ chat.id.replace('portfolio-', '').slice(0, 12) }}</strong><small>{{ chat.messages.at(-1)?.content || 'New conversation' }}</small></button></aside><main><template v-if="selectedChat"><h2>Conversation</h2><div v-for="message in selectedChat.messages" :key="message.id" :class="['inbox-message', message.role]">{{ message.content }}</div></template><p v-else class="inbox-empty">Waiting for the first live chat…</p></main></div>
+  </section>
+
 
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { db } from './firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, onMounted, nextTick, computed } from 'vue';
+import { db, auth } from './firebase';
+import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import avatarImg from './avatar.png';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
@@ -919,6 +940,57 @@ const activeTheme = ref('orange');
 const isDarkMode = ref(false);
 const showCV = ref(false);
 const mobileMenuOpen = ref(false);
+const isInbox = ref(location.hash === '#inbox');
+const inboxUser = ref(null);
+const chatSessions = ref([]);
+const selectedChatId = ref(null);
+const isAdmin = computed(() => inboxUser.value?.email === import.meta.env.VITE_ADMIN_EMAIL);
+const selectedChat = computed(() => chatSessions.value.find(chat => chat.id === selectedChatId.value));
+const closeInbox = () => { location.hash = ''; isInbox.value = false; };
+const signInToInbox = async () => {
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch (error) { console.error('Inbox sign-in failed', error); }
+};
+const logChatMessage = async (role, content) => {
+  try {
+    await addDoc(collection(db, 'chat_events'), {
+      sessionId: chatSessionId,
+      role,
+      content,
+      clientAt: Date.now(),
+      createdAt: serverTimestamp()
+    });
+  } catch (error) { console.error('Chat logging error:', error); }
+};
+
+// Set VITE_N8N_CHAT_WEBHOOK in .env.local or your deployment environment.
+const chatWebhookUrl = import.meta.env.VITE_N8N_CHAT_WEBHOOK;
+const chatOpen = ref(false);
+const chatInput = ref('');
+const chatSending = ref(false);
+const chatMessagesEl = ref(null);
+const chatSessionId = `portfolio-${crypto.randomUUID?.() || Date.now().toString(36)}`;
+const chatSuggestions = ['What are your skills?', 'Tell me about your projects'];
+const chatMessages = ref([{ id: 1, role: 'assistant', content: "Hi! I'm Benjie's portfolio assistant. Ask me about his skills, projects, or experience." }]);
+const scrollChatToBottom = async () => { await nextTick(); if (chatMessagesEl.value) chatMessagesEl.value.scrollTop = chatMessagesEl.value.scrollHeight; };
+const toggleChat = async () => { chatOpen.value = !chatOpen.value; if (chatOpen.value) await scrollChatToBottom(); };
+const getChatReply = (data) => { const item = Array.isArray(data) ? data[0] : data; if (typeof item === 'string') return item; return item?.reply || item?.text || item?.output || item?.message || item?.response || item?.data?.reply || ''; };
+const sendChatMessage = async (suggestion = '') => {
+  const text = (suggestion || chatInput.value).trim();
+  if (!text || chatSending.value) return;
+  chatMessages.value.push({ id: Date.now(), role: 'user', content: text }); chatInput.value = ''; chatSending.value = true; await scrollChatToBottom();
+  logChatMessage('user', text);
+  try {
+    if (!chatWebhookUrl) throw new Error('missing-webhook');
+    const response = await fetch(chatWebhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, chatInput: text, sessionId: chatSessionId }) });
+    if (!response.ok) throw new Error(`Webhook returned ${response.status}`);
+    const reply = getChatReply(await response.json()); if (!reply) throw new Error('empty-response');
+    chatMessages.value.push({ id: Date.now() + 1, role: 'assistant', content: reply });
+    logChatMessage('assistant', reply);
+  } catch (error) {
+    console.error('Chatbot error:', error);
+    chatMessages.value.push({ id: Date.now() + 1, role: 'assistant', content: !chatWebhookUrl ? 'The assistant is being set up. Please add the n8n webhook URL to VITE_N8N_CHAT_WEBHOOK.' : 'Sorry, I could not reach the assistant right now. Please try again shortly.' });
+  } finally { chatSending.value = false; await scrollChatToBottom(); }
+};
 
 // Terminal Typing Effect
 const terminalCommandText = ref("");
@@ -1123,6 +1195,21 @@ const customRepoDetails = {
 };
 
 onMounted(async () => {
+  onAuthStateChanged(auth, (user) => {
+    inboxUser.value = user;
+    if (user?.email === import.meta.env.VITE_ADMIN_EMAIL) {
+      onSnapshot(query(collection(db, 'chat_events'), orderBy('clientAt', 'desc'), limit(200)), (snapshot) => {
+        const sessions = new Map();
+        snapshot.docs.map(item => ({ id: item.id, ...item.data() })).reverse().forEach((event) => {
+          if (!sessions.has(event.sessionId)) sessions.set(event.sessionId, { id: event.sessionId, messages: [] });
+          sessions.get(event.sessionId).messages.push(event);
+        });
+        chatSessions.value = [...sessions.values()].sort((a, b) => (b.messages.at(-1)?.clientAt || 0) - (a.messages.at(-1)?.clientAt || 0));
+        if (!selectedChatId.value && chatSessions.value[0]) selectedChatId.value = chatSessions.value[0].id;
+      });
+    }
+  });
+  window.addEventListener('hashchange', () => { isInbox.value = location.hash === '#inbox'; });
   // Trigger terminal animation
   startTypingEffect();
 
@@ -1271,6 +1358,10 @@ const submitContact = async () => {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+/* Floating n8n chatbot */
+.inbox-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; background: #101114; color: #f7f7f5; }.inbox-header { display:flex; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid #2b2d33; }.inbox-header strong,.inbox-header span { display:block; }.inbox-header span { margin-top:3px; color:#a8a29e; font-size:.82rem; }.inbox-header button { border:0; background:transparent; color:#fff; font-size:30px; cursor:pointer; }.inbox-login,.inbox-empty { margin:auto; text-align:center; color:#d6d3d1; }.inbox-login button { margin-top:16px; padding:12px 16px; border:0; border-radius:10px; background:#ea580c; color:#fff; font:inherit; cursor:pointer; }.inbox-content { flex:1; min-height:0; display:grid; grid-template-columns:320px 1fr; }.inbox-content aside { overflow:auto; padding:14px; border-right:1px solid #2b2d33; }.inbox-content aside button { display:block; width:100%; padding:13px; margin-bottom:8px; border:1px solid #2b2d33; border-radius:10px; text-align:left; background:#18191d; color:#f7f7f5; cursor:pointer; }.inbox-content aside button.selected { border-color:#ea580c; background:#2a1a12; }.inbox-content aside strong,.inbox-content aside small { display:block; }.inbox-content aside small { overflow:hidden; margin-top:5px; color:#a8a29e; text-overflow:ellipsis; white-space:nowrap; }.inbox-content main { overflow:auto; padding:28px; }.inbox-message { max-width:680px; padding:12px 14px; margin:10px 0; border-radius:12px; line-height:1.5; }.inbox-message.user { margin-left:auto; background:#ea580c; }.inbox-message.assistant { background:#24262c; } @media(max-width:700px){.inbox-content{grid-template-columns:1fr}.inbox-content aside{max-height:180px;border-right:0;border-bottom:1px solid #2b2d33}}
+.chatbot-shell { position: fixed; right: 24px; bottom: 24px; z-index: 500; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }.chatbot-panel { width: min(380px, calc(100vw - 32px)); height: min(520px, calc(100vh - 110px)); display: flex; flex-direction: column; overflow: hidden; background: var(--card-bg, #fff); border: 1px solid var(--card-border, rgba(0,0,0,.1)); border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.2); }.chatbot-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; color: #fff; background: linear-gradient(135deg, var(--accent-purple, #ea580c), var(--accent-blue, #d97706)); }.chatbot-title { display: flex; align-items: center; gap: 10px; }.chatbot-title strong,.chatbot-title small { display: block; }.chatbot-title strong { font-size: .9rem; }.chatbot-title small { font-size: .7rem; opacity: .8; margin-top: 2px; }.chatbot-status { width: 10px; height: 10px; border-radius: 50%; background: #86efac; box-shadow: 0 0 0 3px rgba(255,255,255,.2); }.chatbot-icon-btn { border: 0; background: transparent; color: #fff; font-size: 27px; cursor: pointer; line-height: 1; }.chatbot-messages { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 12px; background: var(--bg-secondary, #fafaf9); }.chat-message { max-width: 86%; padding: 10px 13px; border-radius: 14px; font-size: .86rem; line-height: 1.55; white-space: pre-wrap; }.chat-message.assistant { align-self: flex-start; background: var(--card-bg, #fff); color: var(--text-primary, #1c1917); border-bottom-left-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,.05); }.chat-message.user { align-self: flex-end; color: #fff; background: var(--accent-purple, #ea580c); border-bottom-right-radius: 4px; }.chat-typing { display: flex; align-items: center; gap: 4px; min-height: 18px; }.chat-typing i { width: 6px; height: 6px; display: block; border-radius: 50%; background: currentColor; opacity: .45; animation: chatBounce 1.2s infinite; }.chat-typing i:nth-child(2) { animation-delay: .15s; }.chat-typing i:nth-child(3) { animation-delay: .3s; }.chatbot-suggestions { display: flex; gap: 7px; overflow-x: auto; padding: 9px 14px; border-top: 1px solid var(--card-border, rgba(0,0,0,.08)); background: var(--card-bg, #fff); }.chatbot-suggestions button { white-space: nowrap; border: 1px solid var(--accent-purple, #ea580c); color: var(--accent-purple, #ea580c); background: transparent; border-radius: 999px; padding: 5px 9px; font: inherit; font-size: .72rem; cursor: pointer; }.chatbot-form { display: flex; gap: 9px; padding: 12px 14px 14px; background: var(--card-bg, #fff); }.chatbot-form input { min-width: 0; flex: 1; border: 1px solid var(--card-border, rgba(0,0,0,.16)); border-radius: 10px; padding: 10px 12px; color: var(--text-primary, #1c1917); background: transparent; font: inherit; font-size: .85rem; outline-color: var(--accent-purple, #ea580c); }.chatbot-form button,.chatbot-launcher { display: grid; place-items: center; border: 0; color: #fff; background: var(--accent-purple, #ea580c); cursor: pointer; }.chatbot-form button { width: 42px; border-radius: 10px; }.chatbot-form button:disabled { opacity: .5; cursor: not-allowed; }.chatbot-launcher { width: 58px; height: 58px; border-radius: 50%; box-shadow: 0 8px 25px rgba(234,88,12,.35); transition: transform .2s ease; }.chatbot-launcher:hover { transform: translateY(-2px); }.chatbot-launcher span { font-size: 32px; line-height: 1; }.chat-pop-enter-active,.chat-pop-leave-active { transition: opacity .2s ease, transform .2s ease; }.chat-pop-enter-from,.chat-pop-leave-to { opacity: 0; transform: translateY(10px) scale(.97); } @keyframes chatBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-4px); } } @media (max-width: 480px) { .chatbot-shell { right: 16px; bottom: 16px; }.chatbot-panel { height: min(510px, calc(100vh - 95px)); }.chatbot-launcher { width: 54px; height: 54px; } }
 
 /* --- Custom Retro Mac Cursors --- */
 
