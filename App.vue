@@ -301,11 +301,15 @@
             <p class="chapter-subtitle">Short visual case studies built from real interfaces, workflow captures, and live project sources.</p>
             <div class="reel-grid">
               <article v-for="reel in systemReels" :key="reel.title" :class="['system-reel', reel.tone, 'reveal-on-scroll']">
-                <a :href="reel.href" :target="reel.href.startsWith('http') ? '_blank' : undefined" class="reel-stage" :aria-label="`Open ${reel.title}`">
-                  <video autoplay muted loop playsinline preload="metadata" :poster="reel.poster" :aria-label="`${reel.title} system reel`"><source :src="reel.video" type="video/webm" /></video>
-                  <img v-if="reel.overlay" :src="reel.overlay" class="reel-overlay" alt="" aria-hidden="true" />
-                  <span class="reel-scan"></span><span class="reel-play">▶</span><span class="reel-duration">00:06</span>
-                </a>
+                <div v-if="reel.kind === 'assistant'" class="assistant-demo">
+                  <div class="assistant-demo-head"><span></span><b>Ask Benjie's AI</b><small>Live n8n + Gemini demo</small></div>
+                  <div class="assistant-demo-body"><p v-if="!assistantDemoReply">Ask a real question about Benjie's work, skills, or projects.</p><p v-else>{{ assistantDemoReply }}</p></div>
+                  <form @submit.prevent="runAssistantDemo"><input v-model="assistantDemoInput" maxlength="160" placeholder="What can Benjie build?" :disabled="assistantDemoLoading" /><button :disabled="assistantDemoLoading || !assistantDemoInput.trim()">{{ assistantDemoLoading ? 'Thinking…' : 'Ask AI' }}</button></form>
+                </div>
+                <div v-else class="reel-stage">
+                  <iframe :src="reel.href" :title="`${reel.title} live demo`" loading="lazy"></iframe>
+                  <a :href="reel.href" target="_blank" rel="noopener" class="reel-play" :aria-label="`Open ${reel.title} in a new tab`">↗</a><span class="reel-duration">INTERACTIVE DEMO</span>
+                </div>
                 <div class="reel-copy"><span>{{ reel.kicker }}</span><h3>{{ reel.title }}</h3><p>{{ reel.description }}</p><small>{{ reel.detail }}</small></div>
               </article>
             </div>
@@ -943,10 +947,6 @@ import thesisRecommendations from './screenshots/thesis_4_recommendations.png';
 import thesisInventory from './screenshots/thesis_5_inventory.png';
 import thesisSuppliers from './screenshots/thesis_6_suppliers.png';
 import thesisSettings from './screenshots/thesis_7_settings.png';
-import reelPortfolio from './screenshots/reels/portfolio-ai-hero.png';
-import reelRecruiter from './screenshots/reels/ai-recruiter-overview.png';
-import reelRecruiterFlow from './screenshots/reels/ai-recruiter-workflow.png';
-import reelClock from './screenshots/reels/auto-clock-source.png';
 
 const hasImage = ref(true);
 const activeStep = ref(1);
@@ -955,6 +955,9 @@ const isDarkMode = ref(false);
 const showCV = ref(false);
 const mobileMenuOpen = ref(false);
 const scrollProgress = ref(0);
+const assistantDemoInput = ref('');
+const assistantDemoReply = ref('');
+const assistantDemoLoading = ref(false);
 const toolStack = [
   { name: 'Vue', mark: 'V', color: '#42b883' }, { name: 'Figma', mark: 'F', color: '#f24e1e' },
   { name: 'n8n', mark: 'n', color: '#ea4b71' }, { name: 'Firebase', mark: '▲', color: '#f59e0b' },
@@ -963,10 +966,10 @@ const toolStack = [
   { name: 'JavaScript', mark: 'JS', color: '#d69e2e' }, { name: 'Tailwind', mark: '~', color: '#38bdf8' }
 ];
 const systemReels = [
-  { kicker: 'Live portfolio system', title: 'Portfolio AI Assistant', description: 'A visitor question flows through n8n and Gemini, then appears in a private live inbox with a one-time Telegram alert.', poster: reelPortfolio, video: '/reels/portfolio-ai.webm', detail: 'Chat → AI → automation → inbox', href: '#automations', tone: 'orange' },
-  { kicker: 'Automation case study', title: 'AI Recruitment Agent', description: 'A production-oriented n8n recruitment workflow that screens resumes, structures candidate data, prevents duplicates, and drafts replies.', poster: reelRecruiter, video: '/reels/ai-recruiter.webm', overlay: reelRecruiterFlow, detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet' },
-  { kicker: 'Workflow source', title: 'Auto Clock-In / Out', description: 'An n8n workflow designed for scheduled work clock-in and clock-out using Railway and Gmail.', poster: reelClock, video: '/reels/auto-clock.webm', detail: 'Schedule → n8n → Gmail', href: 'https://github.com/webjie28/n8n-auto-clock-in-out', tone: 'blue' },
-  { kicker: 'Decision support system', title: 'Thesis DSS', description: 'A visual walkthrough of automotive sales reporting, demand forecasting, inventory, and recommendations.', poster: thesisDashboard, video: '/reels/thesis-dss.webm', overlay: thesisPredictions, detail: 'Data → forecast → decision', href: '#thesis', tone: 'green' }
+  { kind: 'assistant', kicker: 'Interactive AI demo', title: 'Portfolio AI Assistant', description: 'Ask a real question and watch the portfolio assistant call the same n8n + Gemini system used by the chat widget.', detail: 'Visitor → n8n → Gemini → response', tone: 'orange' },
+  { kicker: 'Automation case study', title: 'AI Recruitment Agent', description: 'Explore the live build log and workflow documentation for a recruitment automation system.', detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet' },
+  { kicker: 'Live web app', title: 'Daily Life Tracking System', description: 'Open the real productivity and daily tracking web application.', detail: 'Vue → state → personal analytics', href: 'https://dailylife-trackingsystem.vercel.app/#/', tone: 'blue' },
+  { kicker: 'Live e-commerce site', title: 'MNLLUMIERE', description: 'Browse the real responsive e-commerce website and its storefront experience.', detail: 'JavaScript → responsive commerce UI', href: 'https://mnllumiere.vercel.app', tone: 'green' }
 ];
 const isInbox = ref(location.hash === '#inbox');
 const inboxUser = ref(null);
@@ -1002,6 +1005,22 @@ const chatMessages = ref([{ id: 1, role: 'assistant', content: "Hi! I'm Benjie's
 const scrollChatToBottom = async () => { await nextTick(); if (chatMessagesEl.value) chatMessagesEl.value.scrollTop = chatMessagesEl.value.scrollHeight; };
 const toggleChat = async () => { chatOpen.value = !chatOpen.value; if (chatOpen.value) await scrollChatToBottom(); };
 const getChatReply = (data) => { const item = Array.isArray(data) ? data[0] : data; if (typeof item === 'string') return item; return item?.reply || item?.text || item?.output || item?.message || item?.response || item?.data?.reply || ''; };
+const runAssistantDemo = async () => {
+  const message = assistantDemoInput.value.trim();
+  if (!message || assistantDemoLoading.value || !chatWebhookUrl) return;
+  assistantDemoLoading.value = true;
+  assistantDemoReply.value = '';
+  try {
+    const response = await fetch(chatWebhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message, chatInput: message, sessionId: `showcase-${crypto.randomUUID?.() || Date.now().toString(36)}`, showcaseDemo: true }) });
+    if (!response.ok) throw new Error(`Webhook returned ${response.status}`);
+    const reply = getChatReply(await response.json());
+    if (!reply) throw new Error('empty-response');
+    assistantDemoReply.value = reply;
+  } catch (error) {
+    console.error('Assistant demo error:', error);
+    assistantDemoReply.value = 'The live assistant is temporarily unavailable. Please try again shortly.';
+  } finally { assistantDemoLoading.value = false; }
+};
 const sendChatMessage = async (suggestion = '') => {
   const text = (suggestion || chatInput.value).trim();
   if (!text || chatSending.value) return;
@@ -4558,4 +4577,5 @@ button.cta-btn {
 
 /* Real-capture motion reels */
 .reel-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.4rem; margin-top:2.25rem; }.system-reel { overflow:hidden; border:1px solid var(--card-border); border-radius:24px; background:rgba(255,255,255,.52); box-shadow:0 16px 40px var(--shadow-color); transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease; }.system-reel:hover { transform:translateY(-7px); box-shadow:0 28px 60px rgba(112,54,5,.16); }.reel-stage { height:250px; display:block; position:relative; overflow:hidden; background:#171717; }.reel-stage>video { width:100%; height:100%; display:block; object-fit:cover; object-position:top center; transform:scale(1.01); transition:transform .8s cubic-bezier(.2,.8,.2,1); }.system-reel:hover .reel-stage>video { transform:scale(1.08); }.reel-overlay { position:absolute; inset:13% 8%; width:84% !important; height:74% !important; border:1px solid rgba(255,255,255,.3); border-radius:10px; box-shadow:0 18px 35px rgba(0,0,0,.38); opacity:0; transform:translateY(14px) rotate(-2deg) !important; transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1) !important; }.system-reel:hover .reel-overlay { opacity:1; transform:translateY(0) rotate(-2deg) !important; }.reel-stage::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.75)); pointer-events:none; }.reel-scan { position:absolute; z-index:1; left:0; right:0; top:-30%; height:28%; background:linear-gradient(transparent,rgba(255,255,255,.16),transparent); animation:reelScan 5s linear infinite; }.reel-play { position:absolute; z-index:2; left:16px; top:16px; width:36px; height:36px; display:grid; place-items:center; border-radius:50%; padding-left:2px; color:#fff; background:rgba(0,0,0,.44); border:1px solid rgba(255,255,255,.35); font-size:.72rem; transition:transform .3s ease,background .3s ease; }.system-reel:hover .reel-play { transform:scale(1.15); background:var(--accent-purple); }.reel-duration { position:absolute; z-index:2; bottom:12px; right:13px; color:#fff; font-size:.65rem; font-weight:800; letter-spacing:.08em; }.reel-copy { padding:1.35rem 1.45rem 1.5rem; }.reel-copy>span { display:block; color:var(--badge-text); font-size:.66rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }.reel-copy h3 { margin:.6rem 0 .55rem; font-size:1.3rem; line-height:1.2; }.reel-copy p { min-height:4.2em; color:var(--text-secondary); font-size:.88rem; line-height:1.58; }.reel-copy small { display:inline-block; margin-top:1.1rem; padding:.38rem .62rem; border-radius:999px; background:var(--badge-bg); color:var(--badge-text); font-size:.68rem; font-weight:800; }.system-reel.violet .reel-copy>span,.system-reel.violet .reel-copy small { color:#7c3aed; }.system-reel.blue .reel-copy>span,.system-reel.blue .reel-copy small { color:#2563eb; }.system-reel.green .reel-copy>span,.system-reel.green .reel-copy small { color:#059669; } @keyframes reelScan { 0%,55% { transform:translateY(0); opacity:0; } 62% { opacity:1; } 85%,100% { transform:translateY(500%); opacity:0; } } @media(max-width:760px){.reel-grid{grid-template-columns:1fr}.reel-stage{height:220px}.reel-copy p{min-height:0}} @media(prefers-reduced-motion:reduce){.reel-scan{display:none}.reel-overlay{transition:none}.system-reel:hover .reel-stage>video{transform:none}}
+.reel-stage iframe { width:147%; height:147%; border:0; background:#fff; transform:scale(.68); transform-origin:top left; }.assistant-demo { min-height:250px; display:flex; flex-direction:column; color:#fff; background:linear-gradient(135deg,#221812,#5a2107); }.assistant-demo-head { display:flex; align-items:center; gap:.55rem; padding:1rem 1.15rem; border-bottom:1px solid rgba(255,255,255,.13); }.assistant-demo-head span { width:9px; height:9px; border-radius:50%; background:#86efac; box-shadow:0 0 0 4px rgba(134,239,172,.15); }.assistant-demo-head b { font-size:.86rem; }.assistant-demo-head small { margin-left:auto; color:#fed7aa; font-size:.62rem; }.assistant-demo-body { flex:1; padding:1.15rem; color:#fff7ed; font-size:.86rem; line-height:1.55; overflow:auto; }.assistant-demo-body p { margin:0; }.assistant-demo form { display:flex; gap:.55rem; padding:1rem; background:rgba(0,0,0,.16); }.assistant-demo input { min-width:0; flex:1; border:1px solid rgba(255,255,255,.22); border-radius:9px; padding:.68rem .75rem; color:#fff; background:rgba(255,255,255,.1); outline:none; }.assistant-demo input::placeholder { color:#fed7aa; }.assistant-demo button { border:0; border-radius:9px; padding:.68rem .8rem; background:#fb923c; color:#1c1917; font:inherit; font-size:.76rem; font-weight:800; cursor:pointer; }.assistant-demo button:disabled { opacity:.55; cursor:wait; }
 </style>
