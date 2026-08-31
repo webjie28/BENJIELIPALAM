@@ -353,6 +353,25 @@
                 </div>
               </div>
             </div>
+
+            <div class="workflow-demo-heading reveal-on-scroll">
+              <span class="eyebrow">Runnable workflow demos</span>
+              <h3>Four safe n8n automations, built to show the logic—not just the claim.</h3>
+              <p>Each example is manual-triggered and testable in n8n. They model the production decision flow without sending messages, placing calls, uploading media, or touching attendance records.</p>
+            </div>
+            <div class="workflow-demo-grid">
+              <article v-for="demo in workflowDemos" :key="demo.title" :class="['workflow-demo-card', demo.tone, 'reveal-on-scroll']">
+                <div class="workflow-demo-top"><span>n8n · demo mode</span><b>SAFE · MANUAL</b></div>
+                <h3>{{ demo.title }}</h3>
+                <p>{{ demo.description }}</p>
+                <div class="workflow-mini-flow" :aria-label="`${demo.title} workflow steps`">
+                  <template v-for="(step, index) in demo.steps" :key="step">
+                    <span>{{ step }}</span><i v-if="index < demo.steps.length - 1">→</i>
+                  </template>
+                </div>
+                <a :href="demo.templateUrl" target="_blank" rel="noopener" class="workflow-demo-link">Open workflow template <span>↗</span></a>
+              </article>
+            </div>
           </div>
         </section>
 
@@ -970,6 +989,12 @@ const systemReels = [
   { kicker: 'Automation case study', title: 'AI Recruitment Agent', description: 'Explore the live build log and workflow documentation for a recruitment automation system.', detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet' },
   { kicker: 'Live web app', title: 'Daily Life Tracking System', description: 'Open the real productivity and daily tracking web application.', detail: 'Vue → state → personal analytics', href: 'https://dailylife-trackingsystem.vercel.app/#/', tone: 'blue' },
   { kicker: 'Live e-commerce site', title: 'MNLLUMIERE', description: 'Browse the real responsive e-commerce website and its storefront experience.', detail: 'JavaScript → responsive commerce UI', href: 'https://mnllumiere.vercel.app', tone: 'green' }
+];
+const workflowDemos = [
+  { title: 'AI Recruitment Agent', description: 'Sample candidate intake, transparent scoring, then a shortlist or human-review decision.', steps: ['Candidate', 'Score', 'Decision'], tone: 'violet', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/ai-recruitment-agent-demo.json' },
+  { title: 'Auto Clock-In/Out', description: 'Manila time validation chooses an approved attendance action or a safe hold.', steps: ['Time', 'Validate', 'Audit'], tone: 'blue', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/auto-clock-in-out-demo.json' },
+  { title: 'Call Auto-Reply', description: 'An inbound call is classified, receives a polite reply draft, then routes by priority.', steps: ['Call', 'Intent', 'Route'], tone: 'orange', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/call-auto-reply-demo.json' },
+  { title: 'YouTube & Reels Factory', description: 'A content brief becomes a script, asset plan, and separate YouTube and Reel drafts.', steps: ['Brief', 'Scenes', 'Drafts'], tone: 'green', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/youtube-reels-video-factory-demo.json' }
 ];
 const isInbox = ref(location.hash === '#inbox');
 const inboxUser = ref(null);
@@ -4569,6 +4594,7 @@ button.cta-btn {
 .system-flow { margin: 2.5rem 0 3rem; padding: 2rem; border-radius: 22px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; overflow: hidden; position: relative; color: #fff; background: linear-gradient(125deg, #1c1917, #382114); box-shadow: 0 25px 55px rgba(73,35,4,.18); }
 .system-flow::before { content:''; position:absolute; width:300px; height:300px; border-radius:50%; right:-80px; top:-190px; background:radial-gradient(circle,rgba(251,146,60,.36),transparent 65%); }
 .system-flow-copy,.flow-nodes { position:relative; z-index:1; }.eyebrow { display:block; margin-bottom:.7rem; color:#fdba74; text-transform:uppercase; letter-spacing:.12em; font-weight:800; font-size:.68rem; }.system-flow h3 { max-width:420px; font-size:clamp(1.45rem,2.3vw,2rem); line-height:1.15; }.system-flow p { margin-top:.8rem; max-width:480px; color:#d6d3d1; line-height:1.65; font-size:.91rem; }.flow-nodes { display:flex; align-items:center; justify-content:center; gap:.7rem; }.flow-node { width:105px; min-height:105px; padding:1rem .75rem; display:grid; align-content:space-between; border:1px solid rgba(255,255,255,.18); border-radius:18px; background:rgba(255,255,255,.08); backdrop-filter:blur(8px); animation: nodeFloat 4.5s ease-in-out infinite; }.flow-node:nth-of-type(2){animation-delay:.5s}.flow-node:nth-of-type(3){animation-delay:1s}.flow-node.accent { border-color:#fb923c; background:rgba(234,88,12,.28); }.flow-node b { color:#fdba74; font-size:.72rem; }.flow-node span { font-size:.83rem; font-weight:800; }.flow-nodes > i { width:24px; height:1px; background:linear-gradient(90deg,#fb923c,rgba(255,255,255,.25)); position:relative; }.flow-nodes > i::after { content:'›'; position:absolute; right:-3px; top:50%; transform:translateY(-53%); color:#fdba74; }.project-card::before { content:''; position:absolute; inset:0; opacity:0; background:linear-gradient(135deg,rgba(255,255,255,.55),transparent 45%); transition:opacity .35s ease; pointer-events:none; }.project-card:hover::before { opacity:1; }
+.workflow-demo-heading { max-width:680px; margin:4.5rem auto 1.5rem; text-align:center; }.workflow-demo-heading h3 { font-size:clamp(1.35rem,2.6vw,2rem); line-height:1.2; }.workflow-demo-heading p { margin-top:.8rem; color:var(--text-secondary); font-size:.93rem; line-height:1.65; }.workflow-demo-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }.workflow-demo-card { min-height:250px; display:flex; flex-direction:column; padding:1.35rem; border:1px solid var(--card-border); border-radius:20px; background:rgba(255,255,255,.56); box-shadow:0 14px 34px var(--shadow-color); transition:transform .3s ease,box-shadow .3s ease; }.workflow-demo-card:hover { transform:translateY(-5px); box-shadow:0 24px 50px rgba(112,54,5,.15); }.workflow-demo-top { display:flex; justify-content:space-between; align-items:center; gap:.8rem; color:var(--badge-text); font-size:.63rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }.workflow-demo-top b { padding:.3rem .45rem; border-radius:999px; color:#15803d; background:#dcfce7; font-size:.58rem; }.workflow-demo-card h3 { margin:.9rem 0 .5rem; font-size:1.18rem; }.workflow-demo-card>p { color:var(--text-secondary); font-size:.84rem; line-height:1.55; }.workflow-mini-flow { display:flex; align-items:center; gap:.38rem; margin-top:1.1rem; overflow:hidden; color:var(--badge-text); font-size:.67rem; font-weight:800; white-space:nowrap; }.workflow-mini-flow span { padding:.42rem .55rem; border:1px solid var(--card-border); border-radius:8px; background:var(--badge-bg); }.workflow-mini-flow i { color:var(--accent-purple); font-style:normal; }.workflow-demo-link { display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:1.15rem; color:var(--text-primary); font-size:.8rem; font-weight:800; }.workflow-demo-link span { color:var(--accent-purple); font-size:1rem; }.workflow-demo-card.violet .workflow-demo-top,.workflow-demo-card.violet .workflow-mini-flow { color:#7c3aed; }.workflow-demo-card.blue .workflow-demo-top,.workflow-demo-card.blue .workflow-mini-flow { color:#2563eb; }.workflow-demo-card.green .workflow-demo-top,.workflow-demo-card.green .workflow-mini-flow { color:#059669; } @media(max-width:760px){.workflow-demo-grid{grid-template-columns:1fr}.workflow-demo-heading{margin-top:3.25rem}}
 @keyframes scrollCue { 50% { transform: translateY(8px); opacity:.3; } } @keyframes nodeFloat { 50% { transform: translateY(-7px); } }
 @media (max-width: 760px) { .hero-scroll-cue { display:none; }.system-flow { grid-template-columns:1fr; padding:1.5rem; }.flow-nodes { justify-content:flex-start; }.flow-node { width:90px; min-height:88px; }.flow-nodes > i { width:12px; } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; } }
