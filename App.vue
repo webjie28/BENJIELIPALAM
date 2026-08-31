@@ -1,5 +1,6 @@
 <template>
   <div class="portfolio-app">
+    <div class="scroll-progress" :style="{ transform: `scaleX(${scrollProgress})` }" aria-hidden="true"></div>
     <!-- Smooth Animated Fixed Background Glowing Spheres -->
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
@@ -28,7 +29,6 @@
           <a href="#creations" @click="closeMobileMenu">Projects</a>
           <a href="#automations" @click="closeMobileMenu">n8n</a>
           <a href="#thesis" @click="closeMobileMenu">Thesis</a>
-          <a v-if="isAdmin" href="#routines" @click="closeMobileMenu">Routines</a>
           <button @click="showCV = true; closeMobileMenu()" class="cv-nav-btn">CV</button>
           
           <!-- Mobile-only: CTA and controls inside menu -->
@@ -182,6 +182,20 @@
             </div>
           </div>
         </div>
+        <a href="#origin" class="hero-scroll-cue" aria-label="Explore portfolio">
+          <span>Explore the work</span><i></i>
+        </a>
+      </section>
+
+      <section class="toolbelt" aria-label="Tools Benjie works with">
+        <p>Built with tools I use every week</p>
+        <div class="toolbelt-mask">
+          <div class="toolbelt-track">
+            <div v-for="(tool, index) in [...toolStack, ...toolStack]" :key="`${tool.name}-${index}`" class="tool-card" :title="tool.name">
+              <span class="tool-mark" :style="{ color: tool.color }">{{ tool.mark }}</span><span>{{ tool.name }}</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <main class="portfolio-main">
@@ -316,6 +330,15 @@
           <div class="glass-card">
             <h2 class="chapter-header">n8n Automations</h2>
             <p class="chapter-subtitle">Automated workflows built with n8n to streamline processes and integrate APIs seamlessly.</p>
+
+            <div class="system-flow reveal-on-scroll" aria-label="Portfolio AI system workflow">
+              <div class="system-flow-copy"><span class="eyebrow">Live system</span><h3>From a visitor question to a useful response.</h3><p>The portfolio is not just a showcase—it's connected to an AI assistant, n8n automation, Telegram alerts, and a private live inbox.</p></div>
+              <div class="flow-nodes">
+                <div class="flow-node"><b>01</b><span>Visitor</span></div><i></i>
+                <div class="flow-node accent"><b>02</b><span>AI + n8n</span></div><i></i>
+                <div class="flow-node"><b>03</b><span>Live inbox</span></div>
+              </div>
+            </div>
             
             <div class="project-grid">
               <div class="project-card reveal-on-scroll" v-for="project in n8nProjects" :key="project.id">
@@ -435,7 +458,7 @@
         </section>
 
         <!-- SECTION: WEEKLY ROUTINES -->
-        <section v-if="isAdmin" id="routines" class="chapter-section scroll-section reveal-on-scroll">
+        <section v-if="false" id="routines" class="chapter-section scroll-section reveal-on-scroll">
           <div class="glass-card">
             <h2 class="chapter-header">Weekly Routines</h2>
             <p class="chapter-subtitle">My current V-Taper workout split and active recovery tracking.</p>
@@ -940,6 +963,14 @@ const activeTheme = ref('orange');
 const isDarkMode = ref(false);
 const showCV = ref(false);
 const mobileMenuOpen = ref(false);
+const scrollProgress = ref(0);
+const toolStack = [
+  { name: 'Vue', mark: 'V', color: '#42b883' }, { name: 'Figma', mark: 'F', color: '#f24e1e' },
+  { name: 'n8n', mark: 'n', color: '#ea4b71' }, { name: 'Firebase', mark: '▲', color: '#f59e0b' },
+  { name: 'Gemini', mark: '✦', color: '#4285f4' }, { name: 'GitHub', mark: '⌘', color: '#181717' },
+  { name: 'Vercel', mark: '▲', color: '#111111' }, { name: 'PostgreSQL', mark: '◉', color: '#336791' },
+  { name: 'JavaScript', mark: 'JS', color: '#d69e2e' }, { name: 'Tailwind', mark: '~', color: '#38bdf8' }
+];
 const isInbox = ref(location.hash === '#inbox');
 const inboxUser = ref(null);
 const chatSessions = ref([]);
@@ -1195,6 +1226,12 @@ const customRepoDetails = {
 };
 
 onMounted(async () => {
+  const updateScrollProgress = () => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress.value = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+  };
+  updateScrollProgress();
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
   onAuthStateChanged(auth, (user) => {
     inboxUser.value = user;
     if (user?.email === import.meta.env.VITE_ADMIN_EMAIL) {
@@ -4506,4 +4543,20 @@ button.cta-btn {
     font-size: 1.2rem;
   }
 }
+
+/* Senior design pass: editorial motion and system storytelling */
+.scroll-progress { position: fixed; z-index: 950; top: 0; left: 0; width: 100%; height: 3px; transform-origin: left; background: linear-gradient(90deg, var(--accent-purple), #fb923c, var(--accent-blue)); box-shadow: 0 2px 14px var(--accent-glow); }
+.hero-section::after { content: ''; position: absolute; inset: 12% 4% 10%; pointer-events: none; border: 1px solid rgba(234,88,12,.08); border-radius: 36px; mask-image: linear-gradient(to bottom, #000, transparent 70%); }
+.hero-scroll-cue { position: absolute; left: 50%; bottom: 1.7rem; transform: translateX(-50%); display: grid; justify-items: center; gap: .55rem; color: var(--text-secondary); text-decoration: none; font-size: .68rem; letter-spacing: .13em; text-transform: uppercase; font-weight: 700; }
+.hero-scroll-cue i { width: 1px; height: 34px; display: block; background: linear-gradient(var(--accent-purple), transparent); animation: scrollCue 1.8s ease-in-out infinite; }
+.hero-image-frame { isolation: isolate; }
+.hero-image-frame::before { content: 'Available for thoughtful work'; position: absolute; z-index: 2; top: -14px; right: -40px; padding: .55rem .8rem; border: 1px solid var(--card-border); border-radius: 999px; background: rgba(255,255,255,.72); color: var(--text-primary); font-size: .68rem; font-weight: 700; box-shadow: 0 14px 35px var(--shadow-color); animation: floatBadge 4s ease-in-out infinite; }
+.system-flow { margin: 2.5rem 0 3rem; padding: 2rem; border-radius: 22px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; overflow: hidden; position: relative; color: #fff; background: linear-gradient(125deg, #1c1917, #382114); box-shadow: 0 25px 55px rgba(73,35,4,.18); }
+.system-flow::before { content:''; position:absolute; width:300px; height:300px; border-radius:50%; right:-80px; top:-190px; background:radial-gradient(circle,rgba(251,146,60,.36),transparent 65%); }
+.system-flow-copy,.flow-nodes { position:relative; z-index:1; }.eyebrow { display:block; margin-bottom:.7rem; color:#fdba74; text-transform:uppercase; letter-spacing:.12em; font-weight:800; font-size:.68rem; }.system-flow h3 { max-width:420px; font-size:clamp(1.45rem,2.3vw,2rem); line-height:1.15; }.system-flow p { margin-top:.8rem; max-width:480px; color:#d6d3d1; line-height:1.65; font-size:.91rem; }.flow-nodes { display:flex; align-items:center; justify-content:center; gap:.7rem; }.flow-node { width:105px; min-height:105px; padding:1rem .75rem; display:grid; align-content:space-between; border:1px solid rgba(255,255,255,.18); border-radius:18px; background:rgba(255,255,255,.08); backdrop-filter:blur(8px); animation: nodeFloat 4.5s ease-in-out infinite; }.flow-node:nth-of-type(2){animation-delay:.5s}.flow-node:nth-of-type(3){animation-delay:1s}.flow-node.accent { border-color:#fb923c; background:rgba(234,88,12,.28); }.flow-node b { color:#fdba74; font-size:.72rem; }.flow-node span { font-size:.83rem; font-weight:800; }.flow-nodes > i { width:24px; height:1px; background:linear-gradient(90deg,#fb923c,rgba(255,255,255,.25)); position:relative; }.flow-nodes > i::after { content:'›'; position:absolute; right:-3px; top:50%; transform:translateY(-53%); color:#fdba74; }.project-card::before { content:''; position:absolute; inset:0; opacity:0; background:linear-gradient(135deg,rgba(255,255,255,.55),transparent 45%); transition:opacity .35s ease; pointer-events:none; }.project-card:hover::before { opacity:1; }
+@keyframes scrollCue { 50% { transform: translateY(8px); opacity:.3; } } @keyframes floatBadge { 50% { transform: translateY(-7px) rotate(1deg); } } @keyframes nodeFloat { 50% { transform: translateY(-7px); } }
+@media (max-width: 760px) { .hero-scroll-cue { display:none; }.hero-image-frame::before { right:-8px; top:-10px; font-size:.58rem; }.system-flow { grid-template-columns:1fr; padding:1.5rem; }.flow-nodes { justify-content:flex-start; }.flow-node { width:90px; min-height:88px; }.flow-nodes > i { width:12px; } }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; } }
+
+.toolbelt { width:min(1080px, calc(100% - 3rem)); margin:-1.8rem auto 4.5rem; position:relative; z-index:2; }.toolbelt > p { margin:0 0 .85rem 1rem; color:var(--text-secondary); font-size:.68rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }.toolbelt-mask { overflow:hidden; padding:.6rem 0; mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent); }.toolbelt-track { width:max-content; display:flex; gap:.8rem; animation:toolMarquee 28s linear infinite; }.toolbelt-track:hover { animation-play-state:paused; }.tool-card { min-width:136px; height:70px; display:flex; align-items:center; gap:.7rem; padding:0 1rem; border:1px solid var(--card-border); border-radius:16px; background:rgba(255,255,255,.64); box-shadow:0 10px 28px var(--shadow-color); color:var(--text-primary); font-size:.84rem; font-weight:800; transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, background .25s ease; cursor:default; }.tool-card:hover { transform:translateY(-7px) scale(1.08); background:#fff; box-shadow:0 18px 35px rgba(120,50,0,.17); }.tool-mark { width:32px; height:32px; display:grid; place-items:center; border-radius:10px; background:color-mix(in srgb,currentColor 12%,white); font-size:1rem; font-weight:900; }.dark-theme .tool-card { background:rgba(31,41,55,.72); border-color:rgba(255,255,255,.12); }.dark-theme .tool-card:hover { background:#273142; } @keyframes toolMarquee { to { transform:translateX(calc(-50% - .4rem)); } }
 </style>
