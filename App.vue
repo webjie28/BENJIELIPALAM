@@ -371,7 +371,7 @@
                   <i v-if="index < selectedWorkflowDemo.nodes.length - 1">→</i>
                 </template>
               </div>
-              <div class="workflow-modal-note"><b>{{ selectedWorkflowDemo.status === 'LIVE · SCHEDULED' ? 'Portfolio preview' : 'Demo mode' }}</b><span>{{ selectedWorkflowDemo.safety }}</span></div>
+              <div class="workflow-modal-note"><b>{{ selectedWorkflowDemo.status ? 'Portfolio preview' : 'Demo mode' }}</b><span>{{ selectedWorkflowDemo.safety }}</span></div>
             </section>
           </div>
         </Transition>
@@ -993,7 +993,18 @@ const systemReels = [
   { kicker: 'Live e-commerce site', title: 'MNLLUMIERE', description: 'Browse the real responsive e-commerce website and its storefront experience.', detail: 'JavaScript → responsive commerce UI', href: 'https://mnllumiere.vercel.app', tone: 'green' }
 ];
 const workflowDemos = [
-  { title: 'AI Recruitment Agent', description: 'The actual n8n demo workflow: sample intake, transparent scoring, then a shortlist or human-review branch.', steps: ['Candidate', 'Score', 'Decision'], nodes: [{ kind:'trigger', label:'Run candidate demo', detail:'Manual Trigger' }, { kind:'code', label:'Example candidate intake', detail:'Code in JavaScript' }, { kind:'code', label:'Transparent candidate scoring', detail:'Code in JavaScript' }, { kind:'if', label:'Ready for interview?', detail:'IF decision' }, { kind:'code', label:'Create shortlist result', detail:'True branch output' }, { kind:'code', label:'Create review result', detail:'False branch output' }], safety: 'No applicant data is stored and no email is sent in this portfolio demo.', tone: 'violet' },
+  {
+    title: 'AI Recruitment Agent',
+    description: 'An email-driven hiring workflow that extracts resume text, evaluates candidates with Gemini, updates the candidate record, and routes the right draft.',
+    steps: ['Ingest', 'Evaluate', 'Route'], mode: 'email workflow', status: 'PRIVATE · EMAIL-DRIVEN',
+    stages: [
+      { index: '01', title: 'Gmail intake', summary: 'Gmail Ingestion receives an applicant email, gets the message, and checks recruitment keywords.', nodes: ['Gmail Ingestion', 'Get a message', 'Recruitment Keywords'] },
+      { index: '02', title: 'Resume gate', summary: 'The workflow checks whether a PDF resume is attached. Incomplete applications are logged and receive a resume-request draft.', nodes: ['Check: Has PDF Resume?', 'DB · Log Incomplete App', 'Gmail · Draft Resume Request'] },
+      { index: '03', title: 'AI evaluation', summary: 'PDF text is read, then an AI Agent uses Gemini with session memory and search context to assess the candidate.', nodes: ['PDF · Read Resume Text', 'AI Agent', 'Google Gemini Chat Model', 'Simple Memory', 'Search tool'] },
+      { index: '04', title: 'Candidate routing', summary: 'The candidate record is saved or updated, then a router prepares the appropriate email draft without automatically sending it.', nodes: ['DB · Save/Update Candidate', 'Router · Classify Applicant', 'Draft Junior Invitation', 'Draft Senior Invitation', 'Archive/Ignore Spam', 'Draft HR Alert · Needs Review'] }
+    ],
+    safety: 'Portfolio visual only. The private workflow and applicant data are not exposed here; opening this preview does not read Gmail, store a resume, or send an email.', tone: 'violet'
+  },
   { title: 'Auto Clock-In/Out', description: 'The actual n8n demo workflow: Manila time validation selects an approved attendance action or safe hold.', steps: ['Time', 'Validate', 'Audit'], nodes: [{ kind:'trigger', label:'Run attendance demo', detail:'Manual Trigger' }, { kind:'code', label:'Read Manila work time', detail:'Code in JavaScript' }, { kind:'code', label:'Validate clock window', detail:'Code in JavaScript' }, { kind:'if', label:'Approved time window?', detail:'IF decision' }, { kind:'code', label:'Prepare audit event', detail:'True branch output' }, { kind:'code', label:'Record safe hold', detail:'False branch output' }], safety: 'No attendance platform is called and no clock action is made in this portfolio demo.', tone: 'blue' },
   { title: 'Call Auto-Reply', description: 'The actual n8n demo workflow: inbound call context is classified, drafted, and routed by priority.', steps: ['Call', 'Intent', 'Route'], nodes: [{ kind:'trigger', label:'Run incoming call demo', detail:'Manual Trigger' }, { kind:'code', label:'Example incoming call', detail:'Code in JavaScript' }, { kind:'code', label:'Classify call intent', detail:'Code in JavaScript' }, { kind:'code', label:'Draft polite auto-reply', detail:'Code in JavaScript' }, { kind:'if', label:'High-priority callback?', detail:'IF decision' }, { kind:'code', label:'Route standard follow-up', detail:'Safe output branch' }], safety: 'No call, SMS, or email is sent from this portfolio demo.', tone: 'orange' },
   {
