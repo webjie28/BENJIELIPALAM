@@ -1,0 +1,74 @@
+{
+  "name": "Portfolio Demo — YouTube & Reels Video Factory",
+  "nodes": [
+    {
+      "parameters": { "content": "## YouTube & Reels Video Factory\n**Safe portfolio demo** — content brief → production plan → YouTube/Reel deliverables.\n\nNo media is generated or uploaded.", "height": 160, "width": 330, "color": 3 },
+      "id": "36cbb53b-dc5b-40bf-b7ad-53d388b4d280",
+      "name": "What this demo shows",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, -220]
+    },
+    {
+      "parameters": {},
+      "id": "23153741-4630-4a30-8634-8df0ae69bbb5",
+      "name": "Run content factory demo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    topic: 'How an AI portfolio assistant works',\n    audience: 'clients and recruiters',\n    objective: 'show the n8n + Gemini workflow in a clear, visual way',\n    visualStyle: 'warm, polished, developer-focused'\n  }\n}];"
+      },
+      "id": "ed4abf24-2a16-4568-8f23-72f29ff26cd9",
+      "name": "Example content brief",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [250, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => ({\n  json: {\n    ...json,\n    hook: 'What if your portfolio could answer for you?',\n    scenes: [\n      'Visitor asks a question',\n      'n8n receives and routes the message',\n      'Gemini drafts a safe response',\n      'Benjie receives a private notification'\n    ],\n    voiceover: 'A concise walkthrough of the system from visitor question to useful answer.'\n  }\n}));"
+      },
+      "id": "08497683-ed69-496c-b93f-1b990c0f3ed7",
+      "name": "Build script and scenes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => ({\n  json: {\n    ...json,\n    assetPlan: [\n      'Screen capture: portfolio chat',\n      'Screen capture: n8n workflow',\n      'Motion labels for each system step',\n      'Caption file and cover frame'\n    ],\n    reviewGate: 'Human review required before generation or publishing'\n  }\n}));"
+      },
+      "id": "e17fa225-cc6b-4175-a03a-f294db8aa4c1",
+      "name": "Create asset plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [790, 0]
+    },
+    {
+      "parameters": { "jsCode": "return items.map(({ json }) => ({ json: { ...json, format: 'YouTube', aspectRatio: '16:9', targetLength: '2–3 minutes', status: 'Draft ready for review' } }));" },
+      "id": "e278c02c-5ed6-4bb5-b916-06ec278c85df",
+      "name": "Prepare YouTube draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, -80]
+    },
+    {
+      "parameters": { "jsCode": "return items.map(({ json }) => ({ json: { ...json, format: 'Reel / Short', aspectRatio: '9:16', targetLength: '30–45 seconds', status: 'Draft ready for review' } }));" },
+      "id": "8f1ae367-16dd-45d4-9ec3-7a98874d6f8e",
+      "name": "Prepare reel draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 100]
+    }
+  ],
+  "connections": {
+    "Run content factory demo": { "main": [[{ "node": "Example content brief", "type": "main", "index": 0 }]] },
+    "Example content brief": { "main": [[{ "node": "Build script and scenes", "type": "main", "index": 0 }]] },
+    "Build script and scenes": { "main": [[{ "node": "Create asset plan", "type": "main", "index": 0 }]] },
+    "Create asset plan": { "main": [[{ "node": "Prepare YouTube draft", "type": "main", "index": 0 }, { "node": "Prepare reel draft", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {}, "active": false, "settings": { "executionOrder": "v1" }, "versionId": "5f7f8199-b0c6-43dc-b145-8e645b43ad30"
+}

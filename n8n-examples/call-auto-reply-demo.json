@@ -1,0 +1,90 @@
+{
+  "name": "Portfolio Demo — Call Auto-Reply",
+  "nodes": [
+    {
+      "parameters": { "content": "## Call Auto-Reply\n**Safe portfolio demo** — inbound call context → intent/priority → callback response and routing.\n\nNo call, SMS, or email is actually sent.", "height": 160, "width": 320, "color": 6 },
+      "id": "9c2cbc0b-c402-4dd0-a4c5-2b6e21d604aa",
+      "name": "What this demo shows",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, -220]
+    },
+    {
+      "parameters": {},
+      "id": "718826b7-9ce2-45d2-9a54-fbc69b841b6c",
+      "name": "Run incoming call demo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    caller: 'Maria Santos',\n    channel: 'phone',\n    transcript: 'Hi, I would like to ask about a website project timeline and quotation.',\n    receivedAt: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "970a9985-d1f6-45a5-a218-13013f522012",
+      "name": "Example incoming call",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [250, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => {\n  const text = json.transcript.toLowerCase();\n  const intent = text.includes('quotation') || text.includes('project') ? 'project inquiry' : 'general inquiry';\n  const priority = text.includes('urgent') ? 'high' : intent === 'project inquiry' ? 'normal' : 'low';\n  return { json: { ...json, intent, priority } };\n});"
+      },
+      "id": "a3b8f11e-b0aa-47d2-a05f-735c8a5fb319",
+      "name": "Classify call intent",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [510, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(({ json }) => ({\n  json: {\n    ...json,\n    reply: `Hi ${json.caller}, thanks for reaching out. I received your ${json.intent}. Benjie will review the details and reply through the contact channel you provided.`,\n    safeAction: 'Create private callback task only'\n  }\n}));"
+      },
+      "id": "7e5d11f9-3396-4828-a38a-92d8b8ef4f54",
+      "name": "Draft polite auto-reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [770, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 2 },
+          "conditions": [{ "id": "bbb2705f-3df2-4bb6-a6ea-17b3502523c4", "leftValue": "={{ $json.priority }}", "rightValue": "high", "operator": { "type": "string", "operation": "equals" } }],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b6a0ae88-3290-4a37-a94f-fb602512b7ec",
+      "name": "High-priority callback?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1030, 0]
+    },
+    {
+      "parameters": { "jsCode": "return items.map(({ json }) => ({ json: { ...json, route: 'Immediate callback queue' } }));" },
+      "id": "ccff9f2a-b633-4e70-96b3-3e2d90f8aaa6",
+      "name": "Route urgent callback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1280, -80]
+    },
+    {
+      "parameters": { "jsCode": "return items.map(({ json }) => ({ json: { ...json, route: 'Standard follow-up queue' } }));" },
+      "id": "417d9e58-2856-4862-a6da-2599f3e95e4f",
+      "name": "Route standard follow-up",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1280, 100]
+    }
+  ],
+  "connections": {
+    "Run incoming call demo": { "main": [[{ "node": "Example incoming call", "type": "main", "index": 0 }]] },
+    "Example incoming call": { "main": [[{ "node": "Classify call intent", "type": "main", "index": 0 }]] },
+    "Classify call intent": { "main": [[{ "node": "Draft polite auto-reply", "type": "main", "index": 0 }]] },
+    "Draft polite auto-reply": { "main": [[{ "node": "High-priority callback?", "type": "main", "index": 0 }]] },
+    "High-priority callback?": { "main": [[{ "node": "Route urgent callback", "type": "main", "index": 0 }], [{ "node": "Route standard follow-up", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {}, "active": false, "settings": { "executionOrder": "v1" }, "versionId": "ec0f7e35-9bcb-4be1-8dca-42112492f75e"
+}
