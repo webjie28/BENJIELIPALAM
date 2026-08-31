@@ -188,7 +188,6 @@
       </section>
 
       <section class="toolbelt" aria-label="Tools Benjie works with">
-        <p>Built with tools I use every week</p>
         <div class="toolbelt-mask">
           <div class="toolbelt-track">
             <div v-for="(tool, index) in [...toolStack, ...toolStack]" :key="`${tool.name}-${index}`" class="tool-card" :title="tool.name">
