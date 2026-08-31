@@ -331,33 +331,10 @@
               </div>
             </div>
             
-            <div class="project-grid">
-              <div class="project-card reveal-on-scroll" v-for="project in n8nProjects" :key="project.id">
-                <div class="project-header">
-                  <span class="project-badge">{{ project.customSubtitle }}</span>
-                </div>
-                <h3 class="project-title">{{ project.customTitle }}</h3>
-                <p class="project-desc">{{ project.customDescription }}</p>
-                <div class="project-tags">
-                  <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-                </div>
-                <div class="project-footer">
-                  <a :href="project.displayLink" target="_blank" class="view-btn">
-                    <span>View Repository</span>
-                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-
             <div class="workflow-demo-heading reveal-on-scroll">
-              <span class="eyebrow">Runnable workflow demos</span>
-              <h3>Four safe n8n automations, built to show the logic—not just the claim.</h3>
-              <p>Each example is manual-triggered and testable in n8n. They model the production decision flow without sending messages, placing calls, uploading media, or touching attendance records.</p>
+              <span class="eyebrow">Actual workflow demos</span>
+              <h3>Actual n8n workflow demos, captured from the automations in this portfolio.</h3>
+              <p>Each demo is manual-triggered and testable in n8n. Explore the real node topology without exposing the private workspace or sending an external action.</p>
             </div>
             <div class="workflow-demo-grid">
               <article v-for="demo in workflowDemos" :key="demo.title" :class="['workflow-demo-card', demo.tone, 'reveal-on-scroll']">
@@ -379,17 +356,16 @@
           <div v-if="selectedWorkflowDemo" class="workflow-modal-backdrop" @click.self="selectedWorkflowDemo = null">
             <section class="workflow-modal" role="dialog" aria-modal="true" :aria-label="`${selectedWorkflowDemo.title} workflow demo`">
               <button type="button" class="workflow-modal-close" @click="selectedWorkflowDemo = null" aria-label="Close workflow demo">×</button>
-              <span class="workflow-modal-kicker">n8n · interactive workflow preview</span>
+              <span class="workflow-modal-kicker">n8n · actual workflow topology</span>
               <h2>{{ selectedWorkflowDemo.title }}</h2>
               <p>{{ selectedWorkflowDemo.description }}</p>
               <div class="workflow-canvas">
-                <template v-for="(step, index) in selectedWorkflowDemo.steps" :key="step">
-                  <div class="workflow-canvas-node"><b>{{ String(index + 1).padStart(2, '0') }}</b><span>{{ step }}</span><small>{{ selectedWorkflowDemo.nodeDetails[index] }}</small></div>
-                  <i v-if="index < selectedWorkflowDemo.steps.length - 1">→</i>
+                <template v-for="(node, index) in selectedWorkflowDemo.nodes" :key="node.label">
+                  <div :class="['workflow-canvas-node', node.kind]"><b>{{ String(index + 1).padStart(2, '0') }} · {{ node.kind }}</b><span>{{ node.label }}</span><small>{{ node.detail }}</small></div>
+                  <i v-if="index < selectedWorkflowDemo.nodes.length - 1">→</i>
                 </template>
               </div>
               <div class="workflow-modal-note"><b>Demo mode</b><span>{{ selectedWorkflowDemo.safety }}</span></div>
-              <a :href="selectedWorkflowDemo.templateUrl" target="_blank" rel="noopener" class="workflow-source-link">View source template on GitHub <span>↗</span></a>
             </section>
           </div>
         </Transition>
@@ -1011,10 +987,10 @@ const systemReels = [
   { kicker: 'Live e-commerce site', title: 'MNLLUMIERE', description: 'Browse the real responsive e-commerce website and its storefront experience.', detail: 'JavaScript → responsive commerce UI', href: 'https://mnllumiere.vercel.app', tone: 'green' }
 ];
 const workflowDemos = [
-  { title: 'AI Recruitment Agent', description: 'Sample candidate intake, transparent scoring, then a shortlist or human-review decision.', steps: ['Candidate', 'Score', 'Decision'], nodeDetails: ['Receive a structured candidate profile.', 'Explain the score using skills, experience, and portfolio signals.', 'Route to shortlist or human review.'], safety: 'No applicant data is stored and no email is sent in this portfolio demo.', tone: 'violet', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/ai-recruitment-agent-demo.json' },
-  { title: 'Auto Clock-In/Out', description: 'Manila time validation chooses an approved attendance action or a safe hold.', steps: ['Time', 'Validate', 'Audit'], nodeDetails: ['Read the current Asia/Manila work time.', 'Check weekday and approved clock-in or clock-out windows.', 'Prepare an audit event or safely do nothing.'], safety: 'No attendance platform is called and no clock action is made in this portfolio demo.', tone: 'blue', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/auto-clock-in-out-demo.json' },
-  { title: 'Call Auto-Reply', description: 'An inbound call is classified, receives a polite reply draft, then routes by priority.', steps: ['Call', 'Intent', 'Route'], nodeDetails: ['Receive caller context and a transcript.', 'Identify the inquiry and its priority.', 'Create an urgent or standard callback task.'], safety: 'No call, SMS, or email is sent from this portfolio demo.', tone: 'orange', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/call-auto-reply-demo.json' },
-  { title: 'YouTube & Reels Factory', description: 'A content brief becomes a script, asset plan, and separate YouTube and Reel drafts.', steps: ['Brief', 'Scenes', 'Drafts'], nodeDetails: ['Start from a clear topic, audience, and objective.', 'Plan the hook, scenes, voiceover, and captured assets.', 'Create human-review drafts for long-form and short-form video.'], safety: 'No media is generated or uploaded from this portfolio demo.', tone: 'green', templateUrl: 'https://github.com/webjie28/BENJIELIPALAM/blob/main/n8n-examples/youtube-reels-video-factory-demo.json' }
+  { title: 'AI Recruitment Agent', description: 'The actual n8n demo workflow: sample intake, transparent scoring, then a shortlist or human-review branch.', steps: ['Candidate', 'Score', 'Decision'], nodes: [{ kind:'trigger', label:'Run candidate demo', detail:'Manual Trigger' }, { kind:'code', label:'Example candidate intake', detail:'Code in JavaScript' }, { kind:'code', label:'Transparent candidate scoring', detail:'Code in JavaScript' }, { kind:'if', label:'Ready for interview?', detail:'IF decision' }, { kind:'code', label:'Create shortlist result', detail:'True branch output' }, { kind:'code', label:'Create review result', detail:'False branch output' }], safety: 'No applicant data is stored and no email is sent in this portfolio demo.', tone: 'violet' },
+  { title: 'Auto Clock-In/Out', description: 'The actual n8n demo workflow: Manila time validation selects an approved attendance action or safe hold.', steps: ['Time', 'Validate', 'Audit'], nodes: [{ kind:'trigger', label:'Run attendance demo', detail:'Manual Trigger' }, { kind:'code', label:'Read Manila work time', detail:'Code in JavaScript' }, { kind:'code', label:'Validate clock window', detail:'Code in JavaScript' }, { kind:'if', label:'Approved time window?', detail:'IF decision' }, { kind:'code', label:'Prepare audit event', detail:'True branch output' }, { kind:'code', label:'Record safe hold', detail:'False branch output' }], safety: 'No attendance platform is called and no clock action is made in this portfolio demo.', tone: 'blue' },
+  { title: 'Call Auto-Reply', description: 'The actual n8n demo workflow: inbound call context is classified, drafted, and routed by priority.', steps: ['Call', 'Intent', 'Route'], nodes: [{ kind:'trigger', label:'Run incoming call demo', detail:'Manual Trigger' }, { kind:'code', label:'Example incoming call', detail:'Code in JavaScript' }, { kind:'code', label:'Classify call intent', detail:'Code in JavaScript' }, { kind:'code', label:'Draft polite auto-reply', detail:'Code in JavaScript' }, { kind:'if', label:'High-priority callback?', detail:'IF decision' }, { kind:'code', label:'Route standard follow-up', detail:'Safe output branch' }], safety: 'No call, SMS, or email is sent from this portfolio demo.', tone: 'orange' },
+  { title: 'YouTube & Reels Factory', description: 'The actual n8n demo workflow: a brief becomes a script, asset plan, and platform-specific drafts.', steps: ['Brief', 'Scenes', 'Drafts'], nodes: [{ kind:'trigger', label:'Run content factory demo', detail:'Manual Trigger' }, { kind:'code', label:'Example content brief', detail:'Code in JavaScript' }, { kind:'code', label:'Build script and scenes', detail:'Code in JavaScript' }, { kind:'code', label:'Create asset plan', detail:'Code in JavaScript' }, { kind:'code', label:'Prepare YouTube draft', detail:'Output branch' }, { kind:'code', label:'Prepare reel draft', detail:'Output branch' }], safety: 'No media is generated or uploaded from this portfolio demo.', tone: 'green' }
 ];
 const isInbox = ref(location.hash === '#inbox');
 const inboxUser = ref(null);
@@ -1240,7 +1216,6 @@ const changeTheme = (themeName) => {
 
 // Projects State & Github Fetching
 const projects = ref([]);
-const n8nProjects = ref([]);
 const customRepoDetails = {
   'my-soroban.studio': {
     title: 'my-soroban.studio',
@@ -1353,27 +1328,13 @@ onMounted(async () => {
       'MNLLUMIERE'
     ];
 
-    const n8nRepoNames = [
-      'n8n-auto-clock-in-out',
-      'AI-recruitment-agent-n8n'
-    ];
-
     const promises = repoNames.map(name => 
       fetch(`https://api.github.com/repos/webjie28/${name}`)
         .then(res => res.json())
         .then(data => ({ ...data, _repoName: name })) // Keep track of the original requested name for fallbacks
     );
     
-    const n8nPromises = n8nRepoNames.map(name => 
-      fetch(`https://api.github.com/repos/webjie28/${name}`)
-        .then(res => res.json())
-        .then(data => ({ ...data, _repoName: name }))
-    );
-    
-    const [fetchedProjects, fetchedN8nProjects] = await Promise.all([
-      Promise.all(promises),
-      Promise.all(n8nPromises)
-    ]);
+    const fetchedProjects = await Promise.all(promises);
     
     const mapProjectData = (proj) => {
       // Fallback if GitHub API rate limit is exceeded
@@ -1392,7 +1353,6 @@ onMounted(async () => {
     };
 
     projects.value = fetchedProjects.map(mapProjectData);
-    n8nProjects.value = fetchedN8nProjects.map(mapProjectData);
 
     // Observe dynamic elements after render
     setTimeout(() => {
@@ -4624,4 +4584,5 @@ button.cta-btn {
 /* Real-capture motion reels */
 .reel-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.4rem; margin-top:2.25rem; }.system-reel { overflow:hidden; border:1px solid var(--card-border); border-radius:24px; background:rgba(255,255,255,.52); box-shadow:0 16px 40px var(--shadow-color); transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease; }.system-reel:hover { transform:translateY(-7px); box-shadow:0 28px 60px rgba(112,54,5,.16); }.reel-stage { height:250px; display:block; position:relative; overflow:hidden; background:#171717; }.reel-stage>video { width:100%; height:100%; display:block; object-fit:cover; object-position:top center; transform:scale(1.01); transition:transform .8s cubic-bezier(.2,.8,.2,1); }.system-reel:hover .reel-stage>video { transform:scale(1.08); }.reel-overlay { position:absolute; inset:13% 8%; width:84% !important; height:74% !important; border:1px solid rgba(255,255,255,.3); border-radius:10px; box-shadow:0 18px 35px rgba(0,0,0,.38); opacity:0; transform:translateY(14px) rotate(-2deg) !important; transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1) !important; }.system-reel:hover .reel-overlay { opacity:1; transform:translateY(0) rotate(-2deg) !important; }.reel-stage::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.75)); pointer-events:none; }.reel-scan { position:absolute; z-index:1; left:0; right:0; top:-30%; height:28%; background:linear-gradient(transparent,rgba(255,255,255,.16),transparent); animation:reelScan 5s linear infinite; }.reel-play { position:absolute; z-index:2; left:16px; top:16px; width:36px; height:36px; display:grid; place-items:center; border-radius:50%; padding-left:2px; color:#fff; background:rgba(0,0,0,.44); border:1px solid rgba(255,255,255,.35); font-size:.72rem; transition:transform .3s ease,background .3s ease; }.system-reel:hover .reel-play { transform:scale(1.15); background:var(--accent-purple); }.reel-duration { position:absolute; z-index:2; bottom:12px; right:13px; color:#fff; font-size:.65rem; font-weight:800; letter-spacing:.08em; }.reel-copy { padding:1.35rem 1.45rem 1.5rem; }.reel-copy>span { display:block; color:var(--badge-text); font-size:.66rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }.reel-copy h3 { margin:.6rem 0 .55rem; font-size:1.3rem; line-height:1.2; }.reel-copy p { min-height:4.2em; color:var(--text-secondary); font-size:.88rem; line-height:1.58; }.reel-copy small { display:inline-block; margin-top:1.1rem; padding:.38rem .62rem; border-radius:999px; background:var(--badge-bg); color:var(--badge-text); font-size:.68rem; font-weight:800; }.system-reel.violet .reel-copy>span,.system-reel.violet .reel-copy small { color:#7c3aed; }.system-reel.blue .reel-copy>span,.system-reel.blue .reel-copy small { color:#2563eb; }.system-reel.green .reel-copy>span,.system-reel.green .reel-copy small { color:#059669; } @keyframes reelScan { 0%,55% { transform:translateY(0); opacity:0; } 62% { opacity:1; } 85%,100% { transform:translateY(500%); opacity:0; } } @media(max-width:760px){.reel-grid{grid-template-columns:1fr}.reel-stage{height:220px}.reel-copy p{min-height:0}} @media(prefers-reduced-motion:reduce){.reel-scan{display:none}.reel-overlay{transition:none}.system-reel:hover .reel-stage>video{transform:none}}
 .reel-stage iframe { width:147%; height:147%; border:0; background:#fff; transform:scale(.68); transform-origin:top left; }.assistant-demo { min-height:250px; display:flex; flex-direction:column; color:#fff; background:linear-gradient(135deg,#221812,#5a2107); }.assistant-demo-head { display:flex; align-items:center; gap:.55rem; padding:1rem 1.15rem; border-bottom:1px solid rgba(255,255,255,.13); }.assistant-demo-head span { width:9px; height:9px; border-radius:50%; background:#86efac; box-shadow:0 0 0 4px rgba(134,239,172,.15); }.assistant-demo-head b { font-size:.86rem; }.assistant-demo-head small { margin-left:auto; color:#fed7aa; font-size:.62rem; }.assistant-demo-body { flex:1; padding:1.15rem; color:#fff7ed; font-size:.86rem; line-height:1.55; overflow:auto; }.assistant-demo-body p { margin:0; }.assistant-demo form { display:flex; gap:.55rem; padding:1rem; background:rgba(0,0,0,.16); }.assistant-demo input { min-width:0; flex:1; border:1px solid rgba(255,255,255,.22); border-radius:9px; padding:.68rem .75rem; color:#fff; background:rgba(255,255,255,.1); outline:none; }.assistant-demo input::placeholder { color:#fed7aa; }.assistant-demo button { border:0; border-radius:9px; padding:.68rem .8rem; background:#fb923c; color:#1c1917; font:inherit; font-size:.76rem; font-weight:800; cursor:pointer; }.assistant-demo button:disabled { opacity:.55; cursor:wait; }
+.workflow-canvas-node.trigger { border-color:rgba(96,165,250,.62); }.workflow-canvas-node.trigger b { color:#93c5fd; }.workflow-canvas-node.code { border-color:rgba(251,146,60,.58); }.workflow-canvas-node.code b { color:#fdba74; }.workflow-canvas-node.if { border-color:rgba(74,222,128,.65); }.workflow-canvas-node.if b { color:#86efac; }.workflow-canvas { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem; overflow:visible; }.workflow-canvas-node { min-width:0; padding:.8rem; }.workflow-canvas-node b { font-size:.58rem; }.workflow-canvas-node span { margin:.48rem 0; font-size:.82rem; }.workflow-canvas-node small { font-size:.66rem; line-height:1.4; }.workflow-canvas>i { display:none; } @media(max-width:600px){.workflow-canvas{grid-template-columns:repeat(2,minmax(0,1fr));}}
 </style>
