@@ -166,6 +166,7 @@
           <div class="hero-right animate-in">
             <div class="hero-image-frame hero-portrait-cutout">
               <img v-if="hasImage" :src="profileGraduationImg" alt="Benjie Lipalam in graduation attire" class="hero-avatar hero-rotating-photo hero-photo-graduation" @error="hasImage = false" />
+              <img v-if="hasImage" :src="profileBarongImg" alt="" aria-hidden="true" class="hero-avatar hero-rotating-photo hero-photo-barong" />
               <img v-if="hasImage" :src="profilePortraitImg" alt="" aria-hidden="true" class="hero-avatar hero-rotating-photo hero-photo-portrait" />
               <div v-else class="hero-avatar-fallback">BL</div>
             </div>
@@ -905,7 +906,8 @@ import { ref, onMounted, nextTick, computed } from 'vue';
 import { db, auth } from './firebase';
 import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
-import profileGraduationImg from './profile-dsc-2145.webp';
+import profileGraduationImg from './profile-8r1.webp';
+import profileBarongImg from './profile-dsc-2235w.webp';
 import profilePortraitImg from './profile-son-9965.webp';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
@@ -4589,7 +4591,7 @@ button.cta-btn {
 .hero-image-frame.hero-portrait-cutout { width:330px; height:330px; overflow:hidden; border:0; border-radius:0; background:transparent; box-shadow:none; animation:none; isolation:isolate; }.hero-portrait-cutout::before,.hero-portrait-cutout::after { display:none; }.hero-portrait-cutout .hero-avatar { position:static; width:100%; height:100%; object-fit:cover; object-position:center; filter:none; -webkit-mask-image:none; mask-image:none; }.dark-theme .hero-image-frame.hero-portrait-cutout { border:0; background:transparent; box-shadow:none; } @media(max-width:760px){.hero-image-frame.hero-portrait-cutout{width:250px;height:250px;border-radius:0;}}
 
 /* Fixed-size portrait rotation: the frame and the facts below never move. */
-.hero-portrait-cutout .hero-rotating-photo { position:absolute; inset:0; width:100%; height:100%; opacity:0; object-fit:cover; object-position:center 24%; mix-blend-mode:multiply; animation:heroPhotoCycle 10s ease-in-out infinite; will-change:opacity; }.hero-portrait-cutout .hero-photo-graduation { animation-delay:0s; object-position:center 30%; }.hero-portrait-cutout .hero-photo-portrait { animation-delay:-5s; object-position:center 28%; } @keyframes heroPhotoCycle { 0%,45% { opacity:1; } 50%,95% { opacity:0; } 100% { opacity:1; } } .dark-theme .hero-portrait-cutout .hero-rotating-photo { mix-blend-mode:screen; } @media(prefers-reduced-motion:reduce){.hero-portrait-cutout .hero-rotating-photo{animation:none;}.hero-portrait-cutout .hero-photo-graduation{opacity:1;}.hero-portrait-cutout .hero-photo-portrait{display:none;}}
+.hero-portrait-cutout .hero-rotating-photo { position:absolute; inset:0; width:100%; height:100%; opacity:0; object-fit:contain; object-position:center bottom; mix-blend-mode:normal; filter:drop-shadow(0 16px 18px rgba(69,38,13,.14)); animation:heroPhotoCycle 15s ease-in-out infinite; will-change:opacity; }.hero-portrait-cutout .hero-photo-graduation { animation-delay:0s; }.hero-portrait-cutout .hero-photo-barong { animation-delay:-5s; }.hero-portrait-cutout .hero-photo-portrait { animation-delay:-10s; } @keyframes heroPhotoCycle { 0%,30% { opacity:1; } 33.34%,96.66% { opacity:0; } 100% { opacity:1; } } .dark-theme .hero-portrait-cutout .hero-rotating-photo { mix-blend-mode:normal; filter:drop-shadow(0 18px 22px rgba(0,0,0,.32)); } @media(prefers-reduced-motion:reduce){.hero-portrait-cutout .hero-rotating-photo{animation:none;}.hero-portrait-cutout .hero-photo-graduation{opacity:1;}.hero-portrait-cutout .hero-photo-barong,.hero-portrait-cutout .hero-photo-portrait{display:none;}}
 
 /* Final interaction hardening: visibility never depends on animation state. */
 :where(a,button,input,textarea,select):focus-visible { outline:3px solid color-mix(in srgb,var(--accent-purple) 74%,white); outline-offset:4px; }.showcase-nav button[aria-pressed="true"] { color:#fff; border-color:rgba(251,146,60,.55); background:linear-gradient(90deg,rgba(234,88,12,.27),rgba(251,146,60,.08)); }.dark-theme .showcase-nav button[aria-pressed="true"] { border-color:rgba(251,146,60,.65); background:linear-gradient(90deg,rgba(234,88,12,.32),rgba(30,41,59,.15)); } @media(max-width:760px){.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.hero-desc{max-width:34ch;}.hero-quick-facts{gap:.42rem;}.hero-fact-tag{font-size:.66rem;}} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.animate-in,.hero-image-frame.hero-portrait-cutout,.toolbelt-track{animation:none !important;}}
