@@ -162,9 +162,9 @@
             </div>
           </div>
 
-          <!-- Right Side: Graphic Portrait Frame -->
+          <!-- Right Side: Editorial portrait cutout -->
           <div class="hero-right animate-in">
-            <div class="hero-image-frame">
+            <div class="hero-image-frame hero-portrait-cutout">
               <img 
                 v-if="hasImage" 
                 :src="avatarImg" 
@@ -910,7 +910,7 @@ import { ref, onMounted, nextTick, computed } from 'vue';
 import { db, auth } from './firebase';
 import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
-import avatarImg from './avatar.png';
+import avatarImg from './hero-portrait-cutout.png';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
 import thesisPredictions from './screenshots/thesis_3_predictions.png';
@@ -4587,4 +4587,7 @@ button.cta-btn {
 @supports (animation-timeline: view()) { .feature-works .system-reel { animation:caseSpotlight linear both; animation-timeline:view(); animation-range:entry 4% cover 46%; will-change:clip-path,filter,opacity; } .feature-works .system-reel:nth-child(even) { animation-range:entry 12% cover 54%; } } @keyframes caseSpotlight { 0% { opacity:.18; clip-path:inset(18% 10% round 24px); filter:blur(8px) saturate(.55); } 52% { opacity:1; clip-path:inset(0 0 round 24px); filter:blur(0) saturate(1); } 100% { opacity:1; clip-path:inset(0 0 round 24px); filter:blur(0) saturate(1); } }
 @media (pointer:fine) and (prefers-reduced-motion:no-preference) { html.has-system-cursor,html.has-system-cursor * { cursor:none !important; } .system-cursor { --cursor-x:-100px; --cursor-y:-100px; position:fixed; z-index:1200; left:0; top:0; width:18px; height:18px; pointer-events:none; opacity:0; transform:translate3d(calc(var(--cursor-x) - 9px),calc(var(--cursor-y) - 9px),0); transition:width .24s cubic-bezier(.2,.8,.2,1),height .24s cubic-bezier(.2,.8,.2,1),opacity .18s ease,transform .08s linear; mix-blend-mode:multiply; }.system-cursor::before { content:''; position:absolute; inset:0; border:1.5px solid #ea580c; border-radius:50%; box-shadow:0 0 0 5px rgba(234,88,12,.1); }.system-cursor i { position:absolute; left:50%; top:50%; width:3px; height:3px; border-radius:50%; background:#ea580c; transform:translate(-50%,-50%); transition:transform .24s ease; }.system-cursor.is-visible { opacity:1; }.system-cursor.is-active { width:42px; height:42px; transform:translate3d(calc(var(--cursor-x) - 21px),calc(var(--cursor-y) - 21px),0); mix-blend-mode:normal; }.system-cursor.is-active::before { border-color:#fff; background:#ea580c; box-shadow:0 0 0 7px rgba(234,88,12,.18); }.system-cursor.is-active i { background:#fff; transform:translate(-50%,-50%) scale(1.3); }.system-cursor.is-hidden { opacity:0; } .dark-theme .system-cursor { mix-blend-mode:screen; } }
 .showcase-nav>p { margin:0 0 1.25rem; }
+
+/* Hero portrait is a cutout, not a boxed profile image. */
+.hero-image-frame.hero-portrait-cutout { width:clamp(290px,32vw,465px); height:clamp(390px,42vw,570px); overflow:visible; border:0; border-radius:0; background:transparent; box-shadow:none; animation:portraitLift 7s ease-in-out infinite; }.hero-portrait-cutout::before { content:''; position:absolute; z-index:-1; inset:15% 5% 3%; border-radius:50%; background:radial-gradient(ellipse at center,rgba(251,146,60,.3),rgba(251,146,60,.08) 42%,transparent 70%); filter:blur(5px); }.hero-portrait-cutout::after { content:''; position:absolute; z-index:-1; right:-8%; top:10%; width:58%; height:68%; border:1px solid rgba(234,88,12,.25); border-radius:50% 50% 48% 52%; transform:rotate(13deg); }.hero-portrait-cutout .hero-avatar { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; filter:drop-shadow(0 30px 24px rgba(65,28,5,.22)); }.hero-portrait-cutout .hero-avatar-fallback { border-radius:50%; }.dark-theme .hero-portrait-cutout::before { background:radial-gradient(ellipse at center,rgba(251,146,60,.23),rgba(37,99,235,.12) 45%,transparent 70%); }.dark-theme .hero-portrait-cutout::after { border-color:rgba(147,197,253,.2); } @keyframes portraitLift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-11px); } } @media(max-width:760px){.hero-image-frame.hero-portrait-cutout{width:min(82vw,360px);height:min(105vw,450px);}.hero-portrait-cutout::after{right:-2%;top:8%;}} @media(prefers-reduced-motion:reduce){.hero-image-frame.hero-portrait-cutout{animation:none;}}
 </style>
