@@ -1,0 +1,64 @@
+{
+  "name": "AI Client Inquiry & Proposal Assistant",
+  "nodes": [
+    {
+      "parameters": { "pollTimes": { "item": [{ "mode": "everyMinute" }] }, "simple": false, "filters": {} },
+      "id": "trigger", "name": "Gmail — Client Inquiry", "type": "n8n-nodes-base.gmailTrigger", "typeVersion": 1, "position": [260, 360]
+    },
+    {
+      "parameters": { "operation": "get", "messageId": "={{ $json.id }}", "options": { "downloadAttachments": true } },
+      "id": "message", "name": "Get Full Inquiry", "type": "n8n-nodes-base.gmail", "typeVersion": 2.1, "position": [480, 360]
+    },
+    {
+      "parameters": { "jsCode": "const text = $json.textPlain || $json.snippet || '';\nreturn [{ json: {\n  inquiry_id: $json.id,\n  sender_name: $json.from?.value?.[0]?.name || '',\n  sender_email: $json.from?.value?.[0]?.address || $json.from || '',\n  subject: $json.subject || '',\n  message: text.slice(0, 12000),\n  received_at: $json.date || new Date().toISOString()\n}}];" },
+      "id": "normalize", "name": "Normalize Client Inquiry", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [700, 360]
+    },
+    {
+      "parameters": { "promptType": "define", "text": "={{ $json.message }}", "options": { "systemMessage": "You are an assistant that triages inbound freelance client inquiries. Extract only evidence contained in the email. Return JSON with: inquiry_type (web_project|automation|revision|support|other), urgency (low|normal|high), budget_signal (unknown|low|medium|high), requested_stack (array), deliverables (array), deadline, lead_score (0-100), confidence (0-1), missing_information (array), recommended_next_action (reply|discovery_call|proposal_draft|human_review), and response_outline. Never promise pricing, delivery dates, or availability. Low confidence or sensitive requests must use human_review." } },
+      "id": "agent", "name": "Classify & Scope Inquiry", "type": "@n8n/n8n-nodes-langchain.agent", "typeVersion": 2, "position": [930, 360]
+    },
+    {
+      "parameters": { "modelName": "models/gemini-2.5-flash" },
+      "id": "gemini", "name": "Google Gemini Chat Model", "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini", "typeVersion": 1, "position": [900, 560]
+    },
+    {
+      "parameters": { "jsCode": "const source = $json.output || $json.text || '{}';\nlet evaluation; try { evaluation = typeof source === 'string' ? JSON.parse(source.replace(/```json|```/g, '')) : source; } catch { evaluation = { inquiry_type: 'other', urgency: 'normal', lead_score: 0, confidence: 0, missing_information: ['Could not parse AI output'], recommended_next_action: 'human_review' }; }\nconst original = $('Normalize Client Inquiry').first().json;\nconst review_required = evaluation.confidence < 0.75 || evaluation.lead_score < 45 || evaluation.recommended_next_action === 'human_review';\nreturn [{ json: { ...original, ...evaluation, review_required, stage: review_required ? 'needs_review' : 'qualified' } }];" },
+      "id": "score", "name": "Validate Score & Review Gate", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [1160, 360]
+    },
+    {
+      "parameters": { "operation": "appendOrUpdate", "documentId": { "__rl": true, "value": "REPLACE_WITH_CLIENT_PIPELINE_SHEET_ID", "mode": "id" }, "sheetName": { "__rl": true, "value": "Client Pipeline", "mode": "name" }, "columns": { "mappingMode": "autoMapInputData", "matchingColumns": ["sender_email"], "schema": [] } },
+      "id": "sheet", "name": "Log Client Opportunity", "type": "n8n-nodes-base.googleSheets", "typeVersion": 4.5, "position": [1380, 360]
+    },
+    {
+      "parameters": { "conditions": { "options": { "caseSensitive": true }, "conditions": [{ "leftValue": "={{ $json.review_required }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true", "singleValue": true } }], "combinator": "and" } },
+      "id": "gate", "name": "Needs Human Review?", "type": "n8n-nodes-base.if", "typeVersion": 2.2, "position": [1600, 360]
+    },
+    {
+      "parameters": { "sendTo": "YOUR_EMAIL@example.com", "subject": "Review needed: {{ $json.subject }}", "message": "Client: {{ $json.sender_name }} <{{ $json.sender_email }}>\nType: {{ $json.inquiry_type }}\nScore: {{ $json.lead_score }}\nMissing: {{ $json.missing_information }}\n\n{{ $json.message }}" },
+      "id": "review", "name": "Draft Internal Review Alert", "type": "n8n-nodes-base.gmail", "typeVersion": 2.1, "position": [1840, 260]
+    },
+    {
+      "parameters": { "sendTo": "={{ $json.sender_email }}", "subject": "Re: {{ $json.subject }}", "message": "Hi {{ $json.sender_name || 'there' }},\n\nThanks for reaching out. I reviewed your project inquiry and drafted the next steps below for human approval:\n\n{{ $json.response_outline }}\n\nBest,\nBenjie" },
+      "id": "reply", "name": "Draft Client Reply", "type": "n8n-nodes-base.gmail", "typeVersion": 2.1, "position": [1840, 430]
+    },
+    {
+      "parameters": { "sendTo": "YOUR_EMAIL@example.com", "subject": "Proposal outline: {{ $json.sender_name }}", "message": "Project type: {{ $json.inquiry_type }}\nDeliverables: {{ $json.deliverables }}\nStack: {{ $json.requested_stack }}\nDeadline: {{ $json.deadline }}\n\nSuggested proposal outline:\n{{ $json.response_outline }}" },
+      "id": "proposal", "name": "Draft Proposal Outline", "type": "n8n-nodes-base.gmail", "typeVersion": 2.1, "position": [2050, 430]
+    }
+  ],
+  "connections": {
+    "Gmail — Client Inquiry": { "main": [[{ "node": "Get Full Inquiry", "type": "main", "index": 0 }]] },
+    "Get Full Inquiry": { "main": [[{ "node": "Normalize Client Inquiry", "type": "main", "index": 0 }]] },
+    "Normalize Client Inquiry": { "main": [[{ "node": "Classify & Scope Inquiry", "type": "main", "index": 0 }]] },
+    "Google Gemini Chat Model": { "ai_languageModel": [[{ "node": "Classify & Scope Inquiry", "type": "ai_languageModel", "index": 0 }]] },
+    "Classify & Scope Inquiry": { "main": [[{ "node": "Validate Score & Review Gate", "type": "main", "index": 0 }]] },
+    "Validate Score & Review Gate": { "main": [[{ "node": "Log Client Opportunity", "type": "main", "index": 0 }]] },
+    "Log Client Opportunity": { "main": [[{ "node": "Needs Human Review?", "type": "main", "index": 0 }]] },
+    "Needs Human Review?": { "main": [[{ "node": "Draft Internal Review Alert", "type": "main", "index": 0 }], [{ "node": "Draft Client Reply", "type": "main", "index": 0 }]] },
+    "Draft Client Reply": { "main": [[{ "node": "Draft Proposal Outline", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "draft-client-inquiry-proposal-assistant"
+}

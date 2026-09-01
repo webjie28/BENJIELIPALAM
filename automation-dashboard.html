@@ -13,27 +13,27 @@
         <a class="brand" href="/"><span class="brand-mark">✦</span><span>flowboard</span></a>
         <nav aria-label="Primary navigation">
           <a class="nav-item active" href="#overview"><span>▦</span>Overview</a>
-          <a class="nav-item" href="#leads"><span>◉</span>Lead operations <b>12</b></a>
-          <a class="nav-item" href="#content"><span>▷</span>Content pipeline</a>
+          <a class="nav-item" href="#leads"><span>◉</span>Workflow health <b id="failureBadge">0</b></a>
+          <a class="nav-item" href="#content"><span>▷</span>Project registry</a>
           <a class="nav-item" href="#workflows"><span>⌁</span>Workflows</a>
         </nav>
         <div class="sidebar-foot"><span class="avatar">BL</span><div><strong>Benjie Lipalam</strong><small>Operations workspace</small></div><button aria-label="Settings">⋯</button></div>
       </aside>
       <main>
-        <header class="topbar"><div class="crumb"><span>Workspace</span><i>/</i><strong>Automation overview</strong></div><div class="top-actions"><span class="live-pill"><i></i>All systems live</span><button class="icon-button" aria-label="Notifications">♢</button><button class="new-button" id="runWorkflow">+ Run workflow</button></div></header>
-        <section class="page-head" id="overview"><div><p class="eyebrow">Tuesday, September 2</p><h1>Good morning, Benjie.</h1><p class="subhead">Here’s what your automations moved while you were away.</p></div><button class="date-button">Last 7 days <span>⌄</span></button></section>
+        <header class="topbar"><div class="crumb"><span>Workspace</span><i>/</i><strong>n8n operations</strong></div><div class="top-actions"><span class="live-pill" id="connectionStatus"><i></i>Connecting to telemetry</span><button class="icon-button" aria-label="Notifications">♢</button><button class="new-button" id="refreshDashboard">↻ Refresh</button></div></header>
+        <section class="page-head" id="overview"><div><p class="eyebrow">n8n workflow command center</p><h1>Automation, made observable.</h1><p class="subhead" id="syncMessage">Waiting for the first workflow telemetry event.</p></div><button class="date-button" id="timeRange">Last 7 days <span>⌄</span></button></section>
         <section class="metrics" aria-label="Automation metrics">
-          <article><div class="metric-label"><span class="metric-icon mint">⌁</span>Automation runs<button>•••</button></div><strong>1,284</strong><p><b class="up">↑ 18.2%</b> from last week</p><div class="spark mint-spark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
-          <article><div class="metric-label"><span class="metric-icon blue">◎</span>Qualified leads<button>•••</button></div><strong>86</strong><p><b class="up">↑ 12.6%</b> from last week</p><div class="spark blue-spark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
-          <article><div class="metric-label"><span class="metric-icon amber">↗</span>Follow-up rate<button>•••</button></div><strong>74.8%</strong><p><b class="up">↑ 5.4%</b> from last week</p><div class="spark amber-spark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
-          <article><div class="metric-label"><span class="metric-icon rose">△</span>Needs attention<button>•••</button></div><strong>03</strong><p><b class="down">• 1 new issue</b> in content render</p><div class="issue-bars"><i></i><i></i><i></i></div></article>
+          <article><div class="metric-label"><span class="metric-icon mint">⌁</span>Total executions<button>•••</button></div><strong id="totalRuns">—</strong><p id="runsMeta">No live data yet</p><div class="spark mint-spark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><div class="metric-label"><span class="metric-icon blue">◎</span>Active workflows<button>•••</button></div><strong id="activeWorkflows">—</strong><p id="activeMeta">Waiting for registry</p><div class="spark blue-spark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><div class="metric-label"><span class="metric-icon amber">↗</span>Success rate<button>•••</button></div><strong id="successRate">—</strong><p id="successMeta">Calculated from events</p><div class="spark amber-spark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><div class="metric-label"><span class="metric-icon rose">△</span>Needs attention<button>•••</button></div><strong id="attentionCount">—</strong><p id="attentionMeta">No failed events loaded</p><div class="issue-bars"><i></i><i></i><i></i></div></article>
         </section>
         <section class="main-grid">
-          <article class="panel lead-panel" id="leads"><div class="panel-head"><div><p class="eyebrow">Messenger follow-up system</p><h2>Lead pipeline</h2></div><button class="plain-button">View all <span>→</span></button></div><div class="kanban" id="kanban"></div><footer class="panel-footer"><span><i class="dot mint-dot"></i>Syncing every 5 min</span><span>Updated just now</span></footer></article>
+          <article class="panel lead-panel" id="leads"><div class="panel-head"><div><p class="eyebrow">Live workflow registry</p><h2>Workflow health</h2></div><button class="plain-button" id="openN8n">Open n8n <span>→</span></button></div><div class="kanban" id="kanban"></div><footer class="panel-footer"><span><i class="dot mint-dot"></i>Event-driven sync</span><span id="registryUpdated">No workflow data yet</span></footer></article>
           <article class="panel activity-panel"><div class="panel-head"><div><p class="eyebrow">Live activity</p><h2>Workflow pulse</h2></div><button class="icon-button">•••</button></div><div class="activity-list" id="activity"></div><button class="timeline-button" id="loadActivity">Load earlier activity</button></article>
         </section>
-        <section class="content-section" id="content"><div class="section-title"><div><p class="eyebrow">Shorts factory</p><h2>Content pipeline</h2></div><div class="legend"><span><i class="dot mint-dot"></i>Healthy</span><span><i class="dot amber-dot"></i>Review</span><span><i class="dot rose-dot"></i>Blocked</span></div></div><div class="content-grid" id="contentGrid"></div></section>
-        <section class="workflow-strip" id="workflows"><div><p class="eyebrow">Connected systems</p><h2>Your automations, in one view.</h2></div><div class="workflow-nodes"><span>Messenger</span><i>→</i><span class="n8n">n8n</span><i>→</i><span>Gemini</span><i>→</i><span>Sheets</span></div><button class="plain-button">Manage workflows <span>→</span></button></section>
+        <section class="content-section" id="content"><div class="section-title"><div><p class="eyebrow">n8n project registry</p><h2>Connected workflow projects</h2></div><div class="legend"><span><i class="dot mint-dot"></i>Healthy</span><span><i class="dot amber-dot"></i>Degraded</span><span><i class="dot rose-dot"></i>Failing</span></div></div><div class="content-grid" id="contentGrid"></div></section>
+        <section class="workflow-strip" id="workflows"><div><p class="eyebrow">Telemetry contract</p><h2>Every n8n project reports through one event format.</h2></div><div class="workflow-nodes"><span>n8n workflow</span><i>→</i><span class="n8n">event</span><i>→</i><span>Firestore</span><i>→</i><span>Flowboard</span></div><button class="plain-button" id="viewContract">View contract <span>→</span></button></section>
       </main>
     </div>
     <div class="toast" id="toast" role="status"></div>
