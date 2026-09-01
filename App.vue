@@ -890,13 +890,10 @@
     <div v-else class="inbox-content"><aside><button v-for="chat in chatSessions" :key="chat.id" @click="selectedChatId = chat.id" :class="{ selected: selectedChatId === chat.id }"><strong>{{ chat.id.replace('portfolio-', '').slice(0, 12) }}</strong><small>{{ chat.messages.at(-1)?.content || 'New conversation' }}</small></button></aside><main><template v-if="selectedChat"><h2>Conversation</h2><div v-for="message in selectedChat.messages" :key="message.id" :class="['inbox-message', message.role]">{{ message.content }}</div></template><p v-else class="inbox-empty">Waiting for the first live chat…</p></main></div>
   </section>
 
-  <div ref="cursorEl" class="system-cursor" aria-hidden="true"><i></i></div>
-
-
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, nextTick, computed } from 'vue';
+import { ref, onMounted, nextTick, computed } from 'vue';
 import { db, auth } from './firebase';
 import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
@@ -921,8 +918,6 @@ const assistantDemoReply = ref('');
 const assistantDemoLoading = ref(false);
 const selectedWorkflowDemo = ref(null);
 const selectedCaseStudy = ref(null);
-const cursorEl = ref(null);
-let cleanupCursor = () => {};
 const toolIcon = (name, color) => `https://cdn.simpleicons.org/${name}/${color.replace('#', '')}`;
 const toolStack = [
   { name: 'Vue', color: '#42b883', icon: toolIcon('vuedotjs', '#42b883') },
@@ -1241,37 +1236,6 @@ const customRepoDetails = {
 };
 
 onMounted(async () => {
-  const canUseSystemCursor = window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (canUseSystemCursor && cursorEl.value) {
-    document.documentElement.classList.add('has-system-cursor');
-    let frame = 0;
-    const moveCursor = (event) => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        cursorEl.value?.style.setProperty('--cursor-x', `${event.clientX}px`);
-        cursorEl.value?.style.setProperty('--cursor-y', `${event.clientY}px`);
-        cursorEl.value?.classList.add('is-visible');
-      });
-    };
-    const setCursorMode = (event) => {
-      const target = event.target;
-      const isTextField = target.closest?.('input, textarea, [contenteditable="true"]');
-      const isInteractive = target.closest?.('a, button, .system-reel, .tool-card, .workflow-demo-card, .case-study-link');
-      cursorEl.value?.classList.toggle('is-hidden', Boolean(isTextField));
-      cursorEl.value?.classList.toggle('is-active', Boolean(isInteractive));
-    };
-    const hideCursor = () => cursorEl.value?.classList.remove('is-visible');
-    window.addEventListener('pointermove', moveCursor, { passive: true });
-    document.addEventListener('pointerover', setCursorMode, { passive: true });
-    document.documentElement.addEventListener('mouseleave', hideCursor, { passive: true });
-    cleanupCursor = () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('pointermove', moveCursor);
-      document.removeEventListener('pointerover', setCursorMode);
-      document.documentElement.removeEventListener('mouseleave', hideCursor);
-      document.documentElement.classList.remove('has-system-cursor');
-    };
-  }
   const updateScrollProgress = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     scrollProgress.value = maxScroll > 0 ? window.scrollY / maxScroll : 0;
@@ -1386,7 +1350,6 @@ onMounted(async () => {
   });
 });
 
-onBeforeUnmount(() => cleanupCursor());
 
 // Contact Form Setup
 const contactForm = ref({
