@@ -165,13 +165,8 @@
           <!-- Right Side: Editorial portrait cutout -->
           <div class="hero-right animate-in">
             <div class="hero-image-frame hero-portrait-cutout">
-              <img 
-                v-if="hasImage" 
-                :src="avatarImg" 
-                alt="Benjie Lipalam" 
-                class="hero-avatar"
-                @error="hasImage = false"
-              />
+              <img v-if="hasImage" :src="profileGraduationImg" alt="Benjie Lipalam in graduation attire" class="hero-avatar hero-rotating-photo hero-photo-graduation" @error="hasImage = false" />
+              <img v-if="hasImage" :src="profilePortraitImg" alt="" aria-hidden="true" class="hero-avatar hero-rotating-photo hero-photo-portrait" />
               <div v-else class="hero-avatar-fallback">BL</div>
             </div>
 
@@ -910,7 +905,8 @@ import { ref, onMounted, nextTick, computed } from 'vue';
 import { db, auth } from './firebase';
 import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
-import avatarImg from './avatar.png';
+import profileGraduationImg from './profile-dsc-2145.webp';
+import profilePortraitImg from './profile-son-9965.webp';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
 import thesisPredictions from './screenshots/thesis_3_predictions.png';
@@ -4591,6 +4587,9 @@ button.cta-btn {
 /* Editorial portrait: deliberately edge-faded, never framed like a profile card. */
 .hero-image-frame.hero-portrait-cutout { width:clamp(310px,31vw,460px); height:clamp(390px,39vw,555px); overflow:visible; border:0; border-radius:0; background:transparent; box-shadow:none; animation:portraitLift 7s ease-in-out infinite; }.hero-portrait-cutout::before { content:''; position:absolute; z-index:-1; inset:8% 1% 0; background:radial-gradient(ellipse at 52% 43%,rgba(251,146,60,.23),rgba(251,146,60,.08) 46%,transparent 73%); filter:blur(7px); }.hero-portrait-cutout::after { content:''; position:absolute; z-index:-1; right:-3%; top:13%; width:57%; height:63%; border:1px solid rgba(234,88,12,.2); border-radius:50%; transform:rotate(18deg); }.hero-portrait-cutout .hero-avatar { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; filter:contrast(1.03) saturate(.95) drop-shadow(0 30px 28px rgba(65,28,5,.18)); -webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 42%,#000 50%,rgba(0,0,0,.8) 63%,transparent 82%); mask-image:radial-gradient(ellipse 62% 62% at 50% 42%,#000 50%,rgba(0,0,0,.8) 63%,transparent 82%); }.hero-portrait-cutout .hero-avatar-fallback { border-radius:50%; }.dark-theme .hero-portrait-cutout::before { background:radial-gradient(ellipse at 52% 43%,rgba(251,146,60,.18),rgba(37,99,235,.12) 50%,transparent 73%); }.dark-theme .hero-portrait-cutout::after { border-color:rgba(147,197,253,.18); } @keyframes portraitLift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } } @media(max-width:760px){.hero-image-frame.hero-portrait-cutout{width:min(82vw,360px);height:min(100vw,430px);}.hero-portrait-cutout::after{right:-2%;top:8%;}} @media(prefers-reduced-motion:reduce){.hero-image-frame.hero-portrait-cutout{animation:none;}}
 .hero-image-frame.hero-portrait-cutout { width:330px; height:330px; overflow:hidden; border:1px solid rgba(255,255,255,.55); border-radius:28px; background:rgba(255,255,255,.16); box-shadow:0 18px 42px rgba(75,35,8,.1); animation:float 6s ease-in-out infinite; }.hero-portrait-cutout::before,.hero-portrait-cutout::after { display:none; }.hero-portrait-cutout .hero-avatar { position:static; width:100%; height:100%; object-fit:cover; object-position:center; filter:none; -webkit-mask-image:none; mask-image:none; }.dark-theme .hero-image-frame.hero-portrait-cutout { border-color:rgba(255,255,255,.12); background:rgba(30,41,59,.32); box-shadow:0 18px 42px rgba(0,0,0,.28); } @media(max-width:760px){.hero-image-frame.hero-portrait-cutout{width:250px;height:250px;border-radius:24px;}}
+
+/* Fixed-size portrait rotation: the frame and the facts below never move. */
+.hero-portrait-cutout .hero-rotating-photo { position:absolute; inset:0; width:100%; height:100%; opacity:0; object-fit:cover; object-position:center 24%; animation:heroPhotoCycle 10s ease-in-out infinite; will-change:opacity; }.hero-portrait-cutout .hero-photo-graduation { animation-delay:0s; object-position:center 30%; }.hero-portrait-cutout .hero-photo-portrait { animation-delay:-5s; object-position:center 28%; } @keyframes heroPhotoCycle { 0%,45% { opacity:1; } 50%,95% { opacity:0; } 100% { opacity:1; } } @media(prefers-reduced-motion:reduce){.hero-portrait-cutout .hero-rotating-photo{animation:none;}.hero-portrait-cutout .hero-photo-graduation{opacity:1;}.hero-portrait-cutout .hero-photo-portrait{display:none;}}
 
 /* Final interaction hardening: visibility never depends on animation state. */
 :where(a,button,input,textarea,select):focus-visible { outline:3px solid color-mix(in srgb,var(--accent-purple) 74%,white); outline-offset:4px; }.showcase-nav button[aria-pressed="true"] { color:#fff; border-color:rgba(251,146,60,.55); background:linear-gradient(90deg,rgba(234,88,12,.27),rgba(251,146,60,.08)); }.dark-theme .showcase-nav button[aria-pressed="true"] { border-color:rgba(251,146,60,.65); background:linear-gradient(90deg,rgba(234,88,12,.32),rgba(30,41,59,.15)); } @media(max-width:760px){.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.hero-desc{max-width:34ch;}.hero-quick-facts{gap:.42rem;}.hero-fact-tag{font-size:.66rem;}} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.animate-in,.hero-image-frame.hero-portrait-cutout,.toolbelt-track{animation:none !important;}}
