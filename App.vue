@@ -149,7 +149,7 @@
               Frontend developer building interfaces, agentic systems on the side.
             </p>
             <p class="hero-desc muted animate-in stagger-4">
-              A Computer Science &amp; Web Design Enthusiast focused on visually appealing, responsive, and user-centric web applications. I combine modern frameworks with clean UI/UX principles.
+              A Computer Science–trained frontend developer focused on responsive, user-centred web applications. I combine modern frameworks with considered UI/UX decisions and useful automation.
             </p>
 
             <div class="hero-ctas animate-in stagger-5">
@@ -227,9 +227,9 @@
             <div class="section-heading-row"><div><span class="section-eyebrow">Selected work</span><h2 class="chapter-header">Interfaces with a point of view.</h2></div></div>
             <p class="chapter-subtitle">Short visual case studies built from real interfaces, workflow captures, and live project sources.</p>
             <div class="showcase-shell reveal-on-scroll">
-              <nav class="showcase-nav" aria-label="Selected project navigator" role="tablist">
+              <nav class="showcase-nav" aria-label="Selected project navigator">
                 <p>PROJECT INDEX <span>{{ String(activeShowcaseIndex + 1).padStart(2, '0') }}/{{ String(systemReels.length).padStart(2, '0') }}</span></p>
-                <button v-for="(reel, index) in systemReels" :key="reel.title" type="button" role="tab" :aria-selected="activeShowcaseIndex === index" :class="{ active: activeShowcaseIndex === index }" @click="activeShowcaseIndex = index">
+                <button v-for="(reel, index) in systemReels" :key="reel.title" type="button" :aria-pressed="activeShowcaseIndex === index" :class="{ active: activeShowcaseIndex === index }" @click="activeShowcaseIndex = index">
                   <em>{{ String(index + 1).padStart(2, '0') }}</em><span><b>{{ reel.title }}</b><small>{{ reel.kicker }}</small></span><i>↗</i>
                 </button>
               </nav>
@@ -4591,4 +4591,7 @@ button.cta-btn {
 /* Editorial portrait: deliberately edge-faded, never framed like a profile card. */
 .hero-image-frame.hero-portrait-cutout { width:clamp(310px,31vw,460px); height:clamp(390px,39vw,555px); overflow:visible; border:0; border-radius:0; background:transparent; box-shadow:none; animation:portraitLift 7s ease-in-out infinite; }.hero-portrait-cutout::before { content:''; position:absolute; z-index:-1; inset:8% 1% 0; background:radial-gradient(ellipse at 52% 43%,rgba(251,146,60,.23),rgba(251,146,60,.08) 46%,transparent 73%); filter:blur(7px); }.hero-portrait-cutout::after { content:''; position:absolute; z-index:-1; right:-3%; top:13%; width:57%; height:63%; border:1px solid rgba(234,88,12,.2); border-radius:50%; transform:rotate(18deg); }.hero-portrait-cutout .hero-avatar { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; filter:contrast(1.03) saturate(.95) drop-shadow(0 30px 28px rgba(65,28,5,.18)); -webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 42%,#000 50%,rgba(0,0,0,.8) 63%,transparent 82%); mask-image:radial-gradient(ellipse 62% 62% at 50% 42%,#000 50%,rgba(0,0,0,.8) 63%,transparent 82%); }.hero-portrait-cutout .hero-avatar-fallback { border-radius:50%; }.dark-theme .hero-portrait-cutout::before { background:radial-gradient(ellipse at 52% 43%,rgba(251,146,60,.18),rgba(37,99,235,.12) 50%,transparent 73%); }.dark-theme .hero-portrait-cutout::after { border-color:rgba(147,197,253,.18); } @keyframes portraitLift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } } @media(max-width:760px){.hero-image-frame.hero-portrait-cutout{width:min(82vw,360px);height:min(100vw,430px);}.hero-portrait-cutout::after{right:-2%;top:8%;}} @media(prefers-reduced-motion:reduce){.hero-image-frame.hero-portrait-cutout{animation:none;}}
 .hero-image-frame.hero-portrait-cutout { width:330px; height:330px; overflow:hidden; border:1px solid rgba(255,255,255,.55); border-radius:28px; background:rgba(255,255,255,.16); box-shadow:0 18px 42px rgba(75,35,8,.1); animation:float 6s ease-in-out infinite; }.hero-portrait-cutout::before,.hero-portrait-cutout::after { display:none; }.hero-portrait-cutout .hero-avatar { position:static; width:100%; height:100%; object-fit:cover; object-position:center; filter:none; -webkit-mask-image:none; mask-image:none; }.dark-theme .hero-image-frame.hero-portrait-cutout { border-color:rgba(255,255,255,.12); background:rgba(30,41,59,.32); box-shadow:0 18px 42px rgba(0,0,0,.28); } @media(max-width:760px){.hero-image-frame.hero-portrait-cutout{width:250px;height:250px;border-radius:24px;}}
+
+/* Final interaction hardening: visibility never depends on animation state. */
+:where(a,button,input,textarea,select):focus-visible { outline:3px solid color-mix(in srgb,var(--accent-purple) 74%,white); outline-offset:4px; }.showcase-nav button[aria-pressed="true"] { color:#fff; border-color:rgba(251,146,60,.55); background:linear-gradient(90deg,rgba(234,88,12,.27),rgba(251,146,60,.08)); }.dark-theme .showcase-nav button[aria-pressed="true"] { border-color:rgba(251,146,60,.65); background:linear-gradient(90deg,rgba(234,88,12,.32),rgba(30,41,59,.15)); } @media(max-width:760px){.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.hero-desc{max-width:34ch;}.hero-quick-facts{gap:.42rem;}.hero-fact-tag{font-size:.66rem;}} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.animate-in,.hero-image-frame.hero-portrait-cutout,.toolbelt-track{animation:none !important;}}
 </style>
