@@ -910,7 +910,7 @@ import { ref, onMounted, nextTick, computed } from 'vue';
 import { db, auth } from './firebase';
 import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
-import avatarImg from './avatar.png';
+import avatarImg from './hero-portrait.png';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
 import thesisPredictions from './screenshots/thesis_3_predictions.png';
@@ -4590,4 +4590,5 @@ button.cta-btn {
 
 /* Editorial portrait: deliberately edge-faded, never framed like a profile card. */
 .hero-image-frame.hero-portrait-cutout { width:clamp(310px,31vw,460px); height:clamp(390px,39vw,555px); overflow:visible; border:0; border-radius:0; background:transparent; box-shadow:none; animation:portraitLift 7s ease-in-out infinite; }.hero-portrait-cutout::before { content:''; position:absolute; z-index:-1; inset:8% 1% 0; background:radial-gradient(ellipse at 52% 43%,rgba(251,146,60,.23),rgba(251,146,60,.08) 46%,transparent 73%); filter:blur(7px); }.hero-portrait-cutout::after { content:''; position:absolute; z-index:-1; right:-3%; top:13%; width:57%; height:63%; border:1px solid rgba(234,88,12,.2); border-radius:50%; transform:rotate(18deg); }.hero-portrait-cutout .hero-avatar { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; filter:contrast(1.03) saturate(.95) drop-shadow(0 30px 28px rgba(65,28,5,.18)); -webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 42%,#000 50%,rgba(0,0,0,.8) 63%,transparent 82%); mask-image:radial-gradient(ellipse 62% 62% at 50% 42%,#000 50%,rgba(0,0,0,.8) 63%,transparent 82%); }.hero-portrait-cutout .hero-avatar-fallback { border-radius:50%; }.dark-theme .hero-portrait-cutout::before { background:radial-gradient(ellipse at 52% 43%,rgba(251,146,60,.18),rgba(37,99,235,.12) 50%,transparent 73%); }.dark-theme .hero-portrait-cutout::after { border-color:rgba(147,197,253,.18); } @keyframes portraitLift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } } @media(max-width:760px){.hero-image-frame.hero-portrait-cutout{width:min(82vw,360px);height:min(100vw,430px);}.hero-portrait-cutout::after{right:-2%;top:8%;}} @media(prefers-reduced-motion:reduce){.hero-image-frame.hero-portrait-cutout{animation:none;}}
+.hero-portrait-cutout .hero-avatar { object-fit:contain; object-position:center bottom; filter:contrast(1.02) saturate(.97) drop-shadow(0 26px 22px rgba(65,28,5,.16)); -webkit-mask-image:none; mask-image:none; }
 </style>
