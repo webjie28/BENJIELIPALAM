@@ -200,103 +200,31 @@
       <main class="portfolio-main">
         
         <!-- SECTION 1: THE ORIGIN -->
-        <section id="origin" class="chapter-section scroll-section reveal-on-scroll">
-          <div class="intro-card glass-card">
-            <h2 class="chapter-header">The Origin</h2>
-            <div class="story-layout">
-              <div class="story-text">
-                <p class="lead-text">Where Design Meets Code</p>
-                <p>
-                  My journey started with a deep interest in technology, aesthetics, and user interfaces. 
-                  As a Computer Science enthusiast, I quickly realized that writing backend logic is only half the picture—the real magic happens when users interact with a beautifully crafted, intuitive front-end.
-                </p>
-
-                <p>
-                  By combining software engineering with clean web design principles, I focus on creating 
-                  web applications that are fast, accessible, and visually timeless.
-                </p>
-              </div>
-              
-              <!-- Timeline/Journey Steps -->
-              <div class="journey-timeline">
-                <div class="timeline-step reveal-on-scroll">
-                  <div class="step-marker"></div>
-                  <div class="step-content">
-                    <h5>The CS Foundation</h5>
-                    <p>Studying algorithms, systems structures, and software engineering to build a solid programming background.</p>
-                  </div>
-                </div>
-                <div class="timeline-step reveal-on-scroll">
-                  <div class="step-marker"></div>
-                  <div class="step-content">
-                    <h5>The Design Spark</h5>
-                    <p>Exploring UI/UX principles, typography, grid layouts, and color harmony to design elegant interfaces.</p>
-                  </div>
-                </div>
-                <div class="timeline-step reveal-on-scroll">
-                  <div class="step-marker"></div>
-                  <div class="step-content">
-                    <h5>The Synergy</h5>
-                    <p>Unifying frontend engineering with clean design to build responsive web applications that deliver great user experiences.</p>
-                  </div>
-                </div>
-                <div class="timeline-step reveal-on-scroll">
-                  <div class="step-marker"></div>
-                  <div class="step-content">
-                    <h5>The Automation Leap</h5>
-                    <p>Diving into agentic AI engineering — building autonomous workflows with n8n, exploring OpenAI Agents SDK, CrewAI, LangGraph, and Google ADK to bridge frontend craft with intelligent systems.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <section id="origin" class="chapter-section scroll-section reveal-on-scroll origin-editorial">
+          <div class="origin-head"><span class="section-index">01</span><div><span class="section-eyebrow">The origin</span><h2>The craft behind the systems.</h2></div></div>
+          <div class="origin-story">
+            <p class="origin-statement">I design interfaces people enjoy using—and engineer the systems that make them useful.</p>
+            <div class="origin-copy"><p>My path began with technology, aesthetics, and the small details that make an interface feel natural. Computer Science gave me the structure; design gave that structure a human purpose.</p><p>Today, I bring both together in responsive web experiences and AI-assisted workflows that are clear, thoughtful, and practical.</p></div>
           </div>
-
-          <!-- Skills Toolkit -->
-          <div class="skills-highlight glass-card reveal-on-scroll">
-            <h3 class="section-title">Core Competencies</h3>
-            <div class="skills-grid">
-              <div class="skill-category reveal-on-scroll">
-                <div class="skill-icon-title">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                    <polyline points="16 18 22 12 16 6"></polyline>
-                    <polyline points="8 6 2 12 8 18"></polyline>
-                  </svg>
-                  <h4>Computer Science &amp; Dev</h4>
-                </div>
-                <p>Developing reactive, state-driven frontends using Vue 3, modern JavaScript (ES6+), semantic HTML, responsive CSS layouts (Grid/Flexbox), and modular engineering principles.</p>
-              </div>
-              <div class="skill-category reveal-on-scroll">
-                <div class="skill-icon-title">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="9" y1="3" x2="9" y2="21"></line>
-                    <line x1="9" y1="9" x2="21" y2="9"></line>
-                  </svg>
-                  <h4>UI/UX &amp; Web Design</h4>
-                </div>
-                <p>Crafting intuitive layout structures, selecting balanced typography, implementing clean color palettes, and creating polished visual elements to build highly engaging user interfaces.</p>
-              </div>
-              <div class="skill-category reveal-on-scroll">
-                <div class="skill-icon-title">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                    <rect x="4" y="8" width="16" height="12" rx="2" ry="2"></rect>
-                    <path d="M12 8V4"></path>
-                    <path d="M8 4h8"></path>
-                    <circle cx="9" cy="13" r="1"></circle>
-                    <circle cx="15" cy="13" r="1"></circle>
-                  </svg>
-                  <h4>Agentic AI &amp; Automation</h4>
-                </div>
-                <p>Building automated workflows with n8n, Gemini API, and multi-agent frameworks — including an AI recruiter agent that screens resumes and drafts responses, and an automated attendance system with PostgreSQL integration.</p>
-              </div>
+          <div class="origin-milestones" aria-label="Benjie's journey">
+            <article><span>01</span><h3>Foundation</h3><p>Algorithms, software engineering, and the discipline to build dependable products.</p></article>
+            <article><span>02</span><h3>Interface</h3><p>Typography, layout, and interaction design that make technology feel approachable.</p></article>
+            <article><span>03</span><h3>Systems</h3><p>Frontend craft connected to AI agents, n8n workflows, and useful automation.</p></article>
+          </div>
+          <div class="competency-rail reveal-on-scroll">
+            <div class="competency-intro"><span class="section-eyebrow">Capabilities</span><h3>From interface to automation.</h3><p>Three disciplines, used together rather than shown as separate job titles.</p></div>
+            <div class="competency-list">
+              <article><span>01</span><div><h4>Product Engineering</h4><p>Vue, JavaScript, semantic HTML, responsive CSS, and maintainable implementation.</p></div></article>
+              <article><span>02</span><div><h4>UI/UX Direction</h4><p>Clear hierarchy, balanced typography, interaction details, and visual systems.</p></div></article>
+              <article><span>03</span><div><h4>AI &amp; Automation</h4><p>n8n, Gemini, APIs, and agentic workflows that turn routine work into useful systems.</p></div></article>
             </div>
           </div>
         </section>
 
         <!-- SECTION 2: THE CREATIONS -->
         <section id="creations" class="chapter-section scroll-section reveal-on-scroll">
-          <div class="glass-card">
-            <h2 class="chapter-header">Selected Works</h2>
+          <div class="feature-shell feature-works">
+            <div class="section-heading-row"><span class="section-index">02</span><div><span class="section-eyebrow">Selected work</span><h2 class="chapter-header">Interfaces with a point of view.</h2></div></div>
             <p class="chapter-subtitle">Short visual case studies built from real interfaces, workflow captures, and live project sources.</p>
             <div class="reel-grid">
               <article v-for="reel in systemReels" :key="reel.title" :class="['system-reel', reel.tone, 'reveal-on-scroll']">
@@ -317,8 +245,8 @@
 
         <!-- SECTION 2.5: n8n AUTOMATIONS -->
         <section id="automations" class="chapter-section scroll-section reveal-on-scroll">
-          <div class="glass-card">
-            <h2 class="chapter-header">n8n Automations</h2>
+          <div class="feature-shell feature-automation">
+            <div class="section-heading-row"><span class="section-index">03</span><div><span class="section-eyebrow">Automation systems</span><h2 class="chapter-header">n8n Automations</h2></div></div>
             <p class="chapter-subtitle">Automated workflows built with n8n to streamline processes and integrate APIs seamlessly.</p>
 
             <div class="system-flow reveal-on-scroll" aria-label="Portfolio AI system workflow">
@@ -377,8 +305,8 @@
 
         <!-- SECTION 3: CASE STUDY (STICKY SCROLLYTELLING) -->
         <section id="thesis" class="chapter-section scroll-section reveal-on-scroll">
-          <div class="glass-card scrollytelling-wrapper">
-            <h2 class="chapter-header">Case Study: Thesis DSS</h2>
+          <div class="feature-shell thesis-shell scrollytelling-wrapper">
+            <div class="section-heading-row"><span class="section-index">04</span><div><span class="section-eyebrow">Case study</span><h2 class="chapter-header">Thesis DSS</h2></div></div>
             <p class="chapter-subtitle">An interactive walkthrough of the "Sales Reports Analysis On Automotive Spare Parts Business Using Decision Support System" prototype.</p>
 
             <div class="scrollytelling-container">
@@ -699,8 +627,9 @@
 
         <!-- SECTION 4: THE CONNECTION -->
         <section id="connection" class="chapter-section scroll-section reveal-on-scroll">
-          <div class="glass-card contact-wrapper">
-            <h2 class="chapter-header">Get In Touch</h2>
+          <div class="contact-wrapper">
+            <span class="section-eyebrow">05 · Start a conversation</span>
+            <h2 class="chapter-header">Let’s make something useful.</h2>
             <p class="chapter-subtitle">Have an interesting project, design idea, or want to collaborate? Send a message directly.</p>
 
             <div class="contact-layout">
@@ -4621,4 +4550,5 @@ button.cta-btn {
 .workflow-canvas-node.trigger { border-color:rgba(96,165,250,.62); }.workflow-canvas-node.trigger b { color:#93c5fd; }.workflow-canvas-node.code { border-color:rgba(251,146,60,.58); }.workflow-canvas-node.code b { color:#fdba74; }.workflow-canvas-node.if { border-color:rgba(74,222,128,.65); }.workflow-canvas-node.if b { color:#86efac; }.workflow-canvas { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem; overflow:visible; }.workflow-canvas-node { min-width:0; padding:.8rem; }.workflow-canvas-node b { font-size:.58rem; }.workflow-canvas-node span { margin:.48rem 0; font-size:.82rem; }.workflow-canvas-node small { font-size:.66rem; line-height:1.4; }.workflow-canvas>i { display:none; } @media(max-width:600px){.workflow-canvas{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .video-workflow-stages { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; max-height:52vh; margin:2rem 0 1.25rem; padding-right:.2rem; overflow:auto; }.video-workflow-stage { padding:1rem; border:1px solid rgba(255,255,255,.15); border-radius:16px; background:rgba(0,0,0,.16); }.video-workflow-stage>span { color:#fdba74; font-size:.65rem; font-weight:800; letter-spacing:.1em; }.video-workflow-stage h3 { margin:.42rem 0; font-size:1rem; }.video-workflow-stage p { color:#d6d3d1; font-size:.76rem; line-height:1.48; }.video-workflow-nodes { display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.8rem; }.video-workflow-nodes b { padding:.35rem .45rem; border:1px solid rgba(251,146,60,.32); border-radius:7px; color:#fed7aa; background:rgba(251,146,60,.1); font-size:.62rem; line-height:1.25; } @media(max-width:650px){.video-workflow-stages{grid-template-columns:1fr;max-height:55vh;}}
 .tool-mark img { width:19px; height:19px; display:block; object-fit:contain; }.dark-theme .tool-card { color:#f8fafc; background:rgba(28,36,50,.94); border-color:rgba(148,163,184,.27); box-shadow:0 12px 28px rgba(0,0,0,.28); }.dark-theme .tool-card:hover { background:#263247; box-shadow:0 18px 35px rgba(0,0,0,.42); }.dark-theme .tool-mark { background:rgba(255,255,255,.1); }.dark-theme .system-reel,.dark-theme .workflow-demo-card { border-color:rgba(148,163,184,.3); background:linear-gradient(145deg,rgba(30,41,59,.98),rgba(17,24,39,.98)); box-shadow:0 18px 42px rgba(0,0,0,.32); }.dark-theme .system-reel:hover,.dark-theme .workflow-demo-card:hover { box-shadow:0 28px 60px rgba(0,0,0,.48); }.dark-theme .reel-copy h3,.dark-theme .workflow-demo-card h3,.dark-theme .workflow-demo-link { color:#f8fafc; }.dark-theme .reel-copy p,.dark-theme .workflow-demo-card>p { color:#cbd5e1; }.dark-theme .workflow-mini-flow span { color:#e2e8f0; border-color:rgba(148,163,184,.26); background:rgba(15,23,42,.72); }.dark-theme .workflow-demo-top b { color:#bbf7d0; background:rgba(22,163,74,.28); }.dark-theme .system-reel .reel-copy small { background:rgba(15,23,42,.72); }
+.origin-editorial,.feature-shell { border:0; background:transparent; box-shadow:none; }.origin-editorial { padding:2.5rem 0 0; }.origin-head,.section-heading-row { display:grid; grid-template-columns:88px minmax(0,1fr); gap:1.25rem; align-items:start; }.section-index { display:block; color:var(--accent-purple); font-size:.78rem; font-weight:900; letter-spacing:.12em; line-height:1.2; }.section-eyebrow { display:block; margin-bottom:.7rem; color:var(--accent-purple); font-size:.68rem; font-weight:900; letter-spacing:.13em; text-transform:uppercase; }.origin-head h2 { max-width:740px; font-size:clamp(2.5rem,6vw,5.8rem); letter-spacing:-.075em; line-height:.93; }.origin-story { display:grid; grid-template-columns:1.1fr .9fr; gap:3rem; max-width:1000px; margin:4rem 0 5.5rem 88px; }.origin-statement { max-width:600px; color:var(--text-primary); font-size:clamp(1.45rem,2.7vw,2.3rem); font-weight:700; letter-spacing:-.04em; line-height:1.18; }.origin-copy { padding-top:.4rem; }.origin-copy p { color:var(--text-secondary); font-size:1rem; line-height:1.75; }.origin-copy p+p { margin-top:1.15rem; }.origin-milestones { display:grid; grid-template-columns:repeat(3,1fr); margin-left:88px; border-top:1px solid var(--card-border); border-bottom:1px solid var(--card-border); }.origin-milestones article { min-height:190px; padding:1.5rem 1.35rem 1.7rem; border-left:1px solid var(--card-border); }.origin-milestones article:last-child { border-right:1px solid var(--card-border); }.origin-milestones span,.competency-list article>span { color:var(--accent-purple); font-size:.66rem; font-weight:900; letter-spacing:.1em; }.origin-milestones h3 { margin:2.6rem 0 .65rem; font-size:1.15rem; }.origin-milestones p { color:var(--text-secondary); font-size:.84rem; line-height:1.55; }.competency-rail { display:grid; grid-template-columns:.85fr 1.65fr; gap:3rem; margin:6rem 0 1rem 88px; padding-top:1.35rem; border-top:1px solid var(--card-border); }.competency-intro h3 { max-width:260px; font-size:clamp(1.55rem,2.6vw,2.4rem); letter-spacing:-.045em; line-height:1.05; }.competency-intro p { margin-top:1rem; max-width:285px; color:var(--text-secondary); font-size:.9rem; line-height:1.55; }.competency-list { border-top:1px solid var(--card-border); }.competency-list article { display:grid; grid-template-columns:55px 1fr; gap:.85rem; padding:1.25rem 0; border-bottom:1px solid var(--card-border); }.competency-list h4 { font-size:1.15rem; }.competency-list p { margin-top:.35rem; color:var(--text-secondary); font-size:.88rem; line-height:1.55; }.feature-shell { padding:0; }.section-heading-row { margin-bottom:1.2rem; }.section-heading-row .chapter-header { margin:0; }.feature-shell>.chapter-subtitle { max-width:680px; margin:0 0 2.7rem 88px; }.feature-works .reel-grid { margin-top:1.5rem; }.feature-automation .system-flow { margin-top:1.4rem; }.feature-automation .workflow-demo-heading { margin-top:4.2rem; }.thesis-shell .chapter-subtitle { max-width:780px; }.contact-wrapper { max-width:none; position:relative; overflow:hidden; padding:clamp(2.2rem,6vw,5.5rem); border-radius:30px; color:#fff; background:radial-gradient(circle at 88% 10%,rgba(251,146,60,.26),transparent 25%),linear-gradient(135deg,#17110e,#33150a); box-shadow:0 26px 70px rgba(80,35,5,.22); }.contact-wrapper::after { content:'05'; position:absolute; right:4%; bottom:-7%; color:rgba(255,255,255,.05); font-size:clamp(10rem,22vw,21rem); font-weight:900; letter-spacing:-.12em; pointer-events:none; }.contact-wrapper>* { position:relative; z-index:1; }.contact-wrapper .section-eyebrow { color:#fdba74; }.contact-wrapper .chapter-header { max-width:610px; margin-bottom:.8rem; color:#fff; font-size:clamp(2.2rem,5vw,4.4rem); letter-spacing:-.065em; line-height:.95; }.contact-wrapper .chapter-subtitle { max-width:700px; margin-bottom:3.5rem; color:#fed7aa; }.contact-wrapper .contact-details h3 { color:#fff; }.contact-wrapper .contact-details p,.contact-wrapper .detail-item { color:#e7e5e4; }.contact-wrapper .detail-link { color:#fff; }.contact-wrapper .form-input { color:#fff; border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.08); }.contact-wrapper .form-input::placeholder { color:#d6d3d1; }.contact-wrapper .form-group label { color:#fff; }.contact-wrapper .submit-btn { background:#fb923c; color:#241009; }.dark-theme .origin-milestones,.dark-theme .competency-rail,.dark-theme .competency-list,.dark-theme .origin-milestones article,.dark-theme .competency-list article { border-color:rgba(148,163,184,.24); }.dark-theme .contact-wrapper { background:radial-gradient(circle at 88% 10%,rgba(251,146,60,.2),transparent 25%),linear-gradient(135deg,#0f172a,#1c1917); box-shadow:0 26px 70px rgba(0,0,0,.38); } @media(max-width:760px){.origin-head,.section-heading-row{grid-template-columns:1fr;gap:.65rem}.origin-story{grid-template-columns:1fr;margin:2.5rem 0 3.5rem}.origin-milestones{grid-template-columns:1fr;margin-left:0}.origin-milestones article,.origin-milestones article:last-child{min-height:0;border-left:0;border-right:0}.origin-milestones h3{margin:1rem 0 .45rem}.competency-rail{grid-template-columns:1fr;gap:2rem;margin:4rem 0 0}.feature-shell>.chapter-subtitle{margin-left:0}.contact-wrapper{border-radius:22px}.contact-wrapper .contact-layout{gap:2.2rem}}
 </style>
