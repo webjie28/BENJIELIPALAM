@@ -1,6 +1,13 @@
 # Flowboard n8n telemetry contract
 
-Every n8n project writes two Firestore collections: `automationWorkflows` and `automationEvents`.
+Every n8n project sends a compact event to the secure Express telemetry API. The API writes the two Firestore collections: `automationWorkflows` and `automationEvents`.
+
+Start the API with `npm run telemetry` after creating `.env.telemetry` from `.env.telemetry.example`. In n8n, add an **HTTP Request** node to start, success, and error branches:
+
+- Method: `POST`
+- URL: `https://YOUR-TELEMETRY-SERVER/api/telemetry`
+- Header: `x-telemetry-key: YOUR_TELEMETRY_API_KEY`
+- Body: the event schema below
 
 ## Workflow registry
 
