@@ -191,7 +191,7 @@
         <div class="toolbelt-mask">
           <div class="toolbelt-track">
             <div v-for="(tool, index) in [...toolStack, ...toolStack]" :key="`${tool.name}-${index}`" class="tool-card" :title="tool.name">
-              <span class="tool-mark" :style="{ color: tool.color }">{{ tool.mark }}</span><span>{{ tool.name }}</span>
+              <span class="tool-mark" :style="{ color: tool.color }"><img :src="tool.icon" :alt="`${tool.name} logo`" loading="lazy"></span><span>{{ tool.name }}</span>
             </div>
           </div>
         </div>
@@ -978,12 +978,18 @@ const assistantDemoInput = ref('');
 const assistantDemoReply = ref('');
 const assistantDemoLoading = ref(false);
 const selectedWorkflowDemo = ref(null);
+const toolIcon = (name, color) => `https://cdn.simpleicons.org/${name}/${color.replace('#', '')}`;
 const toolStack = [
-  { name: 'Vue', mark: 'V', color: '#42b883' }, { name: 'Figma', mark: 'F', color: '#f24e1e' },
-  { name: 'n8n', mark: 'n', color: '#ea4b71' }, { name: 'Firebase', mark: '▲', color: '#f59e0b' },
-  { name: 'Gemini', mark: '✦', color: '#4285f4' }, { name: 'GitHub', mark: '⌘', color: '#181717' },
-  { name: 'Vercel', mark: '▲', color: '#111111' }, { name: 'PostgreSQL', mark: '◉', color: '#336791' },
-  { name: 'JavaScript', mark: 'JS', color: '#d69e2e' }, { name: 'Tailwind', mark: '~', color: '#38bdf8' }
+  { name: 'Vue', color: '#42b883', icon: toolIcon('vuedotjs', '#42b883') },
+  { name: 'Figma', color: '#f24e1e', icon: toolIcon('figma', '#f24e1e') },
+  { name: 'n8n', color: '#ea4b71', icon: toolIcon('n8n', '#ea4b71') },
+  { name: 'Firebase', color: '#f59e0b', icon: toolIcon('firebase', '#f59e0b') },
+  { name: 'Gemini', color: '#4285f4', icon: toolIcon('googlegemini', '#4285f4') },
+  { name: 'GitHub', color: '#181717', icon: toolIcon('github', '#181717') },
+  { name: 'Vercel', color: '#111111', icon: toolIcon('vercel', '#111111') },
+  { name: 'PostgreSQL', color: '#336791', icon: toolIcon('postgresql', '#336791') },
+  { name: 'JavaScript', color: '#d69e2e', icon: toolIcon('javascript', '#d69e2e') },
+  { name: 'Tailwind CSS', color: '#38bdf8', icon: toolIcon('tailwindcss', '#38bdf8') }
 ];
 const systemReels = [
   { kind: 'assistant', kicker: 'Interactive AI demo', title: 'Portfolio AI Assistant', description: 'Ask a real question and watch the portfolio assistant call the same n8n + Gemini system used by the chat widget.', detail: 'Visitor → n8n → Gemini → response', tone: 'orange' },
@@ -4614,4 +4620,5 @@ button.cta-btn {
 .reel-stage iframe { width:147%; height:147%; border:0; background:#fff; transform:scale(.68); transform-origin:top left; }.assistant-demo { min-height:250px; display:flex; flex-direction:column; color:#fff; background:linear-gradient(135deg,#221812,#5a2107); }.assistant-demo-head { display:flex; align-items:center; gap:.55rem; padding:1rem 1.15rem; border-bottom:1px solid rgba(255,255,255,.13); }.assistant-demo-head span { width:9px; height:9px; border-radius:50%; background:#86efac; box-shadow:0 0 0 4px rgba(134,239,172,.15); }.assistant-demo-head b { font-size:.86rem; }.assistant-demo-head small { margin-left:auto; color:#fed7aa; font-size:.62rem; }.assistant-demo-body { flex:1; padding:1.15rem; color:#fff7ed; font-size:.86rem; line-height:1.55; overflow:auto; }.assistant-demo-body p { margin:0; }.assistant-demo form { display:flex; gap:.55rem; padding:1rem; background:rgba(0,0,0,.16); }.assistant-demo input { min-width:0; flex:1; border:1px solid rgba(255,255,255,.22); border-radius:9px; padding:.68rem .75rem; color:#fff; background:rgba(255,255,255,.1); outline:none; }.assistant-demo input::placeholder { color:#fed7aa; }.assistant-demo button { border:0; border-radius:9px; padding:.68rem .8rem; background:#fb923c; color:#1c1917; font:inherit; font-size:.76rem; font-weight:800; cursor:pointer; }.assistant-demo button:disabled { opacity:.55; cursor:wait; }
 .workflow-canvas-node.trigger { border-color:rgba(96,165,250,.62); }.workflow-canvas-node.trigger b { color:#93c5fd; }.workflow-canvas-node.code { border-color:rgba(251,146,60,.58); }.workflow-canvas-node.code b { color:#fdba74; }.workflow-canvas-node.if { border-color:rgba(74,222,128,.65); }.workflow-canvas-node.if b { color:#86efac; }.workflow-canvas { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem; overflow:visible; }.workflow-canvas-node { min-width:0; padding:.8rem; }.workflow-canvas-node b { font-size:.58rem; }.workflow-canvas-node span { margin:.48rem 0; font-size:.82rem; }.workflow-canvas-node small { font-size:.66rem; line-height:1.4; }.workflow-canvas>i { display:none; } @media(max-width:600px){.workflow-canvas{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .video-workflow-stages { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; max-height:52vh; margin:2rem 0 1.25rem; padding-right:.2rem; overflow:auto; }.video-workflow-stage { padding:1rem; border:1px solid rgba(255,255,255,.15); border-radius:16px; background:rgba(0,0,0,.16); }.video-workflow-stage>span { color:#fdba74; font-size:.65rem; font-weight:800; letter-spacing:.1em; }.video-workflow-stage h3 { margin:.42rem 0; font-size:1rem; }.video-workflow-stage p { color:#d6d3d1; font-size:.76rem; line-height:1.48; }.video-workflow-nodes { display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.8rem; }.video-workflow-nodes b { padding:.35rem .45rem; border:1px solid rgba(251,146,60,.32); border-radius:7px; color:#fed7aa; background:rgba(251,146,60,.1); font-size:.62rem; line-height:1.25; } @media(max-width:650px){.video-workflow-stages{grid-template-columns:1fr;max-height:55vh;}}
+.tool-mark img { width:19px; height:19px; display:block; object-fit:contain; }.dark-theme .tool-card { color:#f8fafc; background:rgba(28,36,50,.94); border-color:rgba(148,163,184,.27); box-shadow:0 12px 28px rgba(0,0,0,.28); }.dark-theme .tool-card:hover { background:#263247; box-shadow:0 18px 35px rgba(0,0,0,.42); }.dark-theme .tool-mark { background:rgba(255,255,255,.1); }.dark-theme .system-reel,.dark-theme .workflow-demo-card { border-color:rgba(148,163,184,.3); background:linear-gradient(145deg,rgba(30,41,59,.98),rgba(17,24,39,.98)); box-shadow:0 18px 42px rgba(0,0,0,.32); }.dark-theme .system-reel:hover,.dark-theme .workflow-demo-card:hover { box-shadow:0 28px 60px rgba(0,0,0,.48); }.dark-theme .reel-copy h3,.dark-theme .workflow-demo-card h3,.dark-theme .workflow-demo-link { color:#f8fafc; }.dark-theme .reel-copy p,.dark-theme .workflow-demo-card>p { color:#cbd5e1; }.dark-theme .workflow-mini-flow span { color:#e2e8f0; border-color:rgba(148,163,184,.26); background:rgba(15,23,42,.72); }.dark-theme .workflow-demo-top b { color:#bbf7d0; background:rgba(22,163,74,.28); }.dark-theme .system-reel .reel-copy small { background:rgba(15,23,42,.72); }
 </style>
