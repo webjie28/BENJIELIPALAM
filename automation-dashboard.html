@@ -3,101 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#080808" />
-    <meta name="description" content="A live operations view for Benjie Lipalam's n8n automation systems." />
-    <title>Flowboard — Automation Operations</title>
+    <meta name="theme-color" content="#080a0c" />
+    <title>Flowboard — Systems Monitor</title>
     <link rel="stylesheet" href="/automation-dashboard.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to dashboard</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark">F</span><span>flowboard</span></a>
+        <p class="nav-label">Monitor</p>
+        <nav aria-label="Primary navigation">
+          <a class="nav-item active" href="#overview"><span>⌂</span>Overview</a>
+          <a class="nav-item" href="#automations"><span>⌁</span>Automations <b id="automationBadge">0</b></a>
+          <a class="nav-item" href="#websites"><span>◎</span>Websites <b id="websiteBadge">0</b></a>
+          <a class="nav-item" href="#activity"><span>↗</span>Activity</a>
+        </nav>
+        <div class="sidebar-foot"><span class="avatar">BL</span><div><strong>Benjie Lipalam</strong><small>Systems workspace</small></div><span class="presence" title="Dashboard online"></span></div>
+      </aside>
 
-    <header class="masthead">
-      <a class="brand" href="/" aria-label="Back to Benjie Lipalam portfolio">
-        <span>FLOWBOARD</span><i>OPS / 01</i>
-      </a>
-      <nav aria-label="Dashboard navigation">
-        <a href="#overview">Overview</a>
-        <a href="#systems">Systems</a>
-        <a href="#activity">Activity</a>
-      </nav>
-      <button class="arrow-link" id="openN8n">Open n8n <span aria-hidden="true">↗</span></button>
-    </header>
+      <main>
+        <header class="topbar">
+          <div class="crumb"><span>Workspace</span><i>/</i><strong>All systems</strong></div>
+          <div class="top-actions"><span class="live-pill" id="connectionStatus"><i></i>Starting monitors</span><button class="refresh-button" id="refreshDashboard">↻ Run checks</button></div>
+        </header>
 
-    <main id="main">
-      <section class="hero" id="overview" aria-labelledby="page-title">
-        <div class="hero-copy">
-          <p class="kicker"><span></span> N8N OPERATIONS / LIVE SYSTEMS</p>
-          <h1 id="page-title">Automation,<br /><em>made observable.</em></h1>
-          <p class="intro">One clear view of every workflow run, failure, and handoff—without opening each automation.</p>
-        </div>
-        <div class="signal" aria-label="Current operations status">
-          <div class="signal-top"><span>System pulse</span><strong id="heroStatus">Checking</strong></div>
-          <div class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <p id="syncMessage">Connecting to workflow telemetry…</p>
-        </div>
-      </section>
+        <section class="hero" id="overview">
+          <div><p class="eyebrow">Unified operations</p><h1>Know what’s working.<br><span>See what needs you.</span></h1><p id="syncMessage">Connecting your automation and website monitors.</p></div>
+          <div class="health-orbit"><strong id="overallHealth">—</strong><span>reporting healthy</span></div>
+        </section>
 
-      <section class="control-bar" aria-label="Dashboard controls">
-        <div class="source-state"><i id="sourceDot"></i><strong id="connectionStatus">Connecting</strong><span id="sourceNote">Checking Firebase telemetry</span></div>
-        <label class="search-wrap"><span class="sr-only">Search workflows</span><input id="workflowSearch" type="search" placeholder="Search systems" autocomplete="off" /><kbd>/</kbd></label>
-        <div class="range-switcher" role="group" aria-label="Event time range">
-          <button data-days="1">24H</button><button class="active" data-days="7">7D</button><button data-days="30">30D</button>
-        </div>
-        <button class="refresh-button" id="refreshDashboard">Refresh <span aria-hidden="true">↻</span></button>
-      </section>
+        <section class="metrics" aria-label="System metrics">
+          <article><div class="metric-label"><span>01</span>Registered systems</div><strong id="totalSystems">—</strong><p id="systemsMeta">Loading registry</p></article>
+          <article><div class="metric-label"><span>02</span>Automation success</div><strong id="successRate">—</strong><p id="successMeta">Waiting for n8n telemetry</p></article>
+          <article><div class="metric-label"><span>03</span>Websites online</div><strong id="onlineWebsites">—</strong><p id="websiteMeta">Running first check</p></article>
+          <article><div class="metric-label"><span>04</span>Needs attention</div><strong id="attentionCount">—</strong><p id="attentionMeta">Checking all systems</p></article>
+        </section>
 
-      <section class="metrics" aria-label="Automation metrics">
-        <article><p>Completed runs</p><strong id="totalRuns">—</strong><span id="runsMeta">Waiting for data</span></article>
-        <article><p>Active workflows</p><strong id="activeWorkflows">—</strong><span id="activeMeta">Waiting for registry</span></article>
-        <article><p>Success rate</p><strong id="successRate">—</strong><span id="successMeta">Calculated from completed runs</span></article>
-        <article class="attention"><p>Needs attention</p><strong id="attentionCount">—</strong><span id="attentionMeta">Checking workflow health</span></article>
-      </section>
+        <section class="system-section" id="automations">
+          <div class="section-head"><div><p class="eyebrow">n8n operations</p><h2>Automations</h2><p>Executions, workflow state, latest node and errors stay in this lane.</p></div><div class="section-actions"><span class="source-pill"><i></i>Firestore telemetry</span><button class="text-button" id="openN8n">Open n8n ↗</button></div></div>
+          <div class="filter-row" data-filter-group="automation"><button class="active" data-filter="all">All</button><button data-filter="healthy">Healthy</button><button data-filter="attention">Needs attention</button></div>
+          <div class="automation-grid" id="automationGrid"></div>
+        </section>
 
-      <section class="operations-grid" id="systems">
-        <article class="panel systems-panel">
-          <header class="section-head"><div><p class="kicker">01 / SYSTEM REGISTRY</p><h2>Workflow health</h2></div><span class="count" id="workflowCount">00 systems</span></header>
-          <div class="system-table" role="table" aria-label="Connected automation workflows">
-            <div class="system-row table-head" role="row"><span>Name</span><span>Status</span><span>Runs</span><span>Last checkpoint</span><span></span></div>
-            <div id="workflowList"></div>
-          </div>
-        </article>
+        <section class="system-section" id="websites">
+          <div class="section-head"><div><p class="eyebrow">Uptime registry</p><h2>Websites</h2><p>Availability, response time and the last successful check stay separate from automations.</p></div><div class="section-actions"><span class="source-pill" id="websiteScan"><i></i>Not checked yet</span><button class="text-button" id="checkWebsites">Check now ↻</button></div></div>
+          <div class="filter-row" data-filter-group="website"><button class="active" data-filter="all">All</button><button data-filter="online">Online</button><button data-filter="attention">Offline</button></div>
+          <div class="website-grid" id="websiteGrid"></div>
+        </section>
 
-        <aside class="panel incident-panel" aria-labelledby="attention-title">
-          <header class="section-head"><div><p class="kicker">02 / EXCEPTIONS</p><h2 id="attention-title">Attention queue</h2></div><b id="failureBadge">0</b></header>
-          <div id="attentionList" class="attention-list"></div>
-        </aside>
-      </section>
+        <section class="activity-section" id="activity">
+          <div class="section-head"><div><p class="eyebrow">Cross-system history</p><h2>Recent activity</h2><p>Automation events and website checks in one readable timeline.</p></div><button class="text-button" id="loadActivity">Latest 100 events</button></div>
+          <div class="activity-list" id="activityList"></div>
+        </section>
 
-      <section class="activity-section" id="activity">
-        <header class="section-head"><div><p class="kicker">03 / EVENT STREAM</p><h2>Latest activity</h2></div><span class="count" id="eventCount">00 events</span></header>
-        <div class="event-list" id="eventList"></div>
-      </section>
-
-      <section class="contract" aria-labelledby="contract-title">
-        <div><p class="kicker">TELEMETRY CONTRACT</p><h2 id="contract-title">One event format.<br />Every automation.</h2></div>
-        <ol aria-label="Telemetry flow"><li>n8n workflow</li><li>Secure event</li><li>Firestore</li><li>Flowboard</li></ol>
-        <button class="outline-button" id="viewContract">View event format <span aria-hidden="true">↗</span></button>
-      </section>
-    </main>
-
-    <footer><span>FLOWBOARD / BENJIE LIPALAM</span><span>AUTOMATION OPERATIONS · <b id="footerYear"></b></span></footer>
-
-    <dialog id="contractDialog">
-      <form method="dialog"><button class="dialog-close" aria-label="Close event format">×</button></form>
-      <p class="kicker">N8N HTTP REQUEST BODY</p>
-      <h2>Operations event</h2>
-      <p>Send this sanitized payload from the start, success, and error branches of each workflow.</p>
-      <pre><code id="contractCode">{
-  "workflowId": "WORKFLOW_ID",
-  "workflowName": "Workflow name",
-  "project": "Project group",
-  "status": "success",
-  "nodeName": "Last completed node",
-  "message": "No private or client data"
-}</code></pre>
-      <button class="copy-button" id="copyContract" type="button">Copy JSON</button>
-    </dialog>
-
+        <section class="contract-strip">
+          <div><p class="eyebrow">How monitoring works</p><h2>Automations report events. Websites answer health checks.</h2></div>
+          <div class="contract-flow"><span>n8n</span><i>→</i><span>Telemetry</span><b>+</b><span>Websites</span><i>→</i><span>Flowboard</span></div>
+          <button class="text-button" id="viewContract">Setup guide ↗</button>
+        </section>
+      </main>
+    </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script type="module" src="/automation-dashboard.js"></script>
   </body>
