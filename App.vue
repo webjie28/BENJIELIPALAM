@@ -318,7 +318,10 @@
               <button type="button" class="workflow-modal-close" @click="selectedCaseStudy = null" aria-label="Close case study">×</button>
               <span class="workflow-modal-kicker">Project case study</span><h2>{{ selectedCaseStudy.title }}</h2><p>{{ selectedCaseStudy.caseStudy.summary }}</p>
               <div class="case-study-grid"><article><span>The problem</span><p>{{ selectedCaseStudy.caseStudy.problem }}</p></article><article><span>The build</span><p>{{ selectedCaseStudy.caseStudy.build }}</p></article><article><span>Stack</span><div class="case-study-tags"><b v-for="item in selectedCaseStudy.caseStudy.stack" :key="item">{{ item }}</b></div></article></div>
-              <a v-if="selectedCaseStudy.href" :href="selectedCaseStudy.href" target="_blank" rel="noopener" class="case-study-live">Open live project <span>↗</span></a>
+              <div class="case-study-actions">
+                <a v-if="selectedCaseStudy.href" :href="selectedCaseStudy.href" target="_blank" rel="noopener" class="case-study-live">Open live project <span>↗</span></a>
+                <a v-if="selectedCaseStudy.sourceHref" :href="selectedCaseStudy.sourceHref" target="_blank" rel="noopener" class="case-study-live case-study-source">View team repository <span>↗</span></a>
+              </div>
             </section>
           </div>
         </Transition>
@@ -328,6 +331,19 @@
           <div class="feature-shell thesis-shell scrollytelling-wrapper">
             <div class="section-heading-row"><div><span class="section-eyebrow">Case study</span><h2 class="chapter-header">Thesis DSS</h2></div></div>
             <p class="chapter-subtitle">An interactive walkthrough of the "Sales Reports Analysis On Automotive Spare Parts Business Using Decision Support System" prototype.</p>
+            <div class="thesis-project-details">
+              <p class="thesis-role-heading"><strong>Team thesis project</strong> <span aria-hidden="true">/</span> My contribution</p>
+              <div class="thesis-role-list">
+                <div><span>01</span><strong>Frontend development</strong><p>Built and refined responsive interface views using React and TypeScript.</p></div>
+                <div><span>02</span><strong>Visual direction</strong><p>Helped define the website color palette and visual treatment of the interface.</p></div>
+                <div><span>03</span><strong>Testing &amp; QA</strong><p>Tested key user flows and interface behavior, then helped identify issues before delivery.</p></div>
+              </div>
+              <p class="thesis-team-note">The complete DSS—including its backend and forecasting logic—is the combined work of our three-person team.</p>
+              <div class="thesis-project-links">
+                <a class="cta-btn pinia-primary-btn" href="https://automotive-spare-parts-dss-thesis.vercel.app/" target="_blank" rel="noopener noreferrer">View live system <span aria-hidden="true">↗</span></a>
+                <a class="cta-btn pinia-secondary-btn" href="https://github.com/jeinciong/automotive-spare-parts-dss-thesis" target="_blank" rel="noopener noreferrer">View team repository <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
 
             <div class="scrollytelling-container">
               <!-- Left Side: Sticky Visual Mockup -->
@@ -823,10 +839,11 @@
             </div>
 
             <div class="cv-project-item">
-              <h3 class="cv-project-title">Automotive Spare Parts Decision Support System (Thesis) &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, TypeScript, Node.js, Express, Python</em></span></h3>
+              <h3 class="cv-project-title">Automotive Spare Parts Decision Support System (Team Thesis) &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, TypeScript</em></span></h3>
               <ul class="cv-bullets">
                 <li>Collaborated in a team of three to design and build a decision support system for spare parts inventory.</li>
-                <li>Developed responsive frontend views using React and TypeScript, and engineered statistical forecasting APIs using Node.js, Express.js, and Python.</li>
+                <li>Developed and refined responsive frontend views using React and TypeScript.</li>
+                <li>Contributed to the interface color direction and performed functional and usability testing across key user flows.</li>
               </ul>
             </div>
 
@@ -945,6 +962,7 @@ const toolStack = [
 ];
 const systemReels = [
   { kind: 'assistant', kicker: 'Interactive AI demo', title: 'Portfolio AI Assistant', description: 'Ask a real question and watch the portfolio assistant call the same n8n + Gemini system used by the chat widget.', detail: 'Visitor → n8n → Gemini → response', tone: 'orange', caseStudy: { summary: 'A portfolio chat experience that answers visitor questions while keeping the AI’s behavior constrained, calm, and portfolio-specific.', problem: 'A portfolio needs a useful first interaction without turning into an aggressive chatbot or exposing private system details.', build: 'A Vue chat interface sends a scoped message to an n8n webhook, which coordinates Gemini and returns a concise response. Sessions are logged to a private Firebase inbox.', stack: ['Vue 3', 'n8n', 'Gemini', 'Firebase'] } },
+  { kicker: 'Team thesis · Frontend & QA', title: 'Automotive Spare Parts DSS', description: 'Explore our live decision support system for sales reporting, demand forecasting, inventory, and supplier management.', detail: 'My role: React frontend → visual direction → testing', href: 'https://automotive-spare-parts-dss-thesis.vercel.app/', sourceHref: 'https://github.com/jeinciong/automotive-spare-parts-dss-thesis', tone: 'orange', caseStudy: { summary: 'A three-person Computer Science thesis project designed to turn automotive spare-parts sales and inventory data into clearer operational decisions.', problem: 'Sales records, stock levels, supplier details, and demand signals are difficult to interpret when they live in separate views and raw tables.', build: 'I developed and refined responsive React and TypeScript interface views, helped define the website color direction, and tested key user flows and interface behavior. The backend and forecasting logic are the combined work of our thesis team.', stack: ['React', 'TypeScript', 'Frontend', 'UI Direction', 'Testing & QA'] } },
   { kicker: 'Live dashboard', title: 'Automation Operations Dashboard', description: 'A real-time command centre for Messenger follow-ups and the Shorts content pipeline.', detail: 'Vue-ready UI → n8n events → human review', href: '/automation-dashboard.html', tone: 'green', caseStudy: { summary: 'An operations dashboard that makes automation work observable: leads, content status, execution health, and exceptions appear in one clear workspace.', problem: 'Automation becomes hard to trust when follow-ups, pipeline status, and render failures are scattered across tools.', build: 'The dashboard turns raw workflow events into a lightweight operating surface with lead stages, content queue visibility, status signals, and intentional human-review moments.', stack: ['JavaScript', 'n8n-ready webhooks', 'Responsive UI', 'Workflow observability'] } },
   { kicker: 'Automation case study', title: 'AI Recruitment Agent', description: 'Explore the live build log and workflow documentation for a recruitment automation system.', detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet', caseStudy: { summary: 'An email-driven workflow that turns incoming applications into structured, reviewable hiring decisions.', problem: 'Reading resumes, checking for attachments, and drafting appropriate next steps creates repetitive manual work.', build: 'The n8n workflow ingests Gmail messages, checks for PDFs, extracts resume text, evaluates context with Gemini, updates a candidate record, and prepares the right human-review draft.', stack: ['n8n', 'Gmail API', 'Gemini', 'Google Sheets'] } },
   { kicker: 'Live web app', title: 'Daily Life Tracking System', description: 'Open the real productivity and daily tracking web application.', detail: 'Vue → state → personal analytics', href: 'https://dailylife-trackingsystem.vercel.app/#/', tone: 'blue', caseStudy: { summary: 'A focused daily tracker that makes personal routines and progress easier to see at a glance.', problem: 'Everyday tracking often becomes fragmented across notes, reminders, and disconnected tools.', build: 'A responsive Vue experience organizes daily inputs into a clearer interface with state-driven views and personal analytics.', stack: ['Vue', 'JavaScript', 'Responsive UI'] } },
@@ -1228,9 +1246,9 @@ const customRepoDetails = {
   },
   'Sales-Reports-Analysis-on-Automotive-Spare-Parts-Business-Using-Decision-Support-System': {
     title: 'Automotive Spare Parts DSS',
-    subtitle: 'Full-Stack DSS Development',
-    description: 'A group thesis project developed by three Computer Science students at Cavite State University. Built to automate inventory forecasting for automotive spare parts businesses — implementing statistical forecasting models, a responsive React and TypeScript frontend dashboard, and a backend powered by Node.js, Express.js, and Python.',
-    tags: ['React', 'TypeScript', 'Node.js', 'Express.js', 'Python', 'Algorithms', 'Inventory Forecasting'],
+    subtitle: 'Team Thesis · Frontend, Visual Direction & QA',
+    description: 'A decision support system created by a three-person Computer Science thesis team for automotive spare parts inventory forecasting. My contribution covered responsive React and TypeScript interfaces, the website’s color direction, and functional testing. The backend and forecasting system represent our team’s combined work.',
+    tags: ['React', 'TypeScript', 'Frontend', 'UI Direction', 'Testing'],
     liveLink: 'https://automotive-spare-parts-dss-thesis.vercel.app'
   },
   'DailylifeTrackingsystem': {
@@ -4597,4 +4615,25 @@ button.cta-btn {
 /* Final interaction hardening: visibility never depends on animation state. */
 :where(a,button,input,textarea,select):focus-visible { outline:3px solid color-mix(in srgb,var(--accent-purple) 74%,white); outline-offset:4px; }.showcase-nav button[aria-pressed="true"] { color:#fff; border-color:rgba(251,146,60,.55); background:linear-gradient(90deg,rgba(234,88,12,.27),rgba(251,146,60,.08)); }.dark-theme .showcase-nav button[aria-pressed="true"] { border-color:rgba(251,146,60,.65); background:linear-gradient(90deg,rgba(234,88,12,.32),rgba(30,41,59,.15)); } @media(max-width:760px){.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.hero-desc{max-width:34ch;}.hero-quick-facts{gap:.42rem;}.hero-fact-tag{font-size:.66rem;}} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.reveal-on-scroll{opacity:1 !important;transform:none !important;transition:none !important;}.animate-in,.hero-image-frame.hero-portrait-cutout,.toolbelt-track{animation:none !important;}}
 .hero-image-frame.hero-portrait-cutout { isolation:auto; }
+
+/* Thesis project attribution and actions */
+.thesis-project-details { margin:0 0 3.5rem 88px; color:var(--text-secondary); line-height:1.7; }
+.thesis-project-details strong { color:var(--text-primary); }
+.thesis-role-heading { font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; }
+.thesis-role-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:1.1rem; border-top:1px solid var(--card-border); border-bottom:1px solid var(--card-border); }
+.thesis-role-list>div { padding:1.25rem 1.25rem 1.35rem 0; }
+.thesis-role-list>div+div { padding-left:1.25rem; border-left:1px solid var(--card-border); }
+.thesis-role-list span { display:block; margin-bottom:1.8rem; color:var(--accent-purple); font-size:.66rem; font-weight:900; letter-spacing:.12em; }
+.thesis-role-list strong { display:block; font-size:1.05rem; }
+.thesis-role-list p { margin-top:.4rem; font-size:.86rem; line-height:1.55; }
+.thesis-team-note { max-width:780px; margin-top:1rem; font-size:.84rem; }
+.thesis-project-links,.case-study-actions { display:flex; flex-wrap:wrap; gap:.85rem; margin-top:1.25rem; }
+.thesis-project-links a { display:inline-flex; align-items:center; gap:.65rem; }
+.case-study-source { color:#fdba74; }
+@media(max-width:760px) {
+  .thesis-project-details { margin-left:0; }
+  .thesis-role-list { grid-template-columns:1fr; }
+  .thesis-role-list>div+div { padding-left:0; border-left:0; border-top:1px solid var(--card-border); }
+  .thesis-role-list span { margin-bottom:.7rem; }
+}
 </style>
