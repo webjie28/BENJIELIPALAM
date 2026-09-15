@@ -1,39 +1,112 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, limit, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, getFirestore, limit, onSnapshot, orderBy, query } from 'firebase/firestore';
 
-const $ = (s) => document.querySelector(s);
-const state = { events: [], workflows: [] };
-const config = ['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId'].reduce((o, k) => ({ ...o, [k]: import.meta.env[`VITE_FIREBASE_${k.replace(/([A-Z])/g, '_$1').toUpperCase()}`] }), {});
-const tone = (s) => ['failed','error'].includes(s) ? 'rose' : ['degraded','waiting'].includes(s) ? 'amber' : s === 'running' ? 'blue' : 'mint';
-const safe = (v='') => String(v).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-const ago = (v) => { const n = Math.max(0, Math.floor((Date.now() - (v?.toDate ? v.toDate() : new Date(v)).getTime()) / 60000)); return !Number.isFinite(n) || n < 1 ? 'just now' : n < 60 ? `${n}m ago` : `${Math.floor(n / 60)}h ago`; };
-const empty = (title, copy) => `<div class="empty-state"><strong>${title}</strong><p>${copy}</p></div>`;
-function toast(text) { const t = $('#toast'); t.textContent = text; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2600); }
+const $ = selector => document.querySelector(selector);
+const config = ['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId'].reduce((result, key) => ({ ...result, [key]: import.meta.env[`VITE_FIREBASE_${key.replace(/([A-Z])/g, '_$1').toUpperCase()}`] }), {});
+const n8nHome = 'https://negosyonakaauto.duckdns.org/home/workflows';
+const now = Date.now();
+const minutesAgo = minutes => new Date(now - minutes * 60000);
+const demoWorkflows = [
+  { id:'inquiry', name:'Client Inquiry & Proposal Assistant', project:'Client operations', description:'Inquiry intake and response preparation', active:true, health:'healthy', executionCount:128, lastNode:'Human review gate', n8nUrl:n8nHome, updatedAt:minutesAgo(8) },
+  { id:'shorts', name:'YouTube Shorts Content System', project:'Content pipeline', description:'Script, render, and publishing preparation', active:true, health:'degraded', executionCount:42, lastNode:'Render video', n8nUrl:n8nHome, updatedAt:minutesAgo(34) },
+  { id:'recruitment', name:'AI Recruitment Agent', project:'Recruitment', description:'Resume evaluation and candidate routing', active:true, health:'failing', executionCount:76, lastNode:'Update candidate record', n8nUrl:n8nHome, updatedAt:minutesAgo(51) },
+  { id:'attendance', name:'Auto Clock-In/Out', project:'Personal operations', description:'Time validation and attendance action', active:true, health:'healthy', executionCount:212, lastNode:'Attendance verified', n8nUrl:n8nHome, updatedAt:minutesAgo(93) }
+];
+const demoEvents = [
+  { id:'e1', workflowId:'inquiry', workflowName:'Client Inquiry & Proposal Assistant', project:'Client operations', status:'success', nodeName:'Human review gate', message:'Qualified inquiry prepared for review', occurredAt:minutesAgo(8) },
+  { id:'e2', workflowId:'shorts', workflowName:'YouTube Shorts Content System', project:'Content pipeline', status:'degraded', nodeName:'Render video', message:'Render completed slower than expected', occurredAt:minutesAgo(34) },
+  { id:'e3', workflowId:'recruitment', workflowName:'AI Recruitment Agent', project:'Recruitment', status:'failed', nodeName:'Update candidate record', message:'Candidate record update needs review', occurredAt:minutesAgo(51) },
+  { id:'e4', workflowId:'attendance', workflowName:'Auto Clock-In/Out', project:'Personal operations', status:'success', nodeName:'Attendance verified', message:'Approved attendance action recorded', occurredAt:minutesAgo(93) },
+  { id:'e5', workflowId:'shorts', workflowName:'YouTube Shorts Content System', project:'Content pipeline', status:'success', nodeName:'Prepare upload', message:'Publishing package prepared', occurredAt:minutesAgo(210) },
+  { id:'e6', workflowId:'recruitment', workflowName:'AI Recruitment Agent', project:'Recruitment', status:'success', nodeName:'Evaluate candidate', message:'Candidate evaluation completed', occurredAt:minutesAgo(420) }
+];
+const state = { workflows:demoWorkflows, events:demoEvents, days:7, search:'', source:'demo' };
+const liveData = { workflows:null, events:null };
 
-function render() {
-  const failed = state.events.filter(e => ['failed','error'].includes(e.status)).length;
-  const success = state.events.filter(e => e.status === 'success').length;
-  const total = state.events.length;
-  $('#totalRuns').textContent = total || '—'; $('#runsMeta').textContent = total ? 'Latest telemetry events' : 'No live data yet';
-  $('#activeWorkflows').textContent = state.workflows.filter(w => w.active !== false).length || '—'; $('#activeMeta').textContent = state.workflows.length ? `${state.workflows.length} registered projects` : 'Waiting for registry';
-  $('#successRate').textContent = total ? `${Math.round(success / total * 100)}%` : '—'; $('#successMeta').textContent = total ? `${success} successful / ${total} events` : 'Calculated from events';
-  $('#attentionCount').textContent = failed; $('#attentionMeta').textContent = failed ? `${failed} errors need review` : 'No failed events loaded'; $('#failureBadge').textContent = failed;
-  $('#connectionStatus').innerHTML = `<i></i>${state.events.length || state.workflows.length ? 'Live telemetry connected' : 'Waiting for telemetry'}`;
-  $('#syncMessage').textContent = state.events[0] ? `Last n8n event ${ago(state.events[0].occurredAt || state.events[0].createdAt)}.` : 'Waiting for the first workflow telemetry event.';
-  $('#registryUpdated').textContent = state.workflows[0] ? `Updated ${ago(state.workflows[0].updatedAt)}` : 'No workflow data yet';
-  $('#kanban').innerHTML = state.workflows.length ? state.workflows.slice(0,6).map(w => `<section class="kanban-column"><header><span>${safe(w.project || 'n8n project')}</span><b>${safe(w.executionCount || 0)}</b></header><button class="lead-card" data-workflow="${safe(w.n8nUrl || '')}"><span class="lead-avatar ${tone(w.health || w.status)}">⌁</span><span><strong>${safe(w.name)}</strong><small>${safe(w.lastNode || 'No recent node data')}</small></span><em class="tag ${tone(w.health || w.status)}">${safe(w.health || w.status || 'healthy')}</em></button><button class="add-lead">View in n8n ↗</button></section>`).join('') : empty('No registered workflows yet', 'Add an Operations Event step to an n8n workflow to make it appear here.');
-  $('#activity').innerHTML = state.events.length ? state.events.slice(0,7).map(e => `<div class="activity"><span class="activity-icon ${tone(e.status)}">⌁</span><div><strong>${safe(e.workflowName || e.workflow || 'n8n workflow')}</strong><p>${safe(e.message || e.nodeName || e.status || 'Execution recorded')}</p></div><time>${ago(e.occurredAt || e.createdAt)}</time></div>`).join('') : empty('No events received', 'Every workflow transition will appear here.');
-  $('#contentGrid').innerHTML = state.workflows.length ? state.workflows.map((w,i) => `<article class="content-card"><div class="video-thumb thumb-${i%3+1}"><span class="play">⌁</span><b>${safe(w.executionCount || 0)} runs</b></div><div class="content-copy"><div><span class="status ${tone(w.health || w.status)}"><i></i>${safe(w.health || w.status || 'healthy')}</span><button aria-label="Workflow actions">•••</button></div><h3>${safe(w.name)}</h3><p>${safe(w.description || w.project || 'n8n workflow project')}</p></div></article>`).join('') : empty('Your n8n project registry is empty', 'Client inquiry, content factory, and every future workflow will live here.');
+const toDate = value => value?.toDate ? value.toDate() : new Date(value || 0);
+const safe = (value='') => String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+const healthClass = value => ['failed','error'].includes(value) ? 'failing' : value || 'healthy';
+const relativeTime = value => {
+  const minutes = Math.max(0, Math.floor((Date.now() - toDate(value).getTime()) / 60000));
+  return minutes < 1 ? 'now' : minutes < 60 ? `${minutes}m` : minutes < 1440 ? `${Math.floor(minutes/60)}h` : `${Math.floor(minutes/1440)}d`;
+};
+const toast = message => { const node=$('#toast'); node.textContent=message; node.classList.add('show'); clearTimeout(toast.timer); toast.timer=setTimeout(()=>node.classList.remove('show'),2600); };
+const filteredEvents = () => {
+  const cutoff = Date.now() - state.days * 86400000;
+  const term = state.search.toLowerCase();
+  return state.events.filter(event => toDate(event.occurredAt || event.createdAt).getTime() >= cutoff && (!term || `${event.workflowName} ${event.project} ${event.message} ${event.nodeName}`.toLowerCase().includes(term)));
+};
+const filteredWorkflows = () => {
+  const term = state.search.toLowerCase();
+  return state.workflows.filter(workflow => !term || `${workflow.name} ${workflow.project} ${workflow.health} ${workflow.lastNode}`.toLowerCase().includes(term));
+};
+if (import.meta.env.DEV && (healthClass('failed') !== 'failing' || safe('<') !== '&lt;')) throw new Error('Dashboard self-check failed');
+
+function renderSource(){
+  const live = state.source === 'live';
+  $('#sourceDot').className = live ? 'live' : state.source === 'error' ? 'error' : '';
+  $('#connectionStatus').textContent = live ? 'Live telemetry' : state.source === 'error' ? 'Live unavailable' : 'Demo telemetry';
+  $('#sourceNote').textContent = live ? 'Firestore listeners connected' : state.source === 'error' ? 'Showing safe demo data' : 'Connect n8n to replace sample events';
+  $('#heroStatus').textContent = live ? 'Live' : state.source === 'error' ? 'Demo fallback' : 'Demo mode';
+  $('#syncMessage').textContent = live && state.events[0] ? `Last workflow event ${relativeTime(state.events[0].occurredAt || state.events[0].createdAt)} ago.` : 'Representative data is active while live workflow events are being connected.';
 }
-function connect() {
-  if (!config.apiKey || !config.projectId) { render(); return toast('Add Firebase config to enable live telemetry.'); }
-  const db = getFirestore(initializeApp(config));
-  onSnapshot(query(collection(db,'automationEvents'),orderBy('occurredAt','desc'),limit(100)), s => { state.events = s.docs.map(d => ({id:d.id,...d.data()})); render(); }, () => toast('Telemetry read needs Firestore rules or configuration.'));
-  onSnapshot(query(collection(db,'automationWorkflows'),orderBy('updatedAt','desc'),limit(30)), s => { state.workflows = s.docs.map(d => ({id:d.id,...d.data()})); render(); });
+
+function render(){
+  const workflows = filteredWorkflows();
+  const events = filteredEvents();
+  const completed = events.filter(event => ['success','failed','error'].includes(event.status));
+  const successes = completed.filter(event => event.status === 'success').length;
+  const attention = workflows.filter(workflow => ['failing','degraded','waiting'].includes(healthClass(workflow.health || workflow.status)));
+  const incidentEvents = events.filter(event => ['failed','error','degraded','waiting'].includes(event.status));
+
+  renderSource();
+  $('#totalRuns').textContent = completed.length || '0';
+  $('#runsMeta').textContent = `${state.days === 1 ? 'Last 24 hours' : `Last ${state.days} days`} · terminal events`;
+  $('#activeWorkflows').textContent = workflows.filter(workflow => workflow.active !== false).length;
+  $('#activeMeta').textContent = `${workflows.length} registered systems`;
+  $('#successRate').textContent = completed.length ? `${Math.round(successes/completed.length*100)}%` : '—';
+  $('#successMeta').textContent = completed.length ? `${successes} successful / ${completed.length} completed` : 'No completed runs yet';
+  $('#attentionCount').textContent = attention.length;
+  $('#attentionMeta').textContent = attention.length ? 'Review degraded or failing systems' : 'All registered systems healthy';
+  $('#workflowCount').textContent = `${String(workflows.length).padStart(2,'0')} systems`;
+  $('#eventCount').textContent = `${String(events.length).padStart(2,'0')} events`;
+  $('#failureBadge').textContent = incidentEvents.length;
+
+  $('#workflowList').innerHTML = workflows.length ? workflows.map((workflow,index) => {
+    const health = healthClass(workflow.health || workflow.status);
+    return `<div class="system-row" role="row"><div class="system-name"><span class="system-index">${String(index+1).padStart(2,'0')}</span><div><strong>${safe(workflow.name)}</strong><small>${safe(workflow.project || 'n8n project')}</small></div></div><span class="health ${safe(health)}">${safe(health)}</span><span class="run-count">${safe(workflow.executionCount || 0)}</span><span class="checkpoint">${safe(workflow.lastNode || 'No checkpoint yet')}</span><button class="inspect" data-url="${safe(workflow.n8nUrl || '')}" aria-label="Open ${safe(workflow.name)} in n8n">↗</button></div>`;
+  }).join('') : '<p class="empty">No systems match this search.</p>';
+
+  $('#attentionList').innerHTML = incidentEvents.length ? incidentEvents.slice(0,5).map(event => `<article class="attention-item"><div><strong>${safe(event.workflowName || 'Workflow')}</strong><time>${relativeTime(event.occurredAt || event.createdAt)} ago</time></div><p>${safe(event.message || event.nodeName || event.status)}</p></article>`).join('') : '<p class="attention-empty">No exceptions in this time range.</p>';
+  $('#eventList').innerHTML = events.length ? events.slice(0,10).map(event => `<article class="event-row"><time>${relativeTime(event.occurredAt || event.createdAt)} ago</time><span class="event-workflow">${safe(event.workflowName || 'Workflow')}</span><span class="event-project">${safe(event.project || 'n8n project')}</span><span class="event-copy">${safe(event.message || event.nodeName || 'Execution recorded')}</span><span class="health ${safe(healthClass(event.status))}">${safe(event.status || 'unknown')}</span></article>`).join('') : '<p class="empty">No events match this time range or search.</p>';
 }
-$('#refreshDashboard').addEventListener('click', () => toast('Live listeners are active.'));
-$('#loadActivity').addEventListener('click', () => toast('Showing the latest 100 workflow events.'));
-$('#openN8n').addEventListener('click', () => window.open('https://negosyonakaauto.duckdns.org/home/workflows','_blank','noopener'));
-$('#viewContract').addEventListener('click', () => toast('Use OPERATIONS-TELEMETRY.md for each n8n project.'));
-document.addEventListener('click', e => { const c=e.target.closest('[data-workflow]'); if(c?.dataset.workflow) window.open(c.dataset.workflow,'_blank','noopener'); });
-render(); connect();
+
+function useLiveData(){
+  if (liveData.workflows === null || liveData.events === null || (!liveData.workflows.length && !liveData.events.length)) return;
+  state.source = 'live';
+  state.workflows = liveData.workflows;
+  state.events = liveData.events;
+  render();
+}
+
+function connect(){
+  if (!config.apiKey || !config.projectId) return render();
+  try {
+    const db = getFirestore(initializeApp(config));
+    onSnapshot(query(collection(db,'automationWorkflows'),orderBy('updatedAt','desc'),limit(30)), snapshot => { liveData.workflows=snapshot.docs.map(doc=>({id:doc.id,...doc.data()})); useLiveData(); }, () => { state.source='error'; render(); });
+    onSnapshot(query(collection(db,'automationEvents'),orderBy('occurredAt','desc'),limit(100)), snapshot => { liveData.events=snapshot.docs.map(doc=>({id:doc.id,...doc.data()})); useLiveData(); }, () => { state.source='error'; render(); });
+  } catch { state.source='error'; render(); }
+}
+
+$('.range-switcher').addEventListener('click', event => { const button=event.target.closest('[data-days]'); if(!button)return; state.days=Number(button.dataset.days); document.querySelectorAll('[data-days]').forEach(node=>node.classList.toggle('active',node===button)); render(); });
+$('#workflowSearch').addEventListener('input', event => { state.search=event.target.value.trim(); render(); });
+document.addEventListener('keydown', event => { if(event.key==='/' && document.activeElement!==$('#workflowSearch')){ event.preventDefault(); $('#workflowSearch').focus(); } });
+document.addEventListener('click', event => { const button=event.target.closest('[data-url]'); if(button?.dataset.url) window.open(button.dataset.url,'_blank','noopener'); });
+$('#openN8n').addEventListener('click',()=>window.open(n8nHome,'_blank','noopener'));
+$('#refreshDashboard').addEventListener('click',()=>{ render(); toast(state.source==='live'?'Live listeners refreshed.':'Demo data refreshed. Connect n8n for live events.'); });
+$('#viewContract').addEventListener('click',()=>$('#contractDialog').showModal());
+$('#copyContract').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText($('#contractCode').textContent); toast('Event JSON copied.'); }catch{ toast('Copy unavailable. Select the JSON manually.'); } });
+$('#footerYear').textContent = new Date().getFullYear();
+
+render();
+connect();
