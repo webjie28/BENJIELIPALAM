@@ -133,53 +133,49 @@
     </header>
 
     <div class="portfolio-container">
-      <!-- FULL-SCREEN SPLIT HERO SECTION (Archi Green Layout) -->
-      <section id="hero" class="hero-section">
-        <!-- Ambient Hero Glow Layers (Dark Mode Only) -->
-        <div class="hero-glow-layer primary-glow"></div>
-        <div class="hero-glow-layer secondary-glow"></div>
+      <!-- Editorial prototype: oversized identity, metadata, and one clear message. -->
+      <section id="hero" class="hero-section format-hero">
+        <h1 class="format-wordmark animate-in" aria-label="Benjie Lipalam">
+          <span aria-hidden="true">B</span><span aria-hidden="true">E</span><span aria-hidden="true">N</span><span aria-hidden="true">J</span><span aria-hidden="true">I</span><span aria-hidden="true">E</span>
+        </h1>
+
+        <div class="format-meta animate-in stagger-2" aria-label="Portfolio information">
+          <span>PORTFOLIO / 2026</span>
+          <span>ROSARIO, CAVITE</span>
+          <span><i aria-hidden="true"></i> AVAILABLE FOR OPPORTUNITIES</span>
+        </div>
 
         <div class="hero-content">
-          <!-- Left Side: Typography -->
           <div class="hero-left">
-            <p class="hero-intro-label">BENJIE LIPALAM / DEVELOPER &amp; DESIGNER</p>
-            <h1 class="hero-title animate-in stagger-2">
-              <span class="typewriter-text pinia-accent">Benjie Lipalam</span>
-            </h1>
-            <p class="hero-tagline animate-in stagger-3">
-              Thoughtful interfaces.<br />Useful automation.
-            </p>
+            <p class="hero-intro-label">DEVELOPER · DESIGNER · AUTOMATION BUILDER</p>
+            <h2 class="hero-tagline animate-in stagger-3">
+              Digital systems with<br />a clear point of view.
+            </h2>
             <p class="hero-desc muted animate-in stagger-4">
-              I turn complex ideas into clear web experiences and connect the repetitive work behind them. Built with care, from the first screen to the last workflow.
+              I turn complex ideas into useful web experiences, then connect the repetitive work behind them through AI and automation.
             </p>
 
             <div class="hero-ctas animate-in stagger-5">
-              <a href="#creations" class="cta-btn pinia-primary-btn">View Projects</a>
-              <button @click="showCV = true" class="cta-btn pinia-secondary-btn">View My CV</button>
-              <a href="https://github.com/webjie28" target="_blank" title="GitHub" class="cta-btn pinia-secondary-btn github-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                <span>GitHub</span>
-              </a>
+              <a href="#creations" class="cta-btn pinia-primary-btn">View selected work <span aria-hidden="true">↘</span></a>
+              <button @click="showCV = true" class="cta-btn pinia-secondary-btn">View CV</button>
+              <a href="https://github.com/webjie28" target="_blank" rel="noopener" title="GitHub" class="cta-btn pinia-secondary-btn github-btn">GitHub ↗</a>
             </div>
           </div>
 
-          <!-- Right Side: Editorial portrait cutout -->
-          <div class="hero-right animate-in">
+          <figure class="hero-right animate-in">
             <div class="hero-image-frame hero-portrait-cutout">
               <img v-if="hasImage" :src="profileGraduationImg" alt="Benjie Lipalam in graduation attire" class="hero-avatar hero-rotating-photo hero-photo-graduation" @error="hasImage = false" />
-              <img v-if="hasImage" :src="profileBarongImg" alt="" aria-hidden="true" class="hero-avatar hero-rotating-photo hero-photo-barong" />
-              <img v-if="hasImage" :src="profilePortraitImg" alt="" aria-hidden="true" class="hero-avatar hero-rotating-photo hero-photo-portrait" />
               <div v-else class="hero-avatar-fallback">BL</div>
             </div>
-          </div>
+            <figcaption><span>01</span><p>Frontend craft<br />AI-assisted workflows<br />Human-centered systems</p></figcaption>
+          </figure>
         </div>
       </section>
 
-      <section class="proof-strip" aria-label="Portfolio highlights">
-        <div><strong>06</strong><span>Selected projects</span></div>
-        <div><strong>04</strong><span>Workflow demos</span></div>
-        <div><strong>01</strong><span>Thesis system</span></div>
-        <div><strong>UI + AI</strong><span>Built end to end</span></div>
+      <section id="highlights" class="proof-strip" aria-label="Portfolio highlights">
+        <div><strong>Frontend</strong><span>Responsive product interfaces</span></div>
+        <div><strong>UI/UX Design</strong><span>Visual systems and interaction</span></div>
+        <div><strong>Agentic AI</strong><span>n8n, Gemini and automation</span></div>
       </section>
 
       <section class="toolbelt" aria-label="Tools Benjie works with">
@@ -200,7 +196,7 @@
             <p class="origin-statement">I design interfaces people enjoy using and engineer the systems that make them useful.</p>
             <div class="origin-copy"><p>My path began with technology, aesthetics, and the small details that make an interface feel natural. Computer Science gave me the structure; design gave that structure a human purpose.</p><p>Today, I bring both together in responsive web experiences and AI-assisted workflows that are clear, thoughtful, and practical.</p></div>
           </div>
-          <div class="origin-milestones" aria-label="Benjie's journey">
+          <div id="journey" class="origin-milestones" aria-label="Benjie's journey">
             <article><div class="milestone-top"><span>01</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/></svg></i></div><h3>Foundation</h3><p>Algorithms, software engineering, and the discipline to build dependable products.</p><small>Logic + structure</small></article>
             <article><div class="milestone-top"><span>02</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 10v10"/></svg></i></div><h3>Interface</h3><p>Typography, layout, and interaction design that make technology feel approachable.</p><small>Clarity + feel</small></article>
             <article><div class="milestone-top"><span>03</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5M9 5h6M9 13h.01M15 13h.01M9 16h6"/></svg></i></div><h3>Systems</h3><p>Frontend craft connected to AI agents, n8n workflows, and useful automation.</p><small>AI + automation</small></article>
@@ -218,13 +214,14 @@
         <!-- SECTION 2: THE CREATIONS -->
         <section id="creations" class="chapter-section scroll-section reveal-on-scroll">
           <div class="feature-shell feature-works">
-            <div class="section-heading-row"><div><span class="section-eyebrow">Selected work</span><h2 class="chapter-header">Interfaces with a point of view.</h2></div></div>
-            <p class="chapter-subtitle">Short visual case studies built from real interfaces, workflow captures, and live project sources.</p>
-            <div class="project-gallery reveal-on-scroll">
+            <div class="section-heading-row"><div><span class="section-eyebrow">Selected work / 01—06</span><h2 class="chapter-header"><span>Systems,</span><span>not just screens.</span></h2></div></div>
+            <p class="chapter-subtitle">A selection of live products, thesis work, and automated workflows built to solve a real problem.</p>
+            <div class="project-gallery">
               <article v-for="(project, index) in systemReels" :key="project.title" :class="['project-editorial-card', project.tone]">
                 <div class="project-card-top"><span>{{ String(index + 1).padStart(2, '0') }}</span><small>{{ project.kicker }}</small></div>
                 <div class="project-card-visual">
-                  <img :src="project.preview" :alt="`${project.title} interface preview`" loading="lazy" />
+                  <video v-if="project.reel && index === 0" :poster="project.preview" autoplay muted loop playsinline preload="metadata" :aria-label="`${project.title} interface preview`"><source :src="project.reel" type="video/webm" /></video>
+                  <img v-else :src="project.preview" :alt="`${project.title} interface preview`" loading="lazy" />
                   <span class="project-card-status"><i></i>{{ project.href ? 'LIVE BUILD' : 'INTERACTIVE SYSTEM' }}</span>
                   <strong>{{ project.detail }}</strong>
                 </div>
@@ -258,22 +255,24 @@
               </div>
             </div>
             
-            <div class="workflow-demo-heading reveal-on-scroll">
+            <div id="workflow-demos" class="workflow-demo-heading">
               <span class="eyebrow">Actual workflow demos</span>
               <h3>Actual n8n workflow demos, captured from the automations in this portfolio.</h3>
               <p>Each demo is manual-triggered and testable in n8n. Explore the real node topology without exposing the private workspace or sending an external action.</p>
             </div>
-            <div class="workflow-demo-grid">
-              <article v-for="demo in workflowDemos" :key="demo.title" :class="['workflow-demo-card', demo.tone, 'reveal-on-scroll']">
-                <div class="workflow-demo-top"><span>n8n · {{ demo.mode || 'demo mode' }}</span><b>{{ demo.status || 'SAFE · MANUAL' }}</b></div>
-                <h3>{{ demo.title }}</h3>
-                <p>{{ demo.description }}</p>
+            <div id="workflow-grid" class="workflow-demo-grid">
+              <article v-for="(demo, demoIndex) in workflowDemos" :id="demoIndex === 1 ? 'workflow-compact' : undefined" :key="demo.title" :class="['workflow-demo-card', demo.tone, { featured: demoIndex === 0 }]">
+                <div class="workflow-demo-top"><span>{{ String(demoIndex + 1).padStart(2, '0') }} / {{ demo.mode || 'demo mode' }}</span><b>{{ demo.status || 'SAFE · MANUAL' }}</b></div>
+                <div class="workflow-demo-copy">
+                  <h3>{{ demo.title }}</h3>
+                  <p>{{ demo.description }}</p>
+                </div>
                 <div class="workflow-mini-flow" :aria-label="`${demo.title} workflow steps`">
-                  <template v-for="(step, index) in demo.steps" :key="step">
-                    <span>{{ step }}</span><i v-if="index < demo.steps.length - 1">→</i>
+                  <template v-for="(step, stepIndex) in demo.steps" :key="step">
+                    <span class="workflow-mini-node"><small>{{ String(stepIndex + 1).padStart(2, '0') }}</small><strong>{{ step }}</strong></span><i v-if="stepIndex < demo.steps.length - 1" aria-hidden="true"></i>
                   </template>
                 </div>
-                <button type="button" class="workflow-demo-link" @click="selectedWorkflowDemo = demo">Explore workflow demo <span>→</span></button>
+                <button type="button" class="workflow-demo-link" @click="selectedWorkflowDemo = demo">Inspect workflow <span>↗</span></button>
               </article>
             </div>
           </div>
@@ -320,8 +319,8 @@
         <!-- SECTION 3: CASE STUDY (STICKY SCROLLYTELLING) -->
         <section id="thesis" class="chapter-section scroll-section reveal-on-scroll">
           <div class="feature-shell thesis-shell scrollytelling-wrapper">
-            <div class="section-heading-row"><div><span class="section-eyebrow">Case study</span><h2 class="chapter-header">Thesis DSS</h2></div></div>
-            <p class="chapter-subtitle">An interactive walkthrough of the "Sales Reports Analysis On Automotive Spare Parts Business Using Decision Support System" prototype.</p>
+            <div class="section-heading-row"><div><span class="section-eyebrow">Featured case study / Team thesis</span><h2 class="chapter-header">Automotive intelligence,<br />made usable.</h2></div></div>
+            <p class="chapter-subtitle">A decision support system that turns sales, forecasting, inventory, and supplier data into clearer operational decisions.</p>
             <div class="thesis-project-details">
               <p class="thesis-role-heading"><strong>Team thesis project</strong> <span aria-hidden="true">/</span> My contribution</p>
               <div class="thesis-role-list">
@@ -910,8 +909,6 @@ import { db, auth } from './firebase';
 import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import profileGraduationImg from './profile-8r1.webp';
-import profileBarongImg from './profile-dsc-2235w.webp';
-import profilePortraitImg from './profile-son-9965.webp';
 import thesisDashboard from './screenshots/thesis_1_dashboard.png';
 import thesisSalesReports from './screenshots/thesis_2_sales_reports.png';
 import thesisPredictions from './screenshots/thesis_3_predictions.png';
@@ -952,8 +949,8 @@ const toolStack = [
   { name: 'Tailwind CSS', color: '#38bdf8', icon: toolIcon('tailwindcss', '#38bdf8') }
 ];
 const systemReels = [
-  { kind: 'assistant', kicker: 'Interactive AI demo', title: 'Portfolio AI Assistant', preview: portfolioAiPreview, description: 'Ask a real question and watch the portfolio assistant call the same n8n + Gemini system used by the chat widget.', detail: 'Visitor → n8n → Gemini → response', tone: 'orange', caseStudy: { summary: 'A portfolio chat experience that answers visitor questions while keeping the AI’s behavior constrained, calm, and portfolio-specific.', problem: 'A portfolio needs a useful first interaction without turning into an aggressive chatbot or exposing private system details.', build: 'A Vue chat interface sends a scoped message to an n8n webhook, which coordinates Gemini and returns a concise response. Sessions are logged to a private Firebase inbox.', stack: ['Vue 3', 'n8n', 'Gemini', 'Firebase'] } },
-  { kicker: 'Team thesis · Frontend & QA', title: 'Automotive Spare Parts DSS', preview: thesisDashboard, description: 'Explore our live decision support system for sales reporting, demand forecasting, inventory, and supplier management.', detail: 'My role: React frontend → visual direction → testing', href: 'https://automotive-spare-parts-dss-thesis.vercel.app/', sourceHref: 'https://github.com/jeinciong/automotive-spare-parts-dss-thesis', tone: 'orange', caseStudy: { summary: 'A three-person Computer Science thesis project designed to turn automotive spare-parts sales and inventory data into clearer operational decisions.', problem: 'Sales records, stock levels, supplier details, and demand signals are difficult to interpret when they live in separate views and raw tables.', build: 'I developed and refined responsive React and TypeScript interface views, helped define the website color direction, and tested key user flows and interface behavior. The backend and forecasting logic are the combined work of our thesis team.', stack: ['React', 'TypeScript', 'Frontend', 'UI Direction', 'Testing & QA'] } },
+  { kicker: 'Team thesis · Frontend & QA', title: 'Automotive Spare Parts DSS', preview: thesisDashboard, reel: '/reels/thesis-dss.webm', description: 'Explore our live decision support system for sales reporting, demand forecasting, inventory, and supplier management.', detail: 'My role: React frontend → visual direction → testing', href: 'https://automotive-spare-parts-dss-thesis.vercel.app/', sourceHref: 'https://github.com/jeinciong/automotive-spare-parts-dss-thesis', tone: 'orange', caseStudy: { summary: 'A three-person Computer Science thesis project designed to turn automotive spare-parts sales and inventory data into clearer operational decisions.', problem: 'Sales records, stock levels, supplier details, and demand signals are difficult to interpret when they live in separate views and raw tables.', build: 'I developed and refined responsive React and TypeScript interface views, helped define the website color direction, and tested key user flows and interface behavior. The backend and forecasting logic are the combined work of our thesis team.', stack: ['React', 'TypeScript', 'Frontend', 'UI Direction', 'Testing & QA'] } },
+  { kind: 'assistant', kicker: 'Interactive AI demo', title: 'Portfolio AI Assistant', preview: portfolioAiPreview, reel: '/reels/portfolio-ai.webm', description: 'Ask a real question and watch the portfolio assistant call the same n8n + Gemini system used by the chat widget.', detail: 'Visitor → n8n → Gemini → response', tone: 'orange', caseStudy: { summary: 'A portfolio chat experience that answers visitor questions while keeping the AI’s behavior constrained, calm, and portfolio-specific.', problem: 'A portfolio needs a useful first interaction without turning into an aggressive chatbot or exposing private system details.', build: 'A Vue chat interface sends a scoped message to an n8n webhook, which coordinates Gemini and returns a concise response. Sessions are logged to a private Firebase inbox.', stack: ['Vue 3', 'n8n', 'Gemini', 'Firebase'] } },
   { kicker: 'Live dashboard', title: 'Automation Operations Dashboard', preview: automationDashboardPreview, description: 'A real-time command centre for Messenger follow-ups and the Shorts content pipeline.', detail: 'Vue-ready UI → n8n events → human review', href: '/automation-dashboard.html', tone: 'green', caseStudy: { summary: 'An operations dashboard that makes automation work observable: leads, content status, execution health, and exceptions appear in one clear workspace.', problem: 'Automation becomes hard to trust when follow-ups, pipeline status, and render failures are scattered across tools.', build: 'The dashboard turns raw workflow events into a lightweight operating surface with lead stages, content queue visibility, status signals, and intentional human-review moments.', stack: ['JavaScript', 'n8n-ready webhooks', 'Responsive UI', 'Workflow observability'] } },
   { kicker: 'Automation case study', title: 'AI Recruitment Agent', preview: aiRecruiterPreview, description: 'Explore the live build log and workflow documentation for a recruitment automation system.', detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet', caseStudy: { summary: 'An email-driven workflow that turns incoming applications into structured, reviewable hiring decisions.', problem: 'Reading resumes, checking for attachments, and drafting appropriate next steps creates repetitive manual work.', build: 'The n8n workflow ingests Gmail messages, checks for PDFs, extracts resume text, evaluates context with Gemini, updates a candidate record, and prepares the right human-review draft.', stack: ['n8n', 'Gmail API', 'Gemini', 'Google Sheets'] } },
   { kicker: 'Live web app', title: 'Daily Life Tracking System', preview: dailyLifePreview, description: 'Open the real productivity and daily tracking web application.', detail: 'Vue → state → personal analytics', href: 'https://dailylife-trackingsystem.vercel.app/#/', tone: 'blue', caseStudy: { summary: 'A focused daily tracker that makes personal routines and progress easier to see at a glance.', problem: 'Everyday tracking often becomes fragmented across notes, reminders, and disconnected tools.', build: 'A responsive Vue experience organizes daily inputs into a clearer interface with state-driven views and personal analytics.', stack: ['Vue', 'JavaScript', 'Responsive UI'] } },
