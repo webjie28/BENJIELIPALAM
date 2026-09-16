@@ -142,14 +142,15 @@
         <div class="hero-content">
           <!-- Left Side: Typography -->
           <div class="hero-left">
+            <p class="hero-intro-label">BENJIE LIPALAM / DEVELOPER &amp; DESIGNER</p>
             <h1 class="hero-title animate-in stagger-2">
               <span class="typewriter-text pinia-accent">Benjie Lipalam</span>
             </h1>
             <p class="hero-tagline animate-in stagger-3">
-              Frontend developer building interfaces, agentic systems on the side.
+              Thoughtful interfaces.<br />Useful automation.
             </p>
             <p class="hero-desc muted animate-in stagger-4">
-              A Computer Science–trained frontend developer focused on responsive, user-centred web applications. I combine modern frameworks with considered UI/UX decisions and useful automation.
+              I turn complex ideas into clear web experiences and connect the repetitive work behind them. Built with care, from the first screen to the last workflow.
             </p>
 
             <div class="hero-ctas animate-in stagger-5">
@@ -170,17 +171,15 @@
               <img v-if="hasImage" :src="profilePortraitImg" alt="" aria-hidden="true" class="hero-avatar hero-rotating-photo hero-photo-portrait" />
               <div v-else class="hero-avatar-fallback">BL</div>
             </div>
-
-            <div class="hero-quick-facts animate-in stagger-4">
-              <span class="hero-fact-tag"><span class="fact-bullet orange"></span> Frontend</span>
-              <span class="hero-fact-tag"><span class="fact-bullet green"></span> UI/UX Design</span>
-              <span class="hero-fact-tag"><span class="fact-bullet blue"></span> Agentic AI</span>
-            </div>
           </div>
         </div>
-        <a href="#origin" class="hero-scroll-cue" aria-label="Explore portfolio">
-          <span>Explore the work</span><i></i>
-        </a>
+      </section>
+
+      <section class="proof-strip" aria-label="Portfolio highlights">
+        <div><strong>06</strong><span>Selected projects</span></div>
+        <div><strong>04</strong><span>Workflow demos</span></div>
+        <div><strong>01</strong><span>Thesis system</span></div>
+        <div><strong>UI + AI</strong><span>Built end to end</span></div>
       </section>
 
       <section class="toolbelt" aria-label="Tools Benjie works with">
@@ -194,12 +193,11 @@
       </section>
 
       <main class="portfolio-main">
-        
         <!-- SECTION 1: THE ORIGIN -->
         <section id="origin" class="chapter-section scroll-section reveal-on-scroll origin-editorial">
           <div class="origin-head"><div><span class="section-eyebrow">The origin</span><h2>The craft behind the systems.</h2></div></div>
           <div class="origin-story">
-            <p class="origin-statement">I design interfaces people enjoy using—and engineer the systems that make them useful.</p>
+            <p class="origin-statement">I design interfaces people enjoy using and engineer the systems that make them useful.</p>
             <div class="origin-copy"><p>My path began with technology, aesthetics, and the small details that make an interface feel natural. Computer Science gave me the structure; design gave that structure a human purpose.</p><p>Today, I bring both together in responsive web experiences and AI-assisted workflows that are clear, thoughtful, and practical.</p></div>
           </div>
           <div class="origin-milestones" aria-label="Benjie's journey">
@@ -222,32 +220,25 @@
           <div class="feature-shell feature-works">
             <div class="section-heading-row"><div><span class="section-eyebrow">Selected work</span><h2 class="chapter-header">Interfaces with a point of view.</h2></div></div>
             <p class="chapter-subtitle">Short visual case studies built from real interfaces, workflow captures, and live project sources.</p>
-            <div class="showcase-shell reveal-on-scroll">
-              <nav class="showcase-nav" aria-label="Selected project navigator">
-                <p>PROJECT INDEX <span>{{ String(activeShowcaseIndex + 1).padStart(2, '0') }}/{{ String(systemReels.length).padStart(2, '0') }}</span></p>
-                <button v-for="(reel, index) in systemReels" :key="reel.title" type="button" :aria-pressed="activeShowcaseIndex === index" :class="{ active: activeShowcaseIndex === index }" @click="activeShowcaseIndex = index">
-                  <em>{{ String(index + 1).padStart(2, '0') }}</em><span><b>{{ reel.title }}</b><small>{{ reel.kicker }}</small></span><i>↗</i>
-                </button>
-              </nav>
-              <section class="showcase-stage" aria-live="polite">
-                <Transition name="showcase-swap" mode="out-in">
-                  <div :key="activeShowcase.title" class="showcase-screen">
-                    <div v-if="activeShowcase.kind === 'assistant'" class="assistant-demo showcase-assistant">
-                      <div class="assistant-demo-head"><span></span><b>Ask Benjie's AI</b><small>Live n8n + Gemini demo</small></div>
-                      <div class="assistant-demo-body"><p v-if="!assistantDemoReply">Ask a real question about Benjie's work, skills, or projects.</p><p v-else>{{ assistantDemoReply }}</p></div>
-                      <form @submit.prevent="runAssistantDemo"><input v-model="assistantDemoInput" maxlength="160" placeholder="What can Benjie build?" :disabled="assistantDemoLoading" /><button :disabled="assistantDemoLoading || !assistantDemoInput.trim()">{{ assistantDemoLoading ? 'Thinking…' : 'Ask AI' }}</button></form>
-                    </div>
-                    <div v-else class="showcase-live-preview">
-                      <iframe :src="activeShowcase.href" :title="`${activeShowcase.title} live preview`" loading="lazy"></iframe>
-                      <a :href="activeShowcase.href" target="_blank" rel="noopener" class="showcase-open" :aria-label="`Open ${activeShowcase.title}`">Open live ↗</a><span>LIVE PREVIEW</span>
-                    </div>
-                  </div>
-                </Transition>
-                <div class="showcase-copy" :class="activeShowcase.tone">
-                  <span>{{ activeShowcase.kicker }}</span><h3>{{ activeShowcase.title }}</h3><p>{{ activeShowcase.description }}</p>
-                  <div><small>{{ activeShowcase.detail }}</small><button type="button" @click="selectedCaseStudy = activeShowcase">Read case study <i>→</i></button></div>
+            <div class="project-gallery reveal-on-scroll">
+              <article v-for="(project, index) in systemReels" :key="project.title" :class="['project-editorial-card', project.tone]">
+                <div class="project-card-top"><span>{{ String(index + 1).padStart(2, '0') }}</span><small>{{ project.kicker }}</small></div>
+                <div class="project-card-visual">
+                  <img :src="project.preview" :alt="`${project.title} interface preview`" loading="lazy" />
+                  <span class="project-card-status"><i></i>{{ project.href ? 'LIVE BUILD' : 'INTERACTIVE SYSTEM' }}</span>
+                  <strong>{{ project.detail }}</strong>
                 </div>
-              </section>
+                <div class="project-card-copy">
+                  <h3>{{ project.title }}</h3>
+                  <p>{{ project.description }}</p>
+                  <div class="project-card-tags"><span v-for="item in project.caseStudy.stack.slice(0, 3)" :key="item">{{ item }}</span></div>
+                  <div class="project-card-actions">
+                    <button type="button" @click="selectedCaseStudy = project">View case study <span>→</span></button>
+                    <a v-if="project.href" :href="project.href" target="_blank" rel="noopener">Open live ↗</a>
+                    <button v-else type="button" @click="toggleChat">Try assistant ↗</button>
+                  </div>
+                </div>
+              </article>
             </div>
           </div>
         </section>
@@ -259,7 +250,7 @@
             <p class="chapter-subtitle">Automated workflows built with n8n to streamline processes and integrate APIs seamlessly.</p>
 
             <div class="system-flow reveal-on-scroll" aria-label="Portfolio AI system workflow">
-              <div class="system-flow-copy"><span class="eyebrow">Live system</span><h3>From a visitor question to a useful response.</h3><p>The portfolio is not just a showcase—it's connected to an AI assistant, n8n automation, Telegram alerts, and a private live inbox.</p></div>
+              <div class="system-flow-copy"><span class="eyebrow">Live system</span><h3>From a visitor question to a useful response.</h3><p>The portfolio is not just a showcase. It is connected to an AI assistant, n8n automation, Telegram alerts, and a private live inbox.</p></div>
               <div class="flow-nodes">
                 <div class="flow-node"><b>01</b><span>Visitor</span></div><i></i>
                 <div class="flow-node accent"><b>02</b><span>AI + n8n</span></div><i></i>
@@ -335,10 +326,10 @@
               <p class="thesis-role-heading"><strong>Team thesis project</strong> <span aria-hidden="true">/</span> My contribution</p>
               <div class="thesis-role-list">
                 <div><span>01</span><strong>Frontend development</strong><p>Built and refined responsive interface views using React and TypeScript.</p></div>
-                <div><span>02</span><strong>Visual direction</strong><p>Helped define the website color palette and visual treatment of the interface.</p></div>
-                <div><span>03</span><strong>Testing &amp; QA</strong><p>Tested key user flows and interface behavior, then helped identify issues before delivery.</p></div>
+                <div><span>02</span><strong>Visual direction</strong><p>Helped define the website color palette and the visual treatment of the interface.</p></div>
+                <div><span>03</span><strong>Testing &amp; QA</strong><p>Tested user flows and interface behavior, then helped identify issues before delivery.</p></div>
               </div>
-              <p class="thesis-team-note">The complete DSS—including its backend and forecasting logic—is the combined work of our three-person team.</p>
+              <p class="thesis-team-note">The complete DSS, including its backend and forecasting logic, is the combined work of our three-person team.</p>
               <div class="thesis-project-links">
                 <a class="cta-btn pinia-primary-btn" href="https://automotive-spare-parts-dss-thesis.vercel.app/" target="_blank" rel="noopener noreferrer">View live system <span aria-hidden="true">↗</span></a>
                 <a class="cta-btn pinia-secondary-btn" href="https://github.com/jeinciong/automotive-spare-parts-dss-thesis" target="_blank" rel="noopener noreferrer">View team repository <span aria-hidden="true">↗</span></a>
@@ -801,8 +792,13 @@
           <div class="cv-doc-header">
             <h1 class="cv-name">BENJIE LIPALAM</h1>
             <div class="cv-contact-line">
-              Rosario, Cavite &nbsp;|&nbsp; +63 995 485 3868 &nbsp;|&nbsp; <a href="mailto:Lipalambenjie@gmail.com" class="cv-link">Lipalambenjie@gmail.com</a> &nbsp;&nbsp;<a href="https://benjielipalam.vercel.app/" target="_blank" class="cv-link">https://benjielipalam.vercel.app/</a>
+              Rosario, Cavite &nbsp;|&nbsp; +63 995 485 3868 &nbsp;|&nbsp; <a href="mailto:Lipalambenjie@gmail.com" class="cv-link">Lipalambenjie@gmail.com</a> &nbsp;|&nbsp; <a href="https://benjielipalam.vercel.app/" target="_blank" rel="noopener" class="cv-link">benjielipalam.vercel.app</a> &nbsp;|&nbsp; <a href="https://github.com/webjie28" target="_blank" rel="noopener" class="cv-link">github.com/webjie28</a>
             </div>
+          </div>
+
+          <div class="cv-section">
+            <h2 class="cv-section-heading">Professional Summary</h2>
+            <p class="cv-summary">Computer Science graduate focused on frontend engineering, UI/UX design, and practical automation. Builds responsive Vue and React interfaces, AI-assisted n8n workflows, and operational dashboards that turn complex processes into clear user experiences.</p>
           </div>
 
           <!-- Education -->
@@ -819,22 +815,29 @@
 
           <!-- Projects -->
           <div class="cv-section">
-            <h2 class="cv-section-heading">Projects</h2>
-            
+            <h2 class="cv-section-heading">Selected Projects</h2>
+
             <div class="cv-project-item">
-              <h3 class="cv-project-title">AI Recruiter Agent &nbsp;<span class="cv-tech-stack">| &nbsp;<em>n8n, Google Gemini API, Google Sheets, Gmail API</em></span></h3>
+              <h3 class="cv-project-title">Flowboard Systems Monitor &nbsp;<span class="cv-tech-stack">| &nbsp;<em>JavaScript, Firebase, n8n, Vite</em></span></h3>
               <ul class="cv-bullets">
-                <li>Built a production-grade recruitment automation agent that screens incoming resumes from Gmail, filters spam, and uses AI to parse and log candidate data to Google Sheets.</li>
-                <li>Designed a 4-route classification system that auto-drafts tailored interview invitations or HR review alerts based on candidate seniority and role fit, with duplicate-candidate prevention via upsert logic.</li>
-                <li>Deployed the workflow engine 24/7 on Railway for real-time processing of incoming applications.</li>
+                <li>Built a dark operations dashboard that separates automation telemetry from website uptime monitoring across thirteen registered systems.</li>
+                <li>Added availability checks, response-time reporting, activity history, workflow links, and Firebase-ready execution telemetry without exposing private credentials.</li>
               </ul>
             </div>
 
             <div class="cv-project-item">
-              <h3 class="cv-project-title">n8n Automated Attendance Engine &nbsp;<span class="cv-tech-stack">| &nbsp;<em>n8n, Railway, Gmail API, PostgreSQL</em></span></h3>
+              <h3 class="cv-project-title">Portfolio AI Assistant &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Vue 3, n8n, Gemini, Firebase</em></span></h3>
               <ul class="cv-bullets">
-                <li>Developed a serverless workflow automating daily attendance clock-in/clock-out with weekday-aware scheduling and timezone-safe logic to prevent UTC/local discrepancies.</li>
-                <li>Integrated Gmail API with OAuth2 for real-time HTML email notifications and PostgreSQL for persistent cloud storage of credentials and configuration.</li>
+                <li>Created a portfolio assistant that answers scoped questions through an n8n and Gemini workflow while keeping visitor sessions organized in a private Firebase inbox.</li>
+                <li>Designed the responsive chat interface, safe failure states, suggestion prompts, and human-review visibility for incoming conversations.</li>
+              </ul>
+            </div>
+
+            <div class="cv-project-item">
+              <h3 class="cv-project-title">AI Recruiter Agent &nbsp;<span class="cv-tech-stack">| &nbsp;<em>n8n, Google Gemini API, Google Sheets, Gmail API</em></span></h3>
+              <ul class="cv-bullets">
+                <li>Built a recruitment workflow that checks incoming Gmail applications, reads PDF resumes, evaluates candidate context with Gemini, and maintains structured candidate records.</li>
+                <li>Designed safe routing for incomplete applications, junior and senior interview drafts, spam handling, and cases requiring human review.</li>
               </ul>
             </div>
 
@@ -848,10 +851,9 @@
             </div>
 
             <div class="cv-project-item">
-              <h3 class="cv-project-title">MNL Lumiere — Streetwear Brand Web Application &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, Vite, Firebase</em></span></h3>
+              <h3 class="cv-project-title">MNL Lumiere Streetwear Web Application &nbsp;<span class="cv-tech-stack">| &nbsp;<em>React, Vite, Firebase</em></span></h3>
               <ul class="cv-bullets">
-                <li>Built a modern e-commerce-style brand website using React 19 and Vite, with Firebase integration for scalable data handling and hosting.</li>
-                <li>Designed a custom typography and visual identity system for on-brand, responsive UI, and set up Oxlint for code quality consistency.</li>
+                <li>Built a responsive e-commerce-style brand website with a focused storefront, visual identity system, and mobile-friendly product browsing experience.</li>
               </ul>
             </div>
 
@@ -862,22 +864,6 @@
                 <li>Built reactive visualization widgets and responsive charts to help users review habit completion logs and analyze daily schedules.</li>
               </ul>
             </div>
-
-            <div class="cv-project-item">
-              <h3 class="cv-project-title">Mobile App UI/UX Design — Pharmacy & E-commerce Apps &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Figma</em></span></h3>
-              <ul class="cv-bullets">
-                <li>Designed complete mobile app UI/UX flows in Figma, including onboarding, authentication, and home dashboard screens for a pharmacy ordering app and a separate e-commerce concept.</li>
-                <li>Applied consistent branding, color systems, and layout structure across multi-screen user flows.</li>
-              </ul>
-            </div>
-
-            <div class="cv-project-item">
-              <h3 class="cv-project-title">Bayanihan Escrow &nbsp;<span class="cv-tech-stack">| &nbsp;<em>Rust, Soroban (Stellar Smart Contracts)</em></span></h3>
-              <ul class="cv-bullets">
-                <li>Built an on-chain escrow smart contract securing freelance milestone payments for Southeast Asian freelancers, developed during the Stellar Philippines Bootcamp 2026.</li>
-                <li>Implemented fund deposit, approval-based release, and cancellation-refund logic in Rust, validated with automated unit tests and deployed to the Stellar Testnet.</li>
-              </ul>
-            </div>
           </div>
 
           <!-- Skills -->
@@ -885,10 +871,10 @@
             <h2 class="cv-section-heading">Skills</h2>
             
             <div class="cv-skills-content">
-              <p><strong>Programming Languages:</strong> JavaScript (ES6+), TypeScript, HTML5, CSS3, Java, C++, Python, Rust</p>
-              <p><strong>Frameworks &amp; Libraries:</strong> React, Vue.js (Vue 3), Vite, Node.js, Express.js, Firebase, EmailJS, Tailwind CSS</p>
-              <p><strong>AI &amp; Automation:</strong> n8n workflow automation, Make, Google Gemini API, agentic AI tooling (OpenAI Agents SDK, Cursor)</p>
-              <p><strong>Tools &amp; Platforms:</strong> VS Code, Git, GitHub, Vercel, Railway, PostgreSQL, NetBeans, Eclipse, Code::Blocks, Figma</p>
+              <p><strong>Frontend:</strong> JavaScript, TypeScript, HTML5, CSS3, Vue 3, React, Vite, Tailwind CSS, responsive UI</p>
+              <p><strong>Backend &amp; Data:</strong> Node.js, Express.js, Firebase, Firestore, PostgreSQL, REST APIs</p>
+              <p><strong>AI &amp; Automation:</strong> n8n, Google Gemini API, Gmail API, Google Sheets, workflow observability, human-review routing</p>
+              <p><strong>Design &amp; Delivery:</strong> Figma, UI/UX design, Git, GitHub, Vercel, Railway, functional testing</p>
             </div>
           </div>
         </div>
@@ -933,12 +919,17 @@ import thesisRecommendations from './screenshots/thesis_4_recommendations.png';
 import thesisInventory from './screenshots/thesis_5_inventory.png';
 import thesisSuppliers from './screenshots/thesis_6_suppliers.png';
 import thesisSettings from './screenshots/thesis_7_settings.png';
+import portfolioAiPreview from './screenshots/reels/portfolio-ai-hero.png';
+import automationDashboardPreview from './screenshots/reels/automation-dashboard.png';
+import aiRecruiterPreview from './screenshots/reels/ai-recruiter-overview.png';
+import dailyLifePreview from './screenshots/reels/daily-life.png';
+import mnllumierePreview from './screenshots/reels/mnllumiere.png';
 
 const hasImage = ref(true);
 const activeStep = ref(1);
 const activeShowcaseIndex = ref(0);
 const activeTheme = ref('orange');
-const isDarkMode = ref(false);
+const isDarkMode = ref(true);
 const showCV = ref(false);
 const mobileMenuOpen = ref(false);
 const scrollProgress = ref(0);
@@ -961,12 +952,12 @@ const toolStack = [
   { name: 'Tailwind CSS', color: '#38bdf8', icon: toolIcon('tailwindcss', '#38bdf8') }
 ];
 const systemReels = [
-  { kind: 'assistant', kicker: 'Interactive AI demo', title: 'Portfolio AI Assistant', description: 'Ask a real question and watch the portfolio assistant call the same n8n + Gemini system used by the chat widget.', detail: 'Visitor → n8n → Gemini → response', tone: 'orange', caseStudy: { summary: 'A portfolio chat experience that answers visitor questions while keeping the AI’s behavior constrained, calm, and portfolio-specific.', problem: 'A portfolio needs a useful first interaction without turning into an aggressive chatbot or exposing private system details.', build: 'A Vue chat interface sends a scoped message to an n8n webhook, which coordinates Gemini and returns a concise response. Sessions are logged to a private Firebase inbox.', stack: ['Vue 3', 'n8n', 'Gemini', 'Firebase'] } },
-  { kicker: 'Team thesis · Frontend & QA', title: 'Automotive Spare Parts DSS', description: 'Explore our live decision support system for sales reporting, demand forecasting, inventory, and supplier management.', detail: 'My role: React frontend → visual direction → testing', href: 'https://automotive-spare-parts-dss-thesis.vercel.app/', sourceHref: 'https://github.com/jeinciong/automotive-spare-parts-dss-thesis', tone: 'orange', caseStudy: { summary: 'A three-person Computer Science thesis project designed to turn automotive spare-parts sales and inventory data into clearer operational decisions.', problem: 'Sales records, stock levels, supplier details, and demand signals are difficult to interpret when they live in separate views and raw tables.', build: 'I developed and refined responsive React and TypeScript interface views, helped define the website color direction, and tested key user flows and interface behavior. The backend and forecasting logic are the combined work of our thesis team.', stack: ['React', 'TypeScript', 'Frontend', 'UI Direction', 'Testing & QA'] } },
-  { kicker: 'Live dashboard', title: 'Automation Operations Dashboard', description: 'A real-time command centre for Messenger follow-ups and the Shorts content pipeline.', detail: 'Vue-ready UI → n8n events → human review', href: '/automation-dashboard.html', tone: 'green', caseStudy: { summary: 'An operations dashboard that makes automation work observable: leads, content status, execution health, and exceptions appear in one clear workspace.', problem: 'Automation becomes hard to trust when follow-ups, pipeline status, and render failures are scattered across tools.', build: 'The dashboard turns raw workflow events into a lightweight operating surface with lead stages, content queue visibility, status signals, and intentional human-review moments.', stack: ['JavaScript', 'n8n-ready webhooks', 'Responsive UI', 'Workflow observability'] } },
-  { kicker: 'Automation case study', title: 'AI Recruitment Agent', description: 'Explore the live build log and workflow documentation for a recruitment automation system.', detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet', caseStudy: { summary: 'An email-driven workflow that turns incoming applications into structured, reviewable hiring decisions.', problem: 'Reading resumes, checking for attachments, and drafting appropriate next steps creates repetitive manual work.', build: 'The n8n workflow ingests Gmail messages, checks for PDFs, extracts resume text, evaluates context with Gemini, updates a candidate record, and prepares the right human-review draft.', stack: ['n8n', 'Gmail API', 'Gemini', 'Google Sheets'] } },
-  { kicker: 'Live web app', title: 'Daily Life Tracking System', description: 'Open the real productivity and daily tracking web application.', detail: 'Vue → state → personal analytics', href: 'https://dailylife-trackingsystem.vercel.app/#/', tone: 'blue', caseStudy: { summary: 'A focused daily tracker that makes personal routines and progress easier to see at a glance.', problem: 'Everyday tracking often becomes fragmented across notes, reminders, and disconnected tools.', build: 'A responsive Vue experience organizes daily inputs into a clearer interface with state-driven views and personal analytics.', stack: ['Vue', 'JavaScript', 'Responsive UI'] } },
-  { kicker: 'Live e-commerce site', title: 'MNLLUMIERE', description: 'Browse the real responsive e-commerce website and its storefront experience.', detail: 'JavaScript → responsive commerce UI', href: 'https://mnllumiere.vercel.app', tone: 'green', caseStudy: { summary: 'A visual storefront built to make a fashion-focused brand feel intentional on desktop and mobile.', problem: 'A product experience needs to feel premium while still making browsing and selection simple.', build: 'The interface uses responsive layout, purposeful image treatment, and a direct browsing flow to prioritize the product and brand.', stack: ['JavaScript', 'HTML', 'CSS', 'Responsive Design'] } }
+  { kind: 'assistant', kicker: 'Interactive AI demo', title: 'Portfolio AI Assistant', preview: portfolioAiPreview, description: 'Ask a real question and watch the portfolio assistant call the same n8n + Gemini system used by the chat widget.', detail: 'Visitor → n8n → Gemini → response', tone: 'orange', caseStudy: { summary: 'A portfolio chat experience that answers visitor questions while keeping the AI’s behavior constrained, calm, and portfolio-specific.', problem: 'A portfolio needs a useful first interaction without turning into an aggressive chatbot or exposing private system details.', build: 'A Vue chat interface sends a scoped message to an n8n webhook, which coordinates Gemini and returns a concise response. Sessions are logged to a private Firebase inbox.', stack: ['Vue 3', 'n8n', 'Gemini', 'Firebase'] } },
+  { kicker: 'Team thesis · Frontend & QA', title: 'Automotive Spare Parts DSS', preview: thesisDashboard, description: 'Explore our live decision support system for sales reporting, demand forecasting, inventory, and supplier management.', detail: 'My role: React frontend → visual direction → testing', href: 'https://automotive-spare-parts-dss-thesis.vercel.app/', sourceHref: 'https://github.com/jeinciong/automotive-spare-parts-dss-thesis', tone: 'orange', caseStudy: { summary: 'A three-person Computer Science thesis project designed to turn automotive spare-parts sales and inventory data into clearer operational decisions.', problem: 'Sales records, stock levels, supplier details, and demand signals are difficult to interpret when they live in separate views and raw tables.', build: 'I developed and refined responsive React and TypeScript interface views, helped define the website color direction, and tested key user flows and interface behavior. The backend and forecasting logic are the combined work of our thesis team.', stack: ['React', 'TypeScript', 'Frontend', 'UI Direction', 'Testing & QA'] } },
+  { kicker: 'Live dashboard', title: 'Automation Operations Dashboard', preview: automationDashboardPreview, description: 'A real-time command centre for Messenger follow-ups and the Shorts content pipeline.', detail: 'Vue-ready UI → n8n events → human review', href: '/automation-dashboard.html', tone: 'green', caseStudy: { summary: 'An operations dashboard that makes automation work observable: leads, content status, execution health, and exceptions appear in one clear workspace.', problem: 'Automation becomes hard to trust when follow-ups, pipeline status, and render failures are scattered across tools.', build: 'The dashboard turns raw workflow events into a lightweight operating surface with lead stages, content queue visibility, status signals, and intentional human-review moments.', stack: ['JavaScript', 'n8n-ready webhooks', 'Responsive UI', 'Workflow observability'] } },
+  { kicker: 'Automation case study', title: 'AI Recruitment Agent', preview: aiRecruiterPreview, description: 'Explore the live build log and workflow documentation for a recruitment automation system.', detail: 'Gmail → Gemini → Sheets → reply', href: 'https://ai-recruitment-agent-n8n.vercel.app/', tone: 'violet', caseStudy: { summary: 'An email-driven workflow that turns incoming applications into structured, reviewable hiring decisions.', problem: 'Reading resumes, checking for attachments, and drafting appropriate next steps creates repetitive manual work.', build: 'The n8n workflow ingests Gmail messages, checks for PDFs, extracts resume text, evaluates context with Gemini, updates a candidate record, and prepares the right human-review draft.', stack: ['n8n', 'Gmail API', 'Gemini', 'Google Sheets'] } },
+  { kicker: 'Live web app', title: 'Daily Life Tracking System', preview: dailyLifePreview, description: 'Open the real productivity and daily tracking web application.', detail: 'Vue → state → personal analytics', href: 'https://dailylife-trackingsystem.vercel.app/#/', tone: 'blue', caseStudy: { summary: 'A focused daily tracker that makes personal routines and progress easier to see at a glance.', problem: 'Everyday tracking often becomes fragmented across notes, reminders, and disconnected tools.', build: 'A responsive Vue experience organizes daily inputs into a clearer interface with state-driven views and personal analytics.', stack: ['Vue', 'JavaScript', 'Responsive UI'] } },
+  { kicker: 'Live e-commerce site', title: 'MNLLUMIERE', preview: mnllumierePreview, description: 'Browse the real responsive e-commerce website and its storefront experience.', detail: 'JavaScript → responsive commerce UI', href: 'https://mnllumiere.vercel.app', tone: 'green', caseStudy: { summary: 'A visual storefront built to make a fashion-focused brand feel intentional on desktop and mobile.', problem: 'A product experience needs to feel premium while still making browsing and selection simple.', build: 'The interface uses responsive layout, purposeful image treatment, and a direct browsing flow to prioritize the product and brand.', stack: ['JavaScript', 'HTML', 'CSS', 'Responsive Design'] } }
 ];
 const activeShowcase = computed(() => systemReels[activeShowcaseIndex.value]);
 const workflowDemos = [
@@ -985,15 +976,14 @@ const workflowDemos = [
   { title: 'Auto Clock-In/Out', description: 'The actual n8n demo workflow: Manila time validation selects an approved attendance action or safe hold.', steps: ['Time', 'Validate', 'Audit'], nodes: [{ kind:'trigger', label:'Run attendance demo', detail:'Manual Trigger' }, { kind:'code', label:'Read Manila work time', detail:'Code in JavaScript' }, { kind:'code', label:'Validate clock window', detail:'Code in JavaScript' }, { kind:'if', label:'Approved time window?', detail:'IF decision' }, { kind:'code', label:'Prepare audit event', detail:'True branch output' }, { kind:'code', label:'Record safe hold', detail:'False branch output' }], safety: 'No attendance platform is called and no clock action is made in this portfolio demo.', tone: 'blue' },
   { title: 'Call Auto-Reply', description: 'The actual n8n demo workflow: inbound call context is classified, drafted, and routed by priority.', steps: ['Call', 'Intent', 'Route'], nodes: [{ kind:'trigger', label:'Run incoming call demo', detail:'Manual Trigger' }, { kind:'code', label:'Example incoming call', detail:'Code in JavaScript' }, { kind:'code', label:'Classify call intent', detail:'Code in JavaScript' }, { kind:'code', label:'Draft polite auto-reply', detail:'Code in JavaScript' }, { kind:'if', label:'High-priority callback?', detail:'IF decision' }, { kind:'code', label:'Route standard follow-up', detail:'Safe output branch' }], safety: 'No call, SMS, or email is sent from this portfolio demo.', tone: 'orange' },
   {
-    title: 'YouTube & Reels Publishing System',
-    description: 'A five-workflow production pipeline that researches, builds, renders, uploads, and publishes short-form video.',
+    title: 'YouTube Shorts Content System',
+    description: 'A content pipeline that connects research, scripts, portrait footage, voiceovers, and video upload preparation.',
     steps: ['Script', 'Render', 'Publish'], mode: 'production pipeline', status: 'LIVE · SCHEDULED',
     stages: [
-      { index: '01', title: 'Script Factory 1', summary: 'Schedules at 6:00 AM and 1:00 PM, with a manual trigger for review.', nodes: ['Get row(s) in sheet', 'Filter', 'Limit', 'Grounded PH Research', 'Basic LLM Chain · Gemini', 'Parse Gemini JSON', 'Update row in sheet'] },
+      { index: '01', title: 'Script Factory 1', summary: 'Generates one queued topic per run at 11:00 AM and 7:00 PM, Philippine time, with a manual trigger for review.', nodes: ['Get row(s) in sheet', 'Filter', 'Limit', 'Grounded PH Research', 'Basic LLM Chain · Gemini', 'Parse Gemini JSON', 'Update row in sheet'] },
       { index: '02', title: 'Pexels Background Factory 2', summary: 'Builds portrait background candidates from Pexels and writes the selected URLs back to Sheets.', nodes: ['Get row(s) in sheet', 'Limit', 'Build 4 Pexels Searches', 'Search Pexels Videos', 'Pick Best Portrait Clip', 'Combine 4 Background URLs', 'Update row in sheet'] },
       { index: '03', title: 'Video Factory 3', summary: 'Generates and shares four voiceovers, renders them with FFmpeg, then waits, checks, and routes the final MP4 for review.', nodes: ['Get Script-Ready Topics', 'One Video Per Run', 'Generate Voiceover ×4', 'Upload + Share to Drive', 'Start FFmpeg Render', 'Wait + Check FFmpeg', 'Upload MP4 to Drive', 'Mark Video Ready for Review'] },
       { index: '04', title: 'YouTube Unlisted Upload 4', summary: 'Runs at 7:30 AM/PM; downloads the reviewed MP4 from Drive, uploads it to YouTube, and marks the sheet row.', nodes: ['Get row(s) in sheet', 'Filter', 'Limit', 'Download MP4 from Drive', 'Upload a video · YouTube', 'Update row in sheet'] },
-      { index: '05', title: 'Facebook Reels Auto Publish 5', summary: 'Runs at 8:15 AM/PM; fetches the YouTube-uploaded video, uploads it to Facebook, publishes the Reel, and marks it complete.', nodes: ['Get YouTube-uploaded video', 'One Reel Per Run', 'Download video from Drive', 'Start Facebook Reel Upload', 'Merge + Code', 'Upload Reel video', 'Publish Facebook Reel', 'Mark Facebook Reel uploaded'] }
     ],
     safety: 'Portfolio visual only. The production workflow stays private and opening this preview does not run schedules, render media, or publish a video.', tone: 'green'
   }
@@ -1119,43 +1109,11 @@ const printCV = () => {
   window.print();
 };
 
-const downloadCV = async () => {
-  const element = document.getElementById('printable-cv');
-  if (!element) return;
-
-  // Dynamically load html2pdf.js from CDN
-  if (!window.html2pdf) {
-    await new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  }
-
-  const wrapper = element;
-  const prevOverflow = wrapper.style.overflow;
-  const prevMaxHeight = wrapper.style.maxHeight;
-  const prevHeight = wrapper.style.height;
-  wrapper.style.overflow = 'visible';
-  wrapper.style.maxHeight = 'none';
-  wrapper.style.height = 'auto';
-
-  const opt = {
-    margin:       [8, 10, 8, 10],
-    filename:     'Benjie_Lipalam_CV.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true, letterRendering: true, scrollY: 0 },
-    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-  };
-
-  await window.html2pdf().set(opt).from(element).save();
-
-  wrapper.style.overflow = prevOverflow;
-  wrapper.style.maxHeight = prevMaxHeight;
-  wrapper.style.height = prevHeight;
+const downloadCV = () => {
+  const link = document.createElement('a');
+  link.href = '/Benjie_Lipalam_CV.pdf';
+  link.download = 'BENJIELIPALAM_CV.pdf';
+  link.click();
 };
 
 const toggleDarkMode = () => {
@@ -1422,7 +1380,7 @@ const submitContact = async () => {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 /* Floating n8n chatbot */
 .inbox-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; background: #101114; color: #f7f7f5; }.inbox-header { display:flex; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid #2b2d33; }.inbox-header strong,.inbox-header span { display:block; }.inbox-header span { margin-top:3px; color:#a8a29e; font-size:.82rem; }.inbox-header button { border:0; background:transparent; color:#fff; font-size:30px; cursor:pointer; }.inbox-login,.inbox-empty { margin:auto; text-align:center; color:#d6d3d1; }.inbox-login button { margin-top:16px; padding:12px 16px; border:0; border-radius:10px; background:#ea580c; color:#fff; font:inherit; cursor:pointer; }.inbox-content { flex:1; min-height:0; display:grid; grid-template-columns:320px 1fr; }.inbox-content aside { overflow:auto; padding:14px; border-right:1px solid #2b2d33; }.inbox-content aside button { display:block; width:100%; padding:13px; margin-bottom:8px; border:1px solid #2b2d33; border-radius:10px; text-align:left; background:#18191d; color:#f7f7f5; cursor:pointer; }.inbox-content aside button.selected { border-color:#ea580c; background:#2a1a12; }.inbox-content aside strong,.inbox-content aside small { display:block; }.inbox-content aside small { overflow:hidden; margin-top:5px; color:#a8a29e; text-overflow:ellipsis; white-space:nowrap; }.inbox-content main { overflow:auto; padding:28px; }.inbox-message { max-width:680px; padding:12px 14px; margin:10px 0; border-radius:12px; line-height:1.5; }.inbox-message.user { margin-left:auto; background:#ea580c; }.inbox-message.assistant { background:#24262c; } @media(max-width:700px){.inbox-content{grid-template-columns:1fr}.inbox-content aside{max-height:180px;border-right:0;border-bottom:1px solid #2b2d33}}
@@ -1466,7 +1424,7 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
@@ -3005,8 +2963,6 @@ button.cta-btn {
   letter-spacing: 0.05em;
   color: #000000 !important;
   margin: 0;
-  padding-left: 0.6rem;
-  border-left: 3px solid var(--accent-purple, #ea580c);
 }
 
 .cv-edu-item {
@@ -3165,7 +3121,6 @@ button.cta-btn {
   .cv-section-heading {
     font-size: 0.95rem !important;
     letter-spacing: 0.03em !important;
-    border-left-color: #000000 !important;
   }
 
   .cv-edu-item {
