@@ -57,6 +57,8 @@
               <button 
                 @click="toggleDarkMode" 
                 class="dark-mode-toggle"
+                :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+                :aria-pressed="!isDarkMode"
                 :title="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
               >
                 <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -110,6 +112,8 @@
             <button 
               @click="toggleDarkMode" 
               class="dark-mode-toggle"
+              :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+              :aria-pressed="!isDarkMode"
               :title="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
             >
               <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1124,14 +1128,19 @@ const downloadCV = () => {
   link.click();
 };
 
-const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value;
-  if (isDarkMode.value) {
+const applyColorMode = (useDarkMode, persist = true) => {
+  isDarkMode.value = useDarkMode;
+  if (useDarkMode) {
     document.documentElement.classList.add('dark-theme');
   } else {
     document.documentElement.classList.remove('dark-theme');
   }
+  document.documentElement.style.colorScheme = useDarkMode ? 'dark' : 'light';
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', useDarkMode ? '#222222' : '#f3eee5');
+  if (persist) localStorage.setItem('portfolio-theme', useDarkMode ? 'dark' : 'light');
 };
+
+const toggleDarkMode = () => applyColorMode(!isDarkMode.value);
 
 const changeTheme = (themeName) => {
   activeTheme.value = themeName;
@@ -1234,6 +1243,9 @@ const customRepoDetails = {
 };
 
 onMounted(async () => {
+  const savedTheme = localStorage.getItem('portfolio-theme');
+  applyColorMode(savedTheme ? savedTheme === 'dark' : true, false);
+
   const loaderDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 180 : 2150;
   window.setTimeout(() => { showLoader.value = false; }, loaderDelay);
 
