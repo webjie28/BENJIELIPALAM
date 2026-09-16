@@ -217,7 +217,7 @@
             <div class="section-heading-row"><div><span class="section-eyebrow">Selected work / 01—06</span><h2 class="chapter-header"><span>Systems,</span><span>not just screens.</span></h2></div></div>
             <p class="chapter-subtitle">A selection of live products, thesis work, and automated workflows built to solve a real problem.</p>
             <div class="project-gallery">
-              <article v-for="(project, index) in systemReels" :key="project.title" :class="['project-editorial-card', project.tone]">
+              <article v-for="(project, index) in systemReels" :key="project.title" :class="['project-editorial-card', 'project-reveal', 'reveal-on-scroll', project.tone]">
                 <div class="project-card-top"><span>{{ String(index + 1).padStart(2, '0') }}</span><small>{{ project.kicker }}</small></div>
                 <div class="project-card-visual">
                   <video v-if="project.reel && index === 0" :poster="project.preview" autoplay muted loop playsinline preload="metadata" :aria-label="`${project.title} interface preview`"><source :src="project.reel" type="video/webm" /></video>
