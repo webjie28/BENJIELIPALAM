@@ -675,7 +675,7 @@ body,
   opacity:1;
   object-fit:cover;
   object-position:50% 18%;
-  filter:grayscale(1) contrast(1.02) brightness(.86);
+  filter:saturate(.96) contrast(1.02) brightness(1);
   mix-blend-mode:normal;
   -webkit-mask-image:none;
   mask-image:none;
@@ -685,7 +685,7 @@ body,
   transition:filter .5s ease,transform .7s cubic-bezier(.2,.8,.2,1);
 }
 
-.portfolio-app .format-hero .hero-image-frame:hover .hero-avatar { filter:grayscale(.15) contrast(1) brightness(1);mix-blend-mode:normal;transform:scale(1.53); }
+.portfolio-app .format-hero .hero-image-frame:hover .hero-avatar { filter:saturate(1.04) contrast(1.01) brightness(1.02);mix-blend-mode:normal;transform:scale(1.53); }
 .portfolio-app .format-hero figcaption {
   display:flex;
   min-height:170px;
