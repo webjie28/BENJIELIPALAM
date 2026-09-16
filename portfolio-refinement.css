@@ -475,9 +475,11 @@ body,
   color:var(--format-paper);
   font-size:1rem;
   letter-spacing:-.06em;
+  transition:filter .22s ease,transform .22s cubic-bezier(.2,.8,.2,1);
 }
 
-.portfolio-app .logo-dot { color:inherit; }
+.portfolio-app .nav-logo .logo-text { color:var(--format-paper); }
+.portfolio-app .nav-logo .logo-dot { color:#f97316; }
 .portfolio-app .nav-links { gap:clamp(.9rem,2vw,2rem);transform:none; }
 .portfolio-app .nav-links>a,
 .portfolio-app .cv-nav-btn,
@@ -487,13 +489,36 @@ body,
   font-weight:700;
   letter-spacing:.08em;
   text-transform:uppercase;
+  transition:color .22s ease,text-shadow .22s ease,border-color .22s ease,background .22s ease,transform .12s ease;
 }
+
+.portfolio-app .nav-logo:hover,
+.portfolio-app .nav-logo:focus-visible { filter:drop-shadow(0 0 9px rgba(249,115,22,.68));transform:translateY(-1px); }
+.portfolio-app .nav-links>a:hover,
+.portfolio-app .nav-links>a:focus-visible,
+.portfolio-app .cv-nav-btn:hover,
+.portfolio-app .cv-nav-btn:focus-visible {
+  color:#fff;
+  text-shadow:0 0 7px rgba(255,255,255,.9),0 0 18px rgba(249,115,22,.78);
+}
+.portfolio-app .nav-links>a:active,
+.portfolio-app .cv-nav-btn:active,
+.portfolio-app .nav-cta-btn:active { transform:scale(.97); }
 
 .portfolio-app .nav-cta-btn {
   padding:.62rem .85rem;
   border:1px solid rgba(255,255,255,.35);
   border-radius:0;
   background:transparent;
+}
+
+.portfolio-app .nav-cta-btn:hover,
+.portfolio-app .nav-cta-btn:focus-visible {
+  color:#fff;
+  border-color:#f97316;
+  background:rgba(249,115,22,.1);
+  box-shadow:0 0 22px rgba(249,115,22,.2);
+  text-shadow:0 0 12px rgba(255,255,255,.55);
 }
 
 .portfolio-app .portfolio-container {
@@ -649,16 +674,18 @@ body,
   height:100%;
   opacity:1;
   object-fit:cover;
-  object-position:50% 15%;
+  object-position:50% 18%;
   filter:grayscale(1) contrast(1.02) brightness(.86);
   mix-blend-mode:normal;
   -webkit-mask-image:none;
   mask-image:none;
   animation:none;
+  transform:scale(1.48);
+  transform-origin:50% 18%;
   transition:filter .5s ease,transform .7s cubic-bezier(.2,.8,.2,1);
 }
 
-.portfolio-app .format-hero .hero-image-frame:hover .hero-avatar { filter:grayscale(.15) contrast(1) brightness(1);mix-blend-mode:normal;transform:scale(1.025); }
+.portfolio-app .format-hero .hero-image-frame:hover .hero-avatar { filter:grayscale(.15) contrast(1) brightness(1);mix-blend-mode:normal;transform:scale(1.53); }
 .portfolio-app .format-hero figcaption {
   display:flex;
   min-height:170px;
