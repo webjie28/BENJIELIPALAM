@@ -1,5 +1,15 @@
 <template>
-  <div class="portfolio-app">
+  <div class="portfolio-app" :class="{ 'is-loading': showLoader }" :aria-busy="showLoader ? 'true' : 'false'">
+    <div v-if="showLoader" class="site-loader" role="status" aria-live="polite" aria-label="Loading Benjie Lipalam's portfolio">
+      <div class="site-loader-lockup" aria-hidden="true">
+        <span class="site-loader-kicker">Portfolio / 2026</span>
+        <div class="site-loader-word">
+          <span v-for="(letter, index) in 'BENJIE'" :key="letter + index" :style="{ '--letter-index': index }">{{ letter }}</span>
+        </div>
+        <div class="site-loader-meta"><strong>Lipalam</strong><span>Interfaces + Automation</span></div>
+        <i class="site-loader-line"></i>
+      </div>
+    </div>
     <div class="scroll-progress" :style="{ transform: `scaleX(${scrollProgress})` }" aria-hidden="true"></div>
     <!-- Smooth Animated Fixed Background Glowing Spheres -->
     <div class="bg-glow bg-glow-1"></div>
@@ -923,6 +933,7 @@ import dailyLifePreview from './screenshots/reels/daily-life.png';
 import mnllumierePreview from './screenshots/reels/mnllumiere.png';
 
 const hasImage = ref(true);
+const showLoader = ref(true);
 const activeStep = ref(1);
 const activeShowcaseIndex = ref(0);
 const activeTheme = ref('orange');
@@ -1223,6 +1234,9 @@ const customRepoDetails = {
 };
 
 onMounted(async () => {
+  const loaderDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 180 : 2150;
+  window.setTimeout(() => { showLoader.value = false; }, loaderDelay);
+
   const updateScrollProgress = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     scrollProgress.value = maxScroll > 0 ? window.scrollY / maxScroll : 0;
