@@ -1235,3 +1235,123 @@ body,
   .proof-strip>div:hover,
   .portfolio-app .origin-milestones article:hover { transform:none; }
 }
+
+/* Phone polish: keep the editorial character without desktop-scale spacing. */
+@media(max-width:760px) {
+  .portfolio-app .chapter-section {
+    margin-bottom:5.25rem;
+    scroll-margin-top:72px;
+  }
+
+  .portfolio-app .format-hero .hero-content {
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:2.25rem;
+    min-height:0;
+    padding:2.4rem 0 3rem;
+  }
+  .portfolio-app .format-hero .hero-left { order:1; }
+  .portfolio-app .format-hero .hero-right {
+    order:2;
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  .portfolio-app .format-hero .hero-tagline {
+    max-width:9ch;
+    font-size:clamp(2.8rem,14vw,3.65rem);
+    line-height:.9;
+  }
+  .portfolio-app .format-hero .hero-desc { margin-top:1.35rem;line-height:1.65; }
+  .portfolio-app .format-hero .hero-ctas {
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:.55rem;
+  }
+  .portfolio-app .format-hero .hero-ctas .pinia-primary-btn { grid-column:1 / -1; }
+  .portfolio-app .format-hero .cta-btn { min-height:48px;justify-content:center;padding:.8rem .9rem; }
+  .portfolio-app .format-hero .hero-image-frame.hero-portrait-cutout { height:min(90vw,350px); }
+  .portfolio-app .format-hero figcaption {
+    min-height:0;
+    flex-direction:row;
+    align-items:center;
+    gap:1rem;
+    padding:.85rem 1rem;
+  }
+  .portfolio-app .format-hero figcaption p {
+    margin-left:auto;
+    text-align:right;
+    writing-mode:horizontal-tb;
+  }
+
+  .proof-strip { gap:.5rem;margin-bottom:2.5rem; }
+  .proof-strip>div { min-height:82px; }
+  .portfolio-app .origin-story { gap:1.4rem;margin:2rem 0 3rem; }
+  .portfolio-app .origin-statement { font-size:1.55rem;line-height:1.16; }
+  .portfolio-app .origin-milestones article,
+  .dark-theme .portfolio-app .origin-milestones article { min-height:170px; }
+  .portfolio-app .competency-rail { gap:1.5rem;margin-top:3.5rem; }
+
+  .portfolio-app .section-heading-row .chapter-header,
+  .portfolio-app .thesis-shell .chapter-header {
+    font-size:clamp(2.75rem,14vw,3.8rem);
+    line-height:.9;
+  }
+  .portfolio-app .feature-shell>.chapter-subtitle { margin-bottom:2rem;line-height:1.6; }
+  .project-card-copy { padding:1.1rem; }
+  .project-card-copy h3 { font-size:clamp(1.65rem,8vw,2.15rem);line-height:1; }
+  .project-card-actions { gap:.5rem; }
+  .project-card-actions button,
+  .project-card-actions a { min-height:44px;display:inline-flex;align-items:center; }
+
+  .portfolio-app .workflow-demo-card,
+  .dark-theme .portfolio-app .workflow-demo-card,
+  .portfolio-app .workflow-demo-card.featured,
+  .dark-theme .portfolio-app .workflow-demo-card.featured {
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    padding:1.25rem;
+  }
+  .portfolio-app .workflow-demo-copy,
+  .portfolio-app .workflow-demo-card.featured .workflow-demo-link { width:100%;align-self:stretch; }
+  .portfolio-app .workflow-demo-card.featured h3 {
+    max-width:8ch;
+    margin:2.4rem 0 .8rem;
+    font-size:clamp(2.7rem,13vw,3.55rem);
+    line-height:.88;
+  }
+  .portfolio-app .workflow-mini-flow,
+  .portfolio-app .workflow-demo-card.featured .workflow-mini-flow {
+    width:100%;
+    align-self:stretch;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:.5rem;
+    margin:1.5rem 0;
+  }
+  .portfolio-app .workflow-mini-flow>i { display:none; }
+  .portfolio-app .workflow-mini-flow .workflow-mini-node {
+    min-height:88px;
+    gap:1rem;
+    padding:.7rem .55rem;
+  }
+  .portfolio-app .workflow-demo-link { min-height:46px;align-items:center; }
+
+  .portfolio-app .thesis-shell { padding:1.35rem !important; }
+  .portfolio-app .thesis-project-details { margin-bottom:2rem; }
+  .portfolio-app .thesis-role-list>div { padding:1rem 0 1.15rem; }
+  .portfolio-app .thesis-project-links { display:grid;grid-template-columns:1fr;gap:.55rem; }
+  .portfolio-app .thesis-project-links .cta-btn { width:100%;min-height:48px;justify-content:center; }
+  .portfolio-app .thesis-shell .browser-mockup { box-shadow:8px 8px 0 #c7c7c0; }
+  .portfolio-app .thesis-shell .browser-mockup:hover { transform:none;box-shadow:8px 8px 0 #c7c7c0; }
+
+  .portfolio-app .contact-wrapper { padding:2rem 0; }
+  .portfolio-app .contact-wrapper .chapter-subtitle { margin-bottom:2.5rem;line-height:1.6; }
+  .portfolio-app .contact-layout { gap:2.5rem; }
+  .portfolio-app .form-input { min-height:48px; }
+  .portfolio-app textarea.form-input { min-height:140px; }
+  .portfolio-app .submit-btn { min-height:50px; }
+  .portfolio-app .chatbot-launcher { width:52px;height:52px;right:16px;bottom:16px; }
+}
