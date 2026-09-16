@@ -650,8 +650,10 @@ body,
   opacity:1;
   object-fit:cover;
   object-position:50% 15%;
-  filter:grayscale(1) contrast(1.12) brightness(.9);
-  mix-blend-mode:luminosity;
+  filter:grayscale(1) contrast(1.02) brightness(.86);
+  mix-blend-mode:normal;
+  -webkit-mask-image:none;
+  mask-image:none;
   animation:none;
   transition:filter .5s ease,transform .7s cubic-bezier(.2,.8,.2,1);
 }
