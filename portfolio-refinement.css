@@ -982,9 +982,9 @@ body,
   grid-column:1 / -1;
   min-height:400px;
   display:grid;
-  grid-template-columns:minmax(0,.8fr) minmax(420px,1.2fr);
+  grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
   grid-template-areas:"top top" "copy flow" "link flow";
-  column-gap:clamp(2rem,6vw,6rem);
+  column-gap:clamp(2rem,4vw,4rem);
   padding:clamp(1.5rem,3.5vw,3.2rem);
   color:var(--format-ink);
   background:var(--format-paper);
@@ -1005,7 +1005,7 @@ body,
 .dark-theme .portfolio-app .workflow-demo-card.featured .workflow-demo-top b { color:#4c4c48;border-color:rgba(0,0,0,.24); }
 .portfolio-app .workflow-demo-card:last-child .workflow-demo-top b,
 .dark-theme .portfolio-app .workflow-demo-card:last-child .workflow-demo-top b { color:var(--format-signal);border-color:rgba(207,255,61,.45); }
-.portfolio-app .workflow-demo-copy { grid-area:copy;align-self:end; }
+.portfolio-app .workflow-demo-copy { min-width:0;grid-area:copy;align-self:end; }
 .portfolio-app .workflow-demo-card h3,
 .dark-theme .portfolio-app .workflow-demo-card h3 {
   margin:clamp(2.5rem,7vw,5rem) 0 .75rem;
@@ -1015,11 +1015,12 @@ body,
   letter-spacing:-.045em;
   line-height:1;
 }
-.portfolio-app .workflow-demo-card.featured h3 { max-width:9ch;font-size:clamp(2.8rem,6vw,6.2rem);line-height:.86; }
+.portfolio-app .workflow-demo-card.featured h3 { max-width:100%;font-size:clamp(2.8rem,5.5vw,5.6rem);line-height:.86;text-wrap:balance; }
 .portfolio-app .workflow-demo-card .workflow-demo-copy>p,
 .dark-theme .portfolio-app .workflow-demo-card .workflow-demo-copy>p { color:#a9a9a3;font-size:.84rem;line-height:1.6; }
 .portfolio-app .workflow-demo-card.featured .workflow-demo-copy>p { max-width:42ch;color:#595954; }
 .portfolio-app .workflow-mini-flow {
+  min-width:0;
   grid-area:flow;
   align-self:center;
   display:flex;

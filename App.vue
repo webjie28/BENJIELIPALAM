@@ -149,7 +149,7 @@
           <div class="hero-left">
             <p class="hero-intro-label">DEVELOPER · DESIGNER · AUTOMATION BUILDER</p>
             <h2 class="hero-tagline animate-in stagger-3">
-              Digital systems with<br />a clear point of view.
+              Interfaces people enjoy.<br />Systems that do the work.
             </h2>
             <p class="hero-desc muted animate-in stagger-4">
               I turn complex ideas into useful web experiences, then connect the repetitive work behind them through AI and automation.
